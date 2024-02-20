@@ -1,6 +1,6 @@
 import express from 'express';
 const router = express.Router()
-import userController from '../controller/userController';
+import * as userController from '../controller/userController';
 
 router.route('/')
     .get(userController.getAllUsers)

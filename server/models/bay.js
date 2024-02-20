@@ -19,5 +19,5 @@ const BaySchema = new Schema ({
     }
 },{timestamps:true})
 
-const Bay = mongoose.model("Bay",baySchema)
+const Bay = mongoose.model("Bay",BaySchema)
 export default Bay;
