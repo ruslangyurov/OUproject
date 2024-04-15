@@ -6,7 +6,11 @@ import {Server} from 'socket.io';
 const app = express();
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
-import router from './routes/bayRoute.js';
+//import {logger} from './middleware/logger.js';
+import { defaultRoute } from './routes/root.js';
+import yardRoute from './routes/yardRoute.js';
+//app.use(logger)
+
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -48,10 +52,6 @@ io.on('connection', (socket) => {
     });
   });
   
- 
-  app.get('/', (req, res) => {
-    res.sendFile(__dirname + '/index.html');
-   });
-
-
-
+ app.use('/', defaultRoute)
+ app.use('/yard', yardRoute)
+  

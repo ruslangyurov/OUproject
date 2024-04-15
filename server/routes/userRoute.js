@@ -8,4 +8,4 @@ router.route('/')
     .patch(userController.updateUser)
     .delete(userController.DeleteUser)
 
-    export default router;
+export default router;

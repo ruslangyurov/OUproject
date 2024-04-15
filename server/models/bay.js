@@ -3,9 +3,10 @@ const Schema = mongoose.Schema;
 
 const BaySchema = new Schema ({
     bayNumber: {
-        type:Number,
+        type: String,
         required:true
     },
+    broken: Boolean,
     trailerNumber: {
         type:String,
         required:true
@@ -13,7 +14,7 @@ const BaySchema = new Schema ({
     stockDelivered: String,
     fullTrailer: Boolean,
     comment: String,
-    tretleOn: {
+    trestleOn: {
         type:Boolean,
         required:true
     }
