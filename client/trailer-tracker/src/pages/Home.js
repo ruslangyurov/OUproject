@@ -1,4 +1,4 @@
-import ButtonBasic from '../Components/Button'
+import ButtonBasic from '../Components/BasicButton'
 import ResponsiveAppBar from '../Components/appBar'
 import ListDividers from '../Components/Divider'
 

@@ -3,6 +3,8 @@ import {BrowserRouter as Router, Routes,Route, Link} from "react-router-dom"
 import {Inbound} from "./pages/Inbound";
 import {Layout} from "./Components/Layout";
 import {Home} from "./pages/Home";
+import {Outbound} from "./pages/Outbound";
+import { Parking } from './pages/Parking';
 
 
 export function App() {
@@ -12,6 +14,8 @@ export function App() {
         <Routes>
           <Route path = "/" element = {<Home/>}> </Route>
           <Route path = '/Inbound' element = {<Inbound />}></Route>
+          <Route path = '/Outbound' element = {<Outbound />}></Route>
+          <Route path = '/Parking' element = {<Parking />}></Route>
         </Routes>
       </Router>
     </div>

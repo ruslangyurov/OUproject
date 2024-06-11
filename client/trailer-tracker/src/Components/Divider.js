@@ -6,6 +6,8 @@ import ListItemButton from '@mui/material/ListItemButton';
 import Divider from '@mui/material/Divider';
 import Button from '@mui/material/Button';
 import {Link} from 'react-router-dom'
+import { palette } from '@mui/system';
+import Typography from '@mui/material/Typography';
 
 
 const style = {
@@ -18,7 +20,13 @@ const style = {
   backgroundColor: 'background.paper',
   justifyContent: 'center',
   mx: 'auto',
-  my: 30
+  my: 25,
+  color: 'primary.main',
+  bgcolor: '#fafafa',
+  typography: 'h4',
+  fontWeight:400,
+  fontFamily: 'monospace',
+  
 
   
 };
@@ -34,21 +42,22 @@ export default function ListDividers() {
         selected={selectedIndex === 0}
         onClick={(event) => handleListItemClick(event, 0)}
         component={Link} to= '/Inbound'>
-        <ListItemText primary="Inbound" />
+        <ListItemText disableTypography primary="Inbound" sx={{textAlign:'center'}} />
       </ListItemButton>
-      
+      <Divider component="li"/>
+      <ListItemButton
+        selected={selectedIndex === 0}
+        onClick={(event) => handleListItemClick(event, 0)}
+        component={Link} to= '/Outbound'>
+        <ListItemText disableTypography primary="Outbound" sx={{textAlign: 'center'}} />
+      </ListItemButton>
       <Divider component="li" />
-      <ListItem>
-        <ListItemText primary="Drafts" />
-      </ListItem>
-      <Divider component="li" />
-      <ListItem>
-        <ListItemText primary="Trash" />
-      </ListItem>
-      <Divider component="li" />
-      <ListItem>
-        <ListItemText primary="Spam" />
-      </ListItem>
+      <ListItemButton
+        selected={selectedIndex === 0}
+        onClick={(event) => handleListItemClick(event, 0)}
+        component={Link} to= '/Parking'>
+        <ListItemText disableTypography primary="Parking" sx={{textAlign: 'center'}} />
+      </ListItemButton>
     </List>
   );
 }
