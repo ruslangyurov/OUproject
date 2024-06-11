@@ -1,10 +1,11 @@
 import * as React from 'react';
+import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
-export default function SelectVariants(props) {
+export default function BasicSelect() {
   const [empty, setEmpty] = React.useState('');
 
   const handleChange = (event) => {
@@ -12,22 +13,19 @@ export default function SelectVariants(props) {
   };
 
   return (
-    <div>
-      <FormControl variant="filled" sx={ props.sx }>
-        <InputLabel id="demo-simple-select-standard-label">Empty Trailer</InputLabel>
+      <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
+        <InputLabel id="StandTrailer">Stand Trailer</InputLabel>
         <Select
-          labelId="demo-simple-select-standard-label"
-          id="demo-simple-select-standard"
+          labelId="StandTrailer"
+          id="Trailer"
           value={empty}
+          label="Stand Trailer"
           onChange={handleChange}
-          label="Empty Trailer"
         >
-          
-          <MenuItem value={"Yes"}>Yes</MenuItem>
-          <MenuItem value={"No"}>No</MenuItem>
+          <MenuItem value={"Full"}>Full Trailer</MenuItem>
+          <MenuItem value={"Empty"}>Empty Trailer</MenuItem>
+          <MenuItem value={'None'}>None</MenuItem>
         </Select>
       </FormControl>
-      
-    </div>
   );
 }
