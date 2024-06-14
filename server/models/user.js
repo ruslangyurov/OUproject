@@ -10,6 +10,7 @@ const UserSchema = new Schema( {
         type:String,
         required:true
     }
+    Tokens = []
 })
 
 const User = mongoose.model("User",userSchema)

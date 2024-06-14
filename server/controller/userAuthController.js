@@ -2,6 +2,7 @@ import user from '../models/user.js'
 import bcrypt from 'bcrypt'
 import * as jwt from 'jsonwebtoken'
 import {asyncHandler} from 'express'
+import verifyToken from '../middleware/verifyToken.js'
 
 
 
@@ -29,6 +30,23 @@ const login = asyncHandler(async(req, res) => {
     const accessToken = jwt.sign(user.username, process.ENV.TOKEN_SECRET, {expiresIn: '1800s'})
 
     res.json({accessToken})
+
+
+})
+
+const logout = asyncHandler(async(req, res) => {
+
+    const {username, token} = req.body
+
+    const user = await User.findOne({username}).exec()
+
+    if (!user) {
+        return res.status(401).json({message:"Unauthorised"})
+
+    user.token.push()
+    }
+
+
 
 
 })
