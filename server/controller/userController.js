@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import User from '../models/user';
+import User from '../models/user.js';
 import {asyncHandler} from 'express';
 import bcrypt from 'bcrypt';
 

@@ -54,4 +54,5 @@ io.on('connection', (socket) => {
   
  app.use('/', defaultRoute)
  app.use('/yard', yardRoute)
+ app.use('auth', userAuthRoute)
   
