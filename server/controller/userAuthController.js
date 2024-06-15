@@ -43,7 +43,7 @@ const logout = asyncHandler(async(req, res) => {
     if (!user) {
         return res.status(401).json({message:"Unauthorised"})
 
-    user.token.push()
+    user.Tokens.push(token)
     }
 
 
@@ -52,3 +52,4 @@ const logout = asyncHandler(async(req, res) => {
 })
 
 
+export {login, logout}

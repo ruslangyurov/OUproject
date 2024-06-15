@@ -14,7 +14,7 @@ import MenuItem from '@mui/material/MenuItem';
 import WorkIcon from '@mui/icons-material/Work';
 import {Link} from 'react-router-dom';
 
-const pages = ['Yard'];
+const pages = ['Login'];
 const settings = ['Profile','Logout'];
 
 function ResponsiveAppBar() {

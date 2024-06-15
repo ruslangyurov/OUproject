@@ -16,6 +16,7 @@ export function App() {
           <Route path = '/Inbound' element = {<Inbound />}></Route>
           <Route path = '/Outbound' element = {<Outbound />}></Route>
           <Route path = '/Parking' element = {<Parking />}></Route>
+          <Route path = '/Login' element = {<Login />}></Route>
         </Routes>
       </Router>
     </div>

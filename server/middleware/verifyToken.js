@@ -1,6 +1,6 @@
 import * as jwt from 'jsonwebtoken'
 
-export default function verifyJWT(req,res,next) {
+export const verifyJWT = (req,res,next) => {
     const authHeader = request.headers.authorization || request.headers.Authorization
 
     if (!authHeader?.startsWith('Bearer ')) {
@@ -12,11 +12,24 @@ export default function verifyJWT(req,res,next) {
         if (err) {
             return res.status(401).json({message: "Forbidden"})
         }
+
+
+
         req.user = decoded.username;
         request.tokenExp = decoded.exp;
         request.token = token;
         next();
     })
 
+}
+
+export const checkBlackList = (req,res,next) => {
+    const {username, token} = req.body
+    const user = await User.findOne({username}).exec()
+    if (token in user.Tokens) {
+        return res.status(401).json(message: "You need to log in")
+    } 
+
+    next()
 }
 

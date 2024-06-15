@@ -1,15 +1,14 @@
 import express from 'express';
-import userAuthController from '../controller/userAuthController.js';
+import {login, logout} from '../controller/userAuthController.js';
 import {Router as router} from 'express';
 
 router.route('/')
-.post()
+.post(login)
 
 router.route('/refresh')
 .get()
 
 router.route('logout')
-.post()
+.post(logout)
 
 
-module.exports = router
