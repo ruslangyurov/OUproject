@@ -23,13 +23,12 @@ export const verifyJWT = (req,res,next) => {
 
 }
 
-export const checkBlackList = (req,res,next) => {
+export const checkBlackList = async (req,res,next) => {
     const {username, token} = req.body
     const user = await User.findOne({username}).exec()
     if (token in user.Tokens) {
-        return res.status(401).json(message: "You need to log in")
-    } 
-
+        return res.status(401).json({message: "You need to log in"})
+    }; 
     next()
 }
 
