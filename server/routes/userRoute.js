@@ -1,12 +1,13 @@
 import express from 'express';
 const router = express.Router()
 import * as userController from '../controller/userController.js';
+import * as verifyToken from '../middleware/verifyToken.js';
 
+router.use(verifyToken.verifyJWT)
 
 router.route('/')
     .get(userController.getAllUsers)
     .post(userController.createNewUser)
-    .patch(userController.updateUser)
-    .delete(userController.DeleteUser)
+    
 
 export default router;

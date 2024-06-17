@@ -1,14 +1,11 @@
 import express from 'express';
-import {login, logout} from '../controller/userAuthController.js';
-import {Router as router} from 'express';
+import * as userAuthController from '../controller/userAuthController.js';
+const router = express.Router();
 
-router.route('/')
-.post(login)
+router.route('/').post(userAuthController.login)
 
-router.route('/refresh')
-.get()
+router.route('/refresh').get(userAuthController.refresh)
 
-router.route('logout')
-.post(logout)
+router.route('/logout').post(userAuthController.logout)
 
-
+export default router;

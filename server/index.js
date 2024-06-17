@@ -9,6 +9,9 @@ import { dirname } from 'path';
 //import {logger} from './middleware/logger.js';
 import { defaultRoute } from './routes/root.js';
 import yardRoute from './routes/yardRoute.js';
+import userAuthRoute from './routes/userAuthRoute.js';
+import userRoute from './routes/userRoute.js';
+import cookieParser from 'cookie-parser';
 //app.use(logger)
 
 
@@ -19,6 +22,7 @@ dotenv.config();
 app.use(express.json({extended:true}))
 app.use(express.urlencoded({extended:true}))
 app.use(cors());
+app.use(cookieParser())
 const mongoDb = "mongodb+srv://ruslangyurov:UPhkK4FkI2nVFUii@oucluster.dqizjw9.mongodb.net/?retryWrites=true&w=majority"
 
 const PORT = process.env.PORT || 5000;
@@ -54,5 +58,7 @@ io.on('connection', (socket) => {
   
  app.use('/', defaultRoute)
  app.use('/yard', yardRoute)
+ app.use('/user', userRoute)
  app.use('/auth', userAuthRoute)
+ 
   
