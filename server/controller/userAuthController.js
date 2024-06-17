@@ -17,9 +17,10 @@ const login = asyncHandler(async(req, res) => {
         return res.status(400).json({message:'All fields are required'})
     }
 
-    const currentUser = await user.findOne({username}).exec()
+    const currentUser = await user.findOne({"username":username}).exec()
 
     if (!currentUser) {
+        
         return res.status(401).json({message:"Unauthorised"})
     }
 

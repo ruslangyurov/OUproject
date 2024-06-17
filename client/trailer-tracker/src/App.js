@@ -1,10 +1,10 @@
 import React from 'react';
-import {BrowserRouter as Router, Routes,Route, Link} from "react-router-dom"
+import {BrowserRouter as Router, Routes,Route} from "react-router-dom"
 import {Inbound} from "./pages/Inbound";
-import {Layout} from "./Components/Layout";
 import {Home} from "./pages/Home";
 import {Outbound} from "./pages/Outbound";
 import { Parking } from './pages/Parking';
+import Login from './pages/Login'
 
 
 export function App() {
