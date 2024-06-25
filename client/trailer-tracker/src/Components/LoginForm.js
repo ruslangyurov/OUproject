@@ -26,10 +26,9 @@ export const BasicLogin = () => {
   useEffect(() => {
     if (isAuth) navigate('/')}, [isAuth])
 
-  const handleLogin = async (e) => {
+  const handleLogin = (e) => {
     e.preventDefault();
-    try {
-    const res = await axios.post(LOGIN_URL, {username, password}).catch(err => {
+    axios.post(LOGIN_URL, {username, password}).then(() => setIsAuth(true)).catch(err => {
       if (!err?.response) {
         setErrMsg("No Server Response");
       } else if (err.response?.status === 409) {
@@ -38,19 +37,16 @@ export const BasicLogin = () => {
         setErrMsg("Page not found");
       } else if (err.response.status === 400) {
         setErrMsg("All fields are required")
-      } else {
-        setErrMsg("Unknown error")
-      }
+      } else if (err.response.status === 401){
+        setErrMsg("Unknown username or password")
+      } else {setErrMsg("Unknown error")}
     })
     setUsername("")
     setPassword("")
-    setIsAuth(true)
+    //setIsAuth(true)
   }
      
-    catch (err) {
-        console.err(err)
-    }
-  }
+    
 
   return (
    
