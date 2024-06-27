@@ -12,12 +12,22 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import WorkIcon from '@mui/icons-material/Work';
-import {Link} from 'react-router-dom';
+import {Link, useNavigate, useLocation} from 'react-router-dom';
+import { useEffect, useState } from 'react';
 
-const pages = ['Login'];
-const settings = ['Profile','Logout'];
+
+const settings = ['Profile'];
+
+
 
 function ResponsiveAppBar() {
+
+  const [pages, setPages] = useState(["Login"])
+  const location = useLocation()
+  useEffect(() => {
+    location.pathname === "/Login" ? setPages([""]):setPages(["Login"])
+  }, [location.pathname])
+  const Navigate = useNavigate();
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -44,11 +54,10 @@ function ResponsiveAppBar() {
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <WorkIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
-          <Typography
+          <Typography onClick={() => Navigate("/")}
             variant="h6"
             noWrap
-            component="a"
-            href="#app-bar-with-responsive-menu"
+            component= {Link} to = {"/"}
             sx={{
               mr: 2,
               display: { xs: 'none', md: 'flex' },
@@ -104,7 +113,6 @@ function ResponsiveAppBar() {
             variant="h5"
             noWrap
             component="a"
-            href="#app-bar-with-responsive-menu"
             sx={{
               mr: 2,
               display: { xs: 'flex', md: 'none' },

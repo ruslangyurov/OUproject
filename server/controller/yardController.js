@@ -12,7 +12,9 @@ const createBay = asyncHandler(async(req,res) => {
     const comment = req.body.comment;
     const trestleOn = req.body.trestleOn;
 
-
+    // if (!bayNumber) {
+    //     return res.status(400).json({message: "Bay number is required"})
+    // }
 
     const bayObj = {
         bayNumber,

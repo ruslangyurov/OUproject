@@ -3,7 +3,7 @@ const router = express.Router()
 import * as userController from '../controller/userController.js';
 import * as verifyToken from '../middleware/verifyToken.js';
 
-router.use(verifyToken.verifyJWT)
+//router.use(verifyToken.verifyJWT)
 
 router.route('/')
     .get(userController.getAllUsers)

@@ -12,11 +12,10 @@ const BaySchema = new Schema ({
         required:true
     },
     stockDelivered: String,
-    fullTrailer: Boolean,
+    fullTrailer: String,
     comment: String,
     trestleOn: {
         type:Boolean,
-        required:true
     }
 },{timestamps:true})
 

@@ -5,20 +5,23 @@ import {Home} from "./pages/Home";
 import {Outbound} from "./pages/Outbound";
 import { Parking } from './pages/Parking';
 import Login from './pages/Login'
+import ResponsiveAppBar from './Components/appBar';
+import { Layout } from './Components/Layout';
+import ListDividers from './Components/Divider';
 
 
 export function App() {
   return (
     <div className='App'>
-      <Router>
-        <Routes>
-          <Route path = "/" element = {<Home/>}> </Route>
-          <Route path = '/Inbound' element = {<Inbound />}></Route>
-          <Route path = '/Outbound' element = {<Outbound />}></Route>
-          <Route path = '/Parking' element = {<Parking />}></Route>
-          <Route path = '/Login' element = {<Login />}></Route>
-        </Routes>
-      </Router>
+      <Routes>
+        <Route path = "/" element = {<Layout />}> 
+          <Route index element = {<ListDividers/>}/>
+          <Route path = '/Inbound' element = {<Inbound />}/>
+          <Route path = '/Outbound' element = {<Outbound />}/>
+          <Route path = '/Parking' element = {<Parking />}/>
+          <Route path = '/Login' element = {<Login />}/>
+        </Route>
+      </Routes>
     </div>
   );
 }

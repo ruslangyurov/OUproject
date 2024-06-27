@@ -1,7 +1,8 @@
 import jwt from 'jsonwebtoken';
 const {verify} = jwt;
 
-export const verifyJWT = (req, res, next) => {
+
+const verifyJWT = (req, res, next) => {
     const authHeader = req.headers.authorization || req.headers.Authorization
 
     if (!authHeader?.startsWith('Bearer ')) {
@@ -10,15 +11,15 @@ export const verifyJWT = (req, res, next) => {
 
     const token = authHeader.split(' ')[1]
 
-    verify(
+    jwt.verify(
         token,
-        process.env.TOKEN_SECRET,
+        process.env.ACCESS_TOKEN_SECRET,
         (err, decoded) => {
-            if (err) return res.status(403).json({ message: {err} })
+            if (err) return res.status(403).json({ message: 'Forbidden' })
             req.user = decoded.username
             next()
         }
     )
 }
 
-
+export {verifyJWT}
