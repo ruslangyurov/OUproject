@@ -9,6 +9,11 @@ import axios from '../apiAxios/axios';
 import SendIcon from '@mui/icons-material/Send';
 import Button from '@mui/material/Button';
 import { useState, useEffect } from 'react';
+import Switch from '@mui/material/Switch';
+import FormGroup from '@mui/material/FormGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import BayForm from '../Components/BayForm'
+
 
 
 export default function FormPropsTextFields(props) {
@@ -60,7 +65,7 @@ useEffect(() => {
     <Box
       component="form" onSubmit={handleSubmit}
       sx={{
-        '& .MuiTextField-root': { m: 1, width: '25ch' },
+        '& .MuiTextField-root': { m: 0, width: '25ch' },
       }}
       noValidate
       autoComplete="off"
@@ -106,6 +111,9 @@ useEffect(() => {
           </Select>
         </FormControl>
         <Button type = "submit" onSubmit = {handleSubmit} variant="contained" endIcon={<SendIcon />}  sx={{ml:8,mt:1,height:50, width:100}}></Button>
+        <FormGroup>
+          <FormControlLabel control={<Switch defaultChecked color = 'warning'/>} label="TrestleOn"  />
+        </FormGroup>
       </div>
     </Box>
   );
