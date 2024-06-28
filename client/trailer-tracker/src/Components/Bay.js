@@ -10,7 +10,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import BayForm from '../Components/BayForm'
 
 
-export default function Bay() {
+export default function Bay(props) {
     return (
     <Accordion>
         <AccordionSummary
@@ -19,7 +19,8 @@ export default function Bay() {
             aria-controls="panel1-content"
             id="panel1-header"
             sx = {{m:'auto', bgcolor:'#e3f2fd', height:'15%'}}>
-                <BayForm/>
+            {props.child}
+            <BayForm child = {props.child}/>
         </AccordionSummary>
         <AccordionActions>
             <FormGroup>

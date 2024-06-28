@@ -8,12 +8,10 @@ import Select from '@mui/material/Select';
 import axios from '../apiAxios/axios';
 import SendIcon from '@mui/icons-material/Send';
 import Button from '@mui/material/Button';
+import { useState, useEffect } from 'react';
 
 
-import { useState } from 'react';
-
-
-export default function FormPropsTextFields() {
+export default function FormPropsTextFields(props) {
   const [valueNumber, setValueNumber] = useState("Trailer number")
   const [valueStock, setValueStock] = useState("Stock delivered")
   const [trailerNumber, setTrailerNumber] = useState("")
@@ -22,12 +20,17 @@ export default function FormPropsTextFields() {
   const [comment, setComment] = useState("")
   const [msg, setErrMsg] = useState("")
 
+useEffect(() => {
+  setErrMsg("")}, [valueNumber])
+
+
   const bay = {
-    bayNumber:"1",
-    trailerNumber: {trailerNumber}, 
-    stockDelivered: {stock},
-    fullTrailer: {empty},
-    comment: {comment}
+    bayNumber:props.child,
+    trailerNumber: valueNumber, 
+    stockDelivered: stock,
+    fullTrailer: empty,
+    comment: comment,
+    trestleOn: false
   }
 
   
@@ -44,7 +47,7 @@ export default function FormPropsTextFields() {
             if (!err?.response) {
               setErrMsg("No Server Response");
             } else if (err.response.status === 400) {
-              setErrMsg("Bay number and trailer number are required")
+              setErrMsg(err.response.data)
             } else {setErrMsg(err.response.status) }
           })
         };

@@ -5,16 +5,29 @@ import io from '../index.js';
 import Bay from '../models/bay.js';
 
 const createBay = asyncHandler(async(req,res) => {
-    const bayNumber = req.body.bayNumber;
-    const trailerNumber = req.body.trailerNumber;
-    const stockDelivered = req.body.stockDelivered;
-    const fullTrailer = req.body.fullTrailer;
-    const comment = req.body.comment;
-    const trestleOn = req.body.trestleOn;
+    // const bayNumber = req.body.bayNumber;
+    // const trailerNumber = req.body.trailerNumber;
+    // const stockDelivered = req.body.stockDelivered;
+    // const fullTrailer = req.body.fullTrailer;
+    // const comment = req.body.comment;
+    // const trestleOn = req.body.trestleOn;
 
-    // if (!bayNumber) {
-    //     return res.status(400).json({message: "Bay number is required"})
-    // }
+    const {bayNumber, trailerNumber, stockDelivered, fullTrailer,comment, trestleOn} = req.body
+    if (!bayNumber && !trailerNumber) {
+        return res.status(400).json({message: "Bay number and trailer number is required"})
+    }
+
+    if (!bayNumber) {
+        return res.status(400).json({message: "Bay number is required"})
+    }
+
+    if (!trailerNumber) {
+        return res.status(400).json({message: "Trailer number is required"})
+    }
+
+    if (!trailerNumber) {
+        return res.status(400).json({message: "Bay number is required"})
+    }
 
     const bayObj = {
         bayNumber,
