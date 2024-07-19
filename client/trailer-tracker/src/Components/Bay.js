@@ -9,6 +9,7 @@ import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import BayForm from '../Components/BayForm'
 import { useState } from 'react';
+import { Typography } from '@mui/material';
 
 
 export default function Bay(props) {
@@ -16,10 +17,25 @@ export default function Bay(props) {
     
 
     return (
-        <div>
+    <Typography component="div">
+      <Box
+        sx={{
+          width: 25,
+          height: 25,
+          borderRadius: 1,
+          variant:"h6",
+          mr: 2,
+          display: { xs: 'none', md: 'flex' },
+          fontFamily: 'monospace',
+          fontWeight: 700,
+          letterSpacing: '.3rem',
+          color: 'inherit',
+          textDecoration: 'none'}}>
           {props.child}
-          <BayForm child = {props.child}/>
-        </div>
+        </Box>
+        <BayForm child = {props.child}/>
+      </Typography>
+        
            
        
         

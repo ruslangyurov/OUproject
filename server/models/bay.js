@@ -6,7 +6,6 @@ const BaySchema = new Schema ({
         type: String,
         required:true
     },
-    broken: Boolean,
     trailerNumber: {
         type:String,
         required:true

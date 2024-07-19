@@ -43,16 +43,18 @@ useEffect(() => {
   const YARD_URL = "/yard"
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+    if (valueNumber === "Trailer number" || empty === "None") {
+      setErrMsg("Please fill in all the required fields")
+    }
     
-     axios.post(YARD_URL,bay).then(() => console.log("bla")).catch(err => {
+     await axios.post(YARD_URL,bay).then(() => console.log("bla")).catch(err => {
             if (err.request) {
               setErrMsg(err.request.data)
             }
             if (!err?.response) {
               setErrMsg("No Server Response");
             } else if (err.response.status === 400) {
-              setErrMsg(err.response.data)
+              setErrMsg(err.response.data.message)
             } else {setErrMsg(err.response.status) }
           })
         };
@@ -65,7 +67,7 @@ useEffect(() => {
     <Box
       component="form" onSubmit={handleSubmit}
       sx={{
-        '& .MuiTextField-root': { m: 0, width: '25ch' },
+        '& .MuiTextField-root': {m: 0, width: '30ch' },
       }}
       noValidate
       autoComplete="off"
@@ -110,6 +112,7 @@ useEffect(() => {
             <MenuItem value={'None'}>None</MenuItem>
           </Select>
         </FormControl>
+        <FormControlLabel control={<Switch defaultChecked color = 'warning'/>} label="Broken Bay" sx = {{m:"auto"}} />
         <Button type = "submit" onSubmit = {handleSubmit} variant="contained" endIcon={<SendIcon />}  sx={{ml:8,mt:1,height:50, width:100}}></Button>
         <FormGroup>
           <FormControlLabel control={<Switch defaultChecked color = 'warning'/>} label="TrestleOn"  />
