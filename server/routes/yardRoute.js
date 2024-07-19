@@ -9,7 +9,7 @@ import {verifyJWT} from '../middleware/verifyToken.js';
 router.route('/')
     .get(yardController.getBays)
     .post(yardController.createBay)
-    .patch()
+    .patch(yardController.updateBay)
     .delete()
 
 

@@ -22,11 +22,15 @@ const settings = ['Profile'];
 
 function ResponsiveAppBar() {
 
-  const [pages, setPages] = useState(["Login"])
+  
+  const [pages, setPages] = useState(["Login", "Empty Trailers"])
   const location = useLocation()
+
   useEffect(() => {
-    location.pathname === "/Login" ? setPages([""]):setPages(["Login"])
+    location.pathname === "/Login" ? setPages([""]):setPages(["Login", "Empty Trailers"])
   }, [location.pathname])
+
+  
   const Navigate = useNavigate();
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);

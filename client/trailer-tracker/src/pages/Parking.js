@@ -1,6 +1,9 @@
+import * as bays from "../Components/bays"
+import Button from '@mui/material/Button';
+
 
 export const Parking = () => {
     return (
-        <h1>Parking</h1>
+      <bays/>
     )
 }

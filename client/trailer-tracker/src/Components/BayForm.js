@@ -13,6 +13,7 @@ import Switch from '@mui/material/Switch';
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import BayForm from '../Components/BayForm'
+import { redirect } from 'react-router-dom';
 
 
 
@@ -21,19 +22,19 @@ export default function FormPropsTextFields(props) {
   const [valueStock, setValueStock] = useState("Stock delivered")
   const [trailerNumber, setTrailerNumber] = useState("")
   const [stock, setStock] = useState("")
-  const [empty, setEmpty] = useState('');
+  //const [empty, setEmpty] = useState('');
   const [comment, setComment] = useState("")
   const [msg, setErrMsg] = useState("")
 
-useEffect(() => {
-  setErrMsg("")}, [valueNumber])
+  useEffect(() => {
+    setErrMsg("")}, [valueNumber, stock, props.empty, comment])
 
 
   const bay = {
     bayNumber:props.child,
     trailerNumber: valueNumber, 
-    stockDelivered: stock,
-    fullTrailer: empty,
+    stockDelivered: valueStock,
+    fullTrailer: props.empty,
     comment: comment,
     trestleOn: false
   }
@@ -43,7 +44,7 @@ useEffect(() => {
   const YARD_URL = "/yard"
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (valueNumber === "Trailer number" || empty === "None") {
+    if (valueNumber === "Trailer number" || props.empty === "None") {
       setErrMsg("Please fill in all the required fields")
     }
     
@@ -64,6 +65,7 @@ useEffect(() => {
         
       
   return (
+    
     <Box
       component="form" onSubmit={handleSubmit}
       sx={{
@@ -75,16 +77,17 @@ useEffect(() => {
       {msg}
       <div>
         <TextField
-          onClick = {() => {setValueNumber("")}}
+          onClick = {() => {if (valueNumber === "Stock delivered") {setValueNumber("")}}}
           onChange = {(e) => {setValueNumber(e.target.value)}}
           required
           id="outlined-required"
           label="Required"
           value = {valueNumber}
           helperText = "Please enter trailer number"
+          error = {valueNumber === "TrailerNumber"|| valueNumber === ""}
         />
         <TextField
-          onClick = {() => {setValueStock("")}}
+          onClick = {() => {if (valueStock === "Stock delivered") {setValueStock("")}}}
           onChange = {(e) => {setValueStock(e.target.value)}}
           id="Stock - text"
           value= {valueStock}
@@ -93,7 +96,7 @@ useEffect(() => {
         />
        
         <TextField
-          onChange = {(e) => {setComment(e.target.value)}}
+          onChange = {(e) => {if (comment === "Comment") {setComment("")}}}
           id="Comment - text"
           label='Comment'
           defaultValue= ""
@@ -103,9 +106,9 @@ useEffect(() => {
           <Select
             labelId="StandTrailer"
             id="Trailer"
-            value={empty}
+            value={props.empty}
             label="Stand Trailer"
-            onChange = {(e) => {setEmpty(e.target.value)}}
+            onChange = {(e) => {props.setEmpty(e.target.value)}}
           >
             <MenuItem value={"Full"}>Full Trailer</MenuItem>
             <MenuItem value={"Empty"}>Empty Trailer</MenuItem>
@@ -114,9 +117,6 @@ useEffect(() => {
         </FormControl>
         <FormControlLabel control={<Switch defaultChecked color = 'warning'/>} label="Broken Bay" sx = {{m:"auto"}} />
         <Button type = "submit" onSubmit = {handleSubmit} variant="contained" endIcon={<SendIcon />}  sx={{ml:8,mt:1,height:50, width:100}}></Button>
-        <FormGroup>
-          <FormControlLabel control={<Switch defaultChecked color = 'warning'/>} label="TrestleOn"  />
-        </FormGroup>
       </div>
     </Box>
   );

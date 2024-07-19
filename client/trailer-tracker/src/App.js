@@ -2,6 +2,7 @@ import React from 'react';
 import {BrowserRouter as Router, Routes,Route} from "react-router-dom"
 import {Inbound} from "./pages/Inbound";
 import {Home} from "./pages/Home";
+import {EmptyTrailers} from "./pages/EmptyTrailers"
 import {Outbound} from "./pages/Outbound";
 import { Parking } from './pages/Parking';
 import Login from './pages/Login'
@@ -20,6 +21,7 @@ export function App() {
           <Route path = '/Outbound' element = {<Outbound />}/>
           <Route path = '/Parking' element = {<Parking />}/>
           <Route path = '/Login' element = {<Login />}/>
+          <Route path = '/EmptyTrailers' element = {<EmptyTrailers />}/>
         </Route>
       </Routes>
     </div>
