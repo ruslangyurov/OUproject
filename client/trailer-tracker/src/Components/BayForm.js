@@ -20,14 +20,14 @@ import { redirect } from 'react-router-dom';
 export default function FormPropsTextFields(props) {
   const [valueNumber, setValueNumber] = useState("Trailer number")
   const [valueStock, setValueStock] = useState("Stock delivered")
-  const [stock, setStock] = useState("")
   const [empty, setEmpty] = useState('');
   const [comment, setComment] = useState("")
   const [msg, setErrMsg] = useState("")
   const [updated, setUpdated] = useState("")
+  const [checked, setChecked] = useState(true)
 
   useEffect(() => {
-    setErrMsg("")}, [valueNumber, stock, empty, comment])
+    setErrMsg("")}, [valueNumber, valueStock, empty, comment])
 
 
   const bay = {
@@ -79,7 +79,10 @@ export default function FormPropsTextFields(props) {
       <div>
         <TextField
           onClick = {() => {if (valueNumber === "Trailer number") {setValueNumber("")}}}
-          onChange = {(e) => {setValueNumber(e.target.value)}}
+          onChange = {(e) => {
+            setValueNumber(e.target.value)
+            setChecked(false)
+          }}
           required
           id="outlined-required"
           label="Required"
@@ -97,10 +100,11 @@ export default function FormPropsTextFields(props) {
         />
        
         <TextField
-          onChange = {(e) => {if (comment === "Comment") {setComment("")}}}
+          onClick = {() => {if (comment === "Comment") {setComment("")}}}
+          onChange = {(e) => setComment(e.target.value)}
           id="Comment - text"
           label='Comment'
-          defaultValue= ""
+          
         />
         <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
           <InputLabel id="StandTrailer">Stand Trailer</InputLabel>
@@ -117,7 +121,7 @@ export default function FormPropsTextFields(props) {
             <MenuItem value={'None'}>None</MenuItem>
           </Select>
         </FormControl>
-        <FormControlLabel control={<Switch defaultChecked color = 'warning'/>} label="Empty bay"></FormControlLabel>
+        <FormControlLabel control={<Switch checked={checked} defaultChecked />} label="Empty bay"></FormControlLabel>
         <FormControlLabel control={<Switch defaultChecked color = 'warning'/>} label="Broken Bay" sx = {{m:"auto"}} />
         <Button type = "submit" onSubmit = {handleSubmit} variant="contained" endIcon={<SendIcon />}  sx={{ml:8,mt:1,height:50, width:100}}>
          
