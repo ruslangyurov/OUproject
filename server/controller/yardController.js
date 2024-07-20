@@ -24,26 +24,26 @@ const createBay = asyncHandler(async(req,res) => {
 })
 
 const updateBay = asyncHandler(async(req,res) => {
-    const {id, bayNumber, trailerNumber, stockDelivered, fullTrailer,comment} = req.body
+    const {_id, bayNumber, trailerNumber, stockDelivered, fullTrailer,comment} = req.body
 
     if (!bayNumber||!fullTrailer) {
         return res.status(400).json("Please fill out all the required fields")
     }
 
-    const newBay = await Bay.findById(id).exec()
+
+    var newBay = await Bay.findOneAndUpdate({bayNumber:req.body.bayNumber}, {trailerNumber: trailerNumber}).exec()
 
     if (!newBay) {
         return res.status(400).json("No bay found")
     }
 
-    newBay.trailerNumber = trailerNumber
+    newBay.trailerNumber = req.body.trailerNumber
     newBay.stockDelivered = stockDelivered
     newBay.fullTrailer = fullTrailer
     newBay.comment = comment
 
-    await newBay.save()
 
-    res.json("bla")
+    res.json(newBay.updatedAt)
 })
 
 const getBays = asyncHandler(async(req, res) => {

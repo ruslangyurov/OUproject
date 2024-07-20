@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
 const BaySchema = new Schema ({
+   _id: String,
     bayNumber: {
         type: String,
         required:true

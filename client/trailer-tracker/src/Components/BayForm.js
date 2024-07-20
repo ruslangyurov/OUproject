@@ -20,21 +20,21 @@ import { redirect } from 'react-router-dom';
 export default function FormPropsTextFields(props) {
   const [valueNumber, setValueNumber] = useState("Trailer number")
   const [valueStock, setValueStock] = useState("Stock delivered")
-  const [trailerNumber, setTrailerNumber] = useState("")
   const [stock, setStock] = useState("")
-  //const [empty, setEmpty] = useState('');
+  const [empty, setEmpty] = useState('');
   const [comment, setComment] = useState("")
   const [msg, setErrMsg] = useState("")
+  const [updated, setUpdated] = useState("")
 
   useEffect(() => {
-    setErrMsg("")}, [valueNumber, stock, props.empty, comment])
+    setErrMsg("")}, [valueNumber, stock, empty, comment])
 
 
   const bay = {
-    bayNumber:props.child,
+    bayNumber: props.child,
     trailerNumber: valueNumber, 
     stockDelivered: valueStock,
-    fullTrailer: props.empty,
+    fullTrailer: empty,
     comment: comment,
     trestleOn: false
   }
@@ -47,16 +47,17 @@ export default function FormPropsTextFields(props) {
     if (valueNumber === "Trailer number" || props.empty === "None") {
       setErrMsg("Please fill in all the required fields")
     }
+
     
-     await axios.post(YARD_URL,bay).then(() => console.log("bla")).catch(err => {
+    await axios.patch(YARD_URL,bay).then((res) => setUpdated(res.data)).catch(err => {
             if (err.request) {
               setErrMsg(err.request.data)
             }
             if (!err?.response) {
               setErrMsg("No Server Response");
             } else if (err.response.status === 400) {
-              setErrMsg(err.response.data.message)
-            } else {setErrMsg(err.response.status) }
+                setErrMsg(err.response.data)
+            } alert({message: updated}) 
           })
         };
    
@@ -77,7 +78,7 @@ export default function FormPropsTextFields(props) {
       {msg}
       <div>
         <TextField
-          onClick = {() => {if (valueNumber === "Stock delivered") {setValueNumber("")}}}
+          onClick = {() => {if (valueNumber === "Trailer number") {setValueNumber("")}}}
           onChange = {(e) => {setValueNumber(e.target.value)}}
           required
           id="outlined-required"
@@ -106,17 +107,26 @@ export default function FormPropsTextFields(props) {
           <Select
             labelId="StandTrailer"
             id="Trailer"
-            value={props.empty}
+            value={empty}
             label="Stand Trailer"
-            onChange = {(e) => {props.setEmpty(e.target.value)}}
+            error = {empty === ""}
+            onChange = {(e) => {setEmpty(e.target.value)}}
           >
             <MenuItem value={"Full"}>Full Trailer</MenuItem>
             <MenuItem value={"Empty"}>Empty Trailer</MenuItem>
             <MenuItem value={'None'}>None</MenuItem>
           </Select>
         </FormControl>
+        <FormControlLabel control={<Switch defaultChecked color = 'warning'/>} label="Empty bay"></FormControlLabel>
         <FormControlLabel control={<Switch defaultChecked color = 'warning'/>} label="Broken Bay" sx = {{m:"auto"}} />
-        <Button type = "submit" onSubmit = {handleSubmit} variant="contained" endIcon={<SendIcon />}  sx={{ml:8,mt:1,height:50, width:100}}></Button>
+        <Button type = "submit" onSubmit = {handleSubmit} variant="contained" endIcon={<SendIcon />}  sx={{ml:8,mt:1,height:50, width:100}}>
+         
+        </Button>
+        <Box
+          sx = {{width: 300, mb:"5px", ml:140}}>
+          Updated at {updated}
+        </Box>
+        
       </div>
     </Box>
   );

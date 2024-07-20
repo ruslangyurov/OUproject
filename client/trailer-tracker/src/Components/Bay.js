@@ -17,27 +17,22 @@ export default function Bay(props) {
     
 
     return (
-    <Typography component="div">
-      <Box
-        sx={{
-          width: 25,
-          height: 25,
-          borderRadius: 1,
-          variant:"h6",
-          mr: 2,
-          display: { xs: 'none', md: 'flex' },
-          fontFamily: 'monospace',
-          fontWeight: 700,
-          letterSpacing: '.3rem',
-          color: 'inherit',
-          textDecoration: 'none'}}>
-          {props.child}
-        </Box>
-        <BayForm child = {props.child}/>
-      </Typography>
-        
-           
-       
+        <Accordion>
+        <AccordionSummary
+            disableGutters
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel1-content"
+            id="panel1-header"
+            sx = {{m:'auto', bgcolor:'#e3f2fd', height:'15%'}}>
+                {props.child}
+                <BayForm child = {props.child}/>
+        </AccordionSummary>
+        <AccordionActions>
+            <FormGroup>
+                <FormControlLabel control={<Switch defaultChecked color = 'warning'/>} label="TrestleOn"  />
+            </FormGroup>
+        </AccordionActions>
+    </Accordion>
         
     )
 
