@@ -57,7 +57,7 @@ export default function FormPropsTextFields(props) {
               setErrMsg("No Server Response");
             } else if (err.response.status === 400) {
                 setErrMsg(err.response.data)
-            } alert({message: updated}) 
+            } else {setErrMsg(err.response.data.message)}
           })
         };
    
@@ -75,7 +75,11 @@ export default function FormPropsTextFields(props) {
       noValidate
       autoComplete="off"
     >
-      {msg}
+      <Box
+        sx = {{width: 300, ml:2}}>
+          {msg}
+      </Box>
+      
       <div>
         <TextField
           onClick = {() => {if (valueNumber === "Trailer number") {setValueNumber("")}}}
@@ -118,7 +122,7 @@ export default function FormPropsTextFields(props) {
           >
             <MenuItem value={"Full"}>Full Trailer</MenuItem>
             <MenuItem value={"Empty"}>Empty Trailer</MenuItem>
-            <MenuItem value={'None'}>None</MenuItem>
+            
           </Select>
         </FormControl>
         <FormControlLabel control={<Switch checked={checked} defaultChecked />} label="Empty bay"></FormControlLabel>

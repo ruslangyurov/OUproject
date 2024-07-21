@@ -26,7 +26,7 @@ const createBay = asyncHandler(async(req,res) => {
 const updateBay = asyncHandler(async(req,res) => {
     const {bayNumber, trailerNumber, stockDelivered, fullTrailer, comment} = req.body
 
-    if (!bayNumber||!fullTrailer) {
+    if (!bayNumber||!fullTrailer || !trailerNumber) {
         return res.status(400).json("Please fill out all the required fields")
     }
 
