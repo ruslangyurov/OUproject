@@ -45,7 +45,7 @@ export const EmptyTrailers = () => {
                             <TableCell sx = {{fontWeight: "bold"}}>Bay Number </TableCell>
                             <TableCell sx = {{fontWeight: "bold"}} align="right">Trailer Number</TableCell>
                             <TableCell sx = {{fontWeight: "bold"}} align="right">Stock</TableCell>
-                            <TableCell sx = {{fontWeight: "bold"}} align="right">Full or Empty</TableCell>
+                            <TableCell sx = {{fontWeight: "bold"}} align="right">Comment</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -59,7 +59,7 @@ export const EmptyTrailers = () => {
                             </TableCell>
                             <TableCell align="right">{bay.trailerNumber}</TableCell>
                             <TableCell align="right">{bay.stockDelivered}</TableCell>
-                            <TableCell align="right">{bay.fullTrailer}</TableCell>
+                            <TableCell align="right">{bay.comment}</TableCell>
                             
                         </TableRow>
                         ))}
@@ -67,6 +67,8 @@ export const EmptyTrailers = () => {
                 </Table>
             </TableContainer>
         )
+    } else {
+        return <h2>No Empty Trailers at the moment.</h2>
     }
 }
        

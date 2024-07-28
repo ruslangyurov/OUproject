@@ -34,7 +34,7 @@ const updateBay = asyncHandler(async(req,res) => {
 
     const update = {
         trailerNumber:req.body.trailerNumber,
-        stockDelivered:stockDelivered === "Stock Delivered"?"No Information":stockDelivered,
+        stockDelivered:stockDelivered === "Stock Delivered"||stockDelivered === ""?"No Information":stockDelivered,
         fullTrailer:fullTrailer,
         comment:comment
     }

@@ -1,5 +1,5 @@
 import {useState} from 'react'
-import BayForm from '../Components/BayForm'
+import Bay from '../Components/Bay'
 
 export const Parking = () => {
 
@@ -16,7 +16,7 @@ export const Parking = () => {
   
   const myBays = []
   for (let i = 0; i < trestle.length; i++) {
-    myBays.push(<BayForm key = {i} child = {i}  state = {trestle[i]} onClick = {onBayClick}/>)
+    myBays.push(<Bay key = {i} child = {i}  state = {trestle[i]} onClick = {onBayClick}/>)
   }
   const [filteredBays, setFilteredBays] = useState(myBays)
   const filterBays = () => {

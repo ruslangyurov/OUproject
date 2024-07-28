@@ -14,7 +14,9 @@ import { Typography } from '@mui/material';
 
 export default function Bay(props) {
 
-    
+    const onClick = () => {
+        onClick(props.bayIndex)
+    }
 
     return (
         <Accordion>
@@ -25,11 +27,11 @@ export default function Bay(props) {
             id="panel1-header"
             sx = {{m:'auto', bgcolor:'#e3f2fd', height:'15%'}}>
                 {props.child}
-                <BayForm child = {props.child}/>
+                <BayForm child = {props.child} state = {props.state} onClick = {props.onClick}/>
         </AccordionSummary>
         <AccordionActions>
             <FormGroup>
-                <FormControlLabel control={<Switch defaultChecked color = 'warning'/>} label="TrestleOn"  />
+                <FormControlLabel control={<Switch checked = {props.state} onChange ={props.OnClick}/>} label="TrestleOn"  />
             </FormGroup>
         </AccordionActions>
     </Accordion>

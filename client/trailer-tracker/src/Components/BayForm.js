@@ -39,7 +39,9 @@ export default function FormPropsTextFields(props) {
     trestleOn: false
   }
 
-  
+  const handleClick = () => {
+    props.onClick(props.index)
+  }
 
   const YARD_URL = "/yard"
   const handleSubmit = async (e) => {
@@ -49,7 +51,7 @@ export default function FormPropsTextFields(props) {
     }
 
     
-    await axios.patch(YARD_URL,bay).then((res) => setUpdated(res.data)).catch(err => {
+    await axios.patch(YARD_URL,bay).then((res) => setUpdated(res.data)).then(() => setChecked(false)).catch(err => {
             if (err.request) {
               setErrMsg(err.request.data)
             }
@@ -61,7 +63,34 @@ export default function FormPropsTextFields(props) {
           })
         };
    
+  const handleDelete = async (e) => {
+    e.preventDefault();
+    const bayDelete = {
+      bayNumber: props.child,
+      trailerNumber: "0", 
+      stockDelivered: "",
+      fullTrailer: "full",
+      comment: "",
+      trestleOn: false
+    }
     
+    await axios.patch(YARD_URL,bayDelete).then((res) => setUpdated(res.data)).then(() => 
+      setChecked(true),
+      setValueNumber(""),
+      setValueStock(""),
+      setEmpty(""),
+      setComment("")).catch(err => {
+                  if (err.request) {
+                    setErrMsg(err.request.data)
+                  }
+                  if (!err?.response) {
+                    setErrMsg("No Server Response");
+                  } else if (err.response.status === 400) {
+                      setErrMsg(err.response.data)
+                  } else {setErrMsg(err.response.data.message)}
+                })
+              };
+         
   
         
       
@@ -82,10 +111,9 @@ export default function FormPropsTextFields(props) {
       
       <div>
         <TextField
-          onClick = {() => {if (valueNumber === "Trailer number") {setValueNumber("")}}}
+          onClick = {() => {if (valueNumber === "Trailer Number") {setValueNumber("")}}}
           onChange = {(e) => {
             setValueNumber(e.target.value)
-            setChecked(false)
           }}
           required
           id="outlined-required"
@@ -95,7 +123,7 @@ export default function FormPropsTextFields(props) {
           error = {valueNumber === "TrailerNumber"|| valueNumber === ""}
         />
         <TextField
-          onClick = {() => {if (valueStock === "Stock delivered") {setValueStock("")}}}
+          onClick = {() => {if (valueStock === "Stock Delivered") {setValueStock("")}}}
           onChange = {(e) => {setValueStock(e.target.value)}}
           id="Stock - text"
           value= {valueStock}
@@ -125,7 +153,7 @@ export default function FormPropsTextFields(props) {
             
           </Select>
         </FormControl>
-        <FormControlLabel control={<Switch checked={checked} defaultChecked />} label="Empty bay"></FormControlLabel>
+        <FormControlLabel control={<Switch checked={checked} onChange = {handleDelete} />} label="Empty bay"></FormControlLabel>
         <FormControlLabel control={<Switch defaultChecked color = 'warning'/>} label="Broken Bay" sx = {{m:"auto"}} />
         <Button type = "submit" onSubmit = {handleSubmit} variant="contained" endIcon={<SendIcon />}  sx={{ml:8,mt:1,height:50, width:100}}>
          
