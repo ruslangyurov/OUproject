@@ -1,9 +1,15 @@
-import {useState} from 'react'
+import {useState,useEffect} from 'react'
 import Bay from '../Components/Bay'
+import Button from '@mui/material/Button';
+import SendIcon from '@mui/icons-material/Send';
 
 export const Parking = () => {
-
+  const [category, setCategory] = useState("bays")
   const [trestle, setTrestle] = useState([false,false,false,false])
+
+  useEffect(() => {
+    filterBays()
+  }, [trestle])
   
   const onBayClick = (bayIndex) => {
     setTrestle(trestle => trestle.map((it, index) => { // iterating through the array
@@ -16,24 +22,35 @@ export const Parking = () => {
   
   const myBays = []
   for (let i = 0; i < trestle.length; i++) {
-    myBays.push(<Bay key = {i} child = {i}  state = {trestle[i]} onClick = {onBayClick}/>)
+    myBays.push(<Bay key = {i} child = {i+1} index = {i}  state = {trestle[i]} onClick = {onBayClick}/>)
   }
   const [filteredBays, setFilteredBays] = useState(myBays)
+
+  
+  
   const filterBays = () => {
     setFilteredBays(myBays.filter(bay => {
       return bay.trestle === false
     }))
+    
   }
   
   
   
-  return (
-    <>
+  if (category === "bays") {
+    return (
+      <>
+         {myBays}
+         <Button variant="contained" endIcon={<SendIcon />} onClick={() => setCategory("")} sx={{ml:2,height:53, width:100}}>Filter</Button>
       
-      {myBays}
+      </>
      
-      
-  
-    </>
-  )
+    )
+  } else {
+    return (
+      filteredBays.length
+      )
+    
+  }
 }
+  

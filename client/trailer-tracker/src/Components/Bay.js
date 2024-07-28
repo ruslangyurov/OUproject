@@ -15,7 +15,7 @@ import { Typography } from '@mui/material';
 export default function Bay(props) {
 
     const onClick = () => {
-        onClick(props.bayIndex)
+        props.onClick(props.index)
     }
 
     return (
@@ -31,7 +31,7 @@ export default function Bay(props) {
         </AccordionSummary>
         <AccordionActions>
             <FormGroup>
-                <FormControlLabel control={<Switch checked = {props.state} onChange ={props.OnClick}/>} label="TrestleOn"  />
+                <FormControlLabel control={<Switch checked = {props.state} onChange ={onClick}/>} label="TrestleOn"  />
             </FormGroup>
         </AccordionActions>
     </Accordion>
