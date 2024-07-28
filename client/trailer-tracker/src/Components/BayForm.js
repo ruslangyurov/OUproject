@@ -18,8 +18,8 @@ import { redirect } from 'react-router-dom';
 
 
 export default function FormPropsTextFields(props) {
-  const [valueNumber, setValueNumber] = useState("Trailer number")
-  const [valueStock, setValueStock] = useState("Stock delivered")
+  const [valueNumber, setValueNumber] = useState("Trailer Number")
+  const [valueStock, setValueStock] = useState("Stock Delivered")
   const [empty, setEmpty] = useState('');
   const [comment, setComment] = useState("")
   const [msg, setErrMsg] = useState("")

@@ -29,10 +29,12 @@ const updateBay = asyncHandler(async(req,res) => {
     if (!bayNumber||!fullTrailer || !trailerNumber) {
         return res.status(400).json("Please fill out all the required fields")
     }
+    
+    
 
     const update = {
         trailerNumber:req.body.trailerNumber,
-        stockDelivered:stockDelivered,
+        stockDelivered:stockDelivered === "Stock Delivered"?"No Information":stockDelivered,
         fullTrailer:fullTrailer,
         comment:comment
     }
@@ -51,7 +53,7 @@ const updateBay = asyncHandler(async(req,res) => {
 
 const getBays = asyncHandler(async(req, res) => {
 
-    const bays = await Bay.find({})
+    const bays = await Bay.find({fullTrailer:"Empty"}).exec()
     if (!bays) {
         return res.status(400).json("No bays found")
     
