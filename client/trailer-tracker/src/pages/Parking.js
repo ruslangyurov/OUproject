@@ -1,14 +1,16 @@
-import {useState,useEffect} from 'react'
+import {useState,useEffect, useRef} from 'react'
 import Bay from '../Components/Bay'
 import Button from '@mui/material/Button';
 import SendIcon from '@mui/icons-material/Send';
 
+
 export const Parking = () => {
-  const [category, setCategory] = useState("bays")
+  const category = useRef("bays")
   const [trestle, setTrestle] = useState([false,false,false,false])
 
   useEffect(() => {
     filterBays()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [trestle])
   
   const onBayClick = (bayIndex) => {
@@ -24,33 +26,44 @@ export const Parking = () => {
   for (let i = 0; i < trestle.length; i++) {
     myBays.push(<Bay key = {i} child = {i+1} index = {i}  state = {trestle[i]} onClick = {onBayClick}/>)
   }
-  const [filteredBays, setFilteredBays] = useState(myBays)
+  const [filteredBays, setFilteredBays] = useState([])
 
-  
+ 
   
   const filterBays = () => {
-    setFilteredBays(myBays.filter(bay => {
-      return bay.trestle === false
-    }))
+        const n = myBays.map((bay,index) => {
+          if (trestle[index] === false) {
+            return myBays[index]
+          }
+        } )
+        setFilteredBays(n)
+       
+      }
     
-  }
   
   
+      
   
-  if (category === "bays") {
+ 
+   if (category.current === "bays") {
     return (
       <>
-         {myBays}
-         <Button variant="contained" endIcon={<SendIcon />} onClick={() => setCategory("")} sx={{ml:2,height:53, width:100}}>Filter</Button>
-      
+        {myBays}
+        <Button variant="contained" endIcon={<SendIcon />} onClick={() => {category.current = ""}} sx={{ml:2,height:53, width:100}}>Submit</Button>
       </>
-     
     )
-  } else {
-    return (
-      filteredBays.length
-      )
     
-  }
-}
+   } else {
+    return (
+      <>
+        {filteredBays.map(bay => (
+         <Bay/>
+      ))}
+      </>
+      )
+
+     
+    
+    }}
+
   

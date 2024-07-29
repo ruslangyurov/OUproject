@@ -8,14 +8,16 @@ import Switch from '@mui/material/Switch';
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import BayForm from '../Components/BayForm'
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { Typography } from '@mui/material';
 
 
 export default function Bay(props) {
+    const[checked, setChecked] = useState(false)
+    const trestleRef = useRef(null)
 
     const onClick = () => {
-        props.onClick(props.index)
+        checked === false?setChecked(true):setChecked(false)
     }
 
     return (
@@ -31,7 +33,7 @@ export default function Bay(props) {
         </AccordionSummary>
         <AccordionActions>
             <FormGroup>
-                <FormControlLabel control={<Switch checked = {props.state} onChange ={onClick}/>} label="TrestleOn"  />
+                <FormControlLabel control={<Switch checked = {checked} ref = {trestleRef} onChange ={onClick}/>} label="TrestleOn"  />
             </FormGroup>
         </AccordionActions>
     </Accordion>
