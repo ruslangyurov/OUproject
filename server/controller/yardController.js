@@ -73,6 +73,19 @@ const getBay = asyncHandler(async(req,res) => {
    
 })
 
+const searchTrailer = asyncHandler(async(req,rs)) => {
+    const {trailerNumber} = req.body
+
+    const result = await Bay.findOne({trailerNumber:trailerNumber})
+
+    if (!result) {
+        return res.status(400).json({message:"No such trailer in yard."})
+    }
+    
+    res.json(result)
+
+}
+
 
 
 

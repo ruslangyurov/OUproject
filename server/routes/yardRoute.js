@@ -13,6 +13,9 @@ router.route('/')
     .delete()
 
 
+router.route('/search')
+    .get(yardController.searchTrailer)    
+
 export default router;
 
 
