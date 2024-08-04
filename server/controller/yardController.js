@@ -62,12 +62,12 @@ const getBays = asyncHandler(async(req, res) => {
 })
 
 const getBay = asyncHandler(async(req,res) => {
-    const {trailerNumber} = req.body
+    const {trailerNumber} = req.query
     const bay = await Bay.findOne({trailerNumber:trailerNumber}).exec()
 
     if (!bay) {
-        return res.status(400).json({message: "Bay not found"})
-    }
+        return res.status(400).json({mesage: "Trailer not found."})
+     }
 
     res.json(bay)
    

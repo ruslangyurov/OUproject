@@ -95,7 +95,7 @@ function ResponsiveAppBar() {
   const handleSearch = (event) => {
     event.preventDefault()
     if (value) {
-      Navigate("/Search", {state:value})
+      Navigate("/Search", {state:value, replace:true})
     }
   }
 

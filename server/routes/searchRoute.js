@@ -3,7 +3,8 @@ const router = express.Router();
 import * as yardController from '../controller/yardController.js';
 import {verifyJWT} from '../middleware/verifyToken.js';
 
-router.route('/search')
+
+router.route('/')
     .get(yardController.getBay)
 
 
