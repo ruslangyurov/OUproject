@@ -12,6 +12,7 @@ import yardRoute from './routes/yardRoute.js';
 import userAuthRoute from './routes/userAuthRoute.js';
 import userRoute from './routes/userRoute.js';
 import cookieParser from 'cookie-parser';
+import searchRoute from './routes/searchRoute.js';
 //app.use(logger)
 
 
@@ -60,5 +61,6 @@ io.on('connection', (socket) => {
  app.use('/yard', yardRoute)
  app.use('/user', userRoute)
  app.use('/auth', userAuthRoute)
+ app.use('/yard/search', searchRoute)
  
   

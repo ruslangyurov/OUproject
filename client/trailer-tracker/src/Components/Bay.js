@@ -17,27 +17,32 @@ export default function Bay(props) {
     const trestleRef = useRef(null)
 
     const onClick = () => {
-        checked === false?setChecked(true):setChecked(false)
+        props.onClick(props.index)
     }
+    if (props.state === true && props.filter === true) {
+        return ""
 
-    return (
-        <Accordion>
-        <AccordionSummary
-            disableGutters
-            expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel1-content"
-            id="panel1-header"
-            sx = {{m:'auto', bgcolor:'#e3f2fd', height:'15%'}}>
-                {props.child}
-                <BayForm child = {props.child} state = {props.state} onClick = {props.onClick}/>
-        </AccordionSummary>
-        <AccordionActions>
-            <FormGroup>
-                <FormControlLabel control={<Switch checked = {checked} ref = {trestleRef} onChange ={onClick}/>} label="TrestleOn"  />
-            </FormGroup>
-        </AccordionActions>
-    </Accordion>
-        
-    )
+    } else {
+        return (
+            <Accordion>
+            <AccordionSummary
+                disableGutters
+                expandIcon={<ExpandMoreIcon />}
+                aria-controls="panel1-content"
+                id="panel1-header"
+                sx = {{m:'auto', bgcolor:'#e3f2fd', height:'15%'}}>
+                    {props.child}
+                    <BayForm child = {props.child} state = {props.state} filter = {props.filter}/>
+            </AccordionSummary>
+            <AccordionActions>
+                <FormGroup>
+                    <FormControlLabel control={<Switch checked = {props.state}  onChange ={onClick}/>} label="TrestleOn"  />
+                </FormGroup>
+            </AccordionActions>
+        </Accordion>
+            
+        )
+    }
+    
 
 }

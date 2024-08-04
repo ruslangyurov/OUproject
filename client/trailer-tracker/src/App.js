@@ -9,6 +9,7 @@ import Login from './pages/Login'
 import ResponsiveAppBar from './Components/appBar';
 import { Layout } from './Components/Layout';
 import ListDividers from './Components/Divider';
+import {Search} from './pages/Search'
 
 
 export function App() {
@@ -22,6 +23,7 @@ export function App() {
           <Route path = '/Parking' element = {<Parking />}/>
           <Route path = '/Login' element = {<Login />}/>
           <Route path = '/EmptyTrailers' element = {<EmptyTrailers />}/>
+          <Route path = '/Search' element = {<Search />}/>
         </Route>
       </Routes>
     </div>

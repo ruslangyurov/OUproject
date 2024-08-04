@@ -14,6 +14,52 @@ import MenuItem from '@mui/material/MenuItem';
 import WorkIcon from '@mui/icons-material/Work';
 import {Link, useNavigate, useLocation} from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import { styled, alpha } from '@mui/material/styles';
+import InputBase from '@mui/material/InputBase';
+import SearchIcon from '@mui/icons-material/Search';
+
+
+const Search = styled('div')(({ theme }) => ({
+  position: 'relative',
+  borderRadius: theme.shape.borderRadius,
+  backgroundColor: alpha(theme.palette.common.white, 0.15),
+  '&:hover': {
+    backgroundColor: alpha(theme.palette.common.white, 0.25),
+  },
+  marginLeft: "auto",
+  width: '100%',
+  [theme.breakpoints.up('sm')]: {
+    marginLeft: theme.spacing(1),
+    width: 'auto',
+  },
+}));
+
+const SearchIconWrapper = styled('div')(({ theme }) => ({
+  padding: theme.spacing(0, 2),
+  height: '100%',
+  position: 'absolute',
+  pointerEvents: 'none',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+}));
+
+const StyledInputBase = styled(InputBase)(({ theme }) => ({
+  color: 'inherit',
+  width: '100%',
+  '& .MuiInputBase-input': {
+    padding: theme.spacing(1, 1, 1, 0),
+    // vertical padding + font size from searchIcon
+    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+    transition: theme.transitions.create('width'),
+    [theme.breakpoints.up('sm')]: {
+      width: '12ch',
+      '&:focus': {
+        width: '20ch',
+      },
+    },
+  },
+}));
 
 
 const settings = ['Profile'];
@@ -22,7 +68,7 @@ const settings = ['Profile'];
 
 function ResponsiveAppBar() {
 
-  
+  const [value, setValue] = useState("")
   const [pages, setPages] = useState(["Login", "EmptyTrailers"])
   const location = useLocation()
 
@@ -44,10 +90,14 @@ function ResponsiveAppBar() {
 
   const handleCloseNavMenu = (page) => {
     setAnchorElNav(null);
-   
-   
-    
-  };
+    };
+
+  const handleSearch = (event) => {
+    event.preventDefault()
+    if (value) {
+      Navigate("/Search", {state:value})
+    }
+  }
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
@@ -144,7 +194,25 @@ function ResponsiveAppBar() {
               </Button>
              
             ))}
+          
           </Box>
+          <Box 
+          component = "form"
+          sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}
+          onSubmit = {handleSearch}
+          >
+            <Search>
+              <SearchIconWrapper>
+                <SearchIcon />
+              </SearchIconWrapper>
+              <StyledInputBase 
+                onChange = {(e) => setValue(e.target.value)}
+                placeholder="Search…"
+                inputProps={{ 'aria-label': 'search' }}
+              />
+            </Search>
+          </Box>
+          
 
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
@@ -175,6 +243,7 @@ function ResponsiveAppBar() {
               ))}
             </Menu>
           </Box>
+         
         </Toolbar>
       </Container>
     </AppBar>
