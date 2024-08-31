@@ -24,11 +24,18 @@ export default function FormPropsTextFields(props) {
   const [comment, setComment] = useState("")
   const [msg, setErrMsg] = useState("")
   const [updated, setUpdated] = useState("")
-  const [checked, setChecked] = useState(true)
+  const [checked, setChecked] = useState(false)
 
   useEffect(() => {
     setErrMsg("")}, [valueNumber, valueStock, empty, comment])
 
+
+    useEffect(() => {
+      setValueStock(localStorage.getItem("stock" + props.child))
+      setValueNumber(localStorage.getItem('trailerNumber' + props.child))
+      setComment(localStorage.getItem('comment' + props.child))
+      setEmpty(localStorage.getItem('fullTrailer' + props.child));
+    }, []);
 
   const bay = {
     bayNumber: props.child,
@@ -111,11 +118,13 @@ export default function FormPropsTextFields(props) {
       
       <div>
         <TextField
+          required
           onClick = {() => {if (valueNumber === "Trailer Number") {setValueNumber("")}}}
           onChange = {(e) => {
             setValueNumber(e.target.value)
+            localStorage.setItem('trailerNumber'+ props.child, e.target.value)
           }}
-          required
+         
           id="outlined-required"
           label="Required"
           value = {valueNumber}
@@ -124,7 +133,9 @@ export default function FormPropsTextFields(props) {
         />
         <TextField
           onClick = {() => {if (valueStock === "Stock Delivered") {setValueStock("")}}}
-          onChange = {(e) => {setValueStock(e.target.value)}}
+          onChange = {(e) => {
+            setValueStock(e.target.value)
+            localStorage.setItem('stock' + props.child, e.target.value)}}
           id="Stock - text"
           value= {valueStock}
           label = 'Stock'
@@ -133,7 +144,10 @@ export default function FormPropsTextFields(props) {
        
         <TextField
           onClick = {() => {if (comment === "Comment") {setComment("")}}}
-          onChange = {(e) => setComment(e.target.value)}
+          onChange = {(e) => {
+            setComment(e.target.value)
+            localStorage.setItem('comment' + props.child, e.target.value)
+          }}
           id="Comment - text"
           label='Comment'
           
@@ -146,7 +160,10 @@ export default function FormPropsTextFields(props) {
             value={empty}
             label="Stand Trailer"
             error = {empty === ""}
-            onChange = {(e) => {setEmpty(e.target.value)}}
+            onChange = {(e) => {
+              setEmpty(e.target.value)
+              localStorage.setItem('fullTrailer' + props.child, e.target.value)
+            }}
           >
             <MenuItem value={"Full"}>Full Trailer</MenuItem>
             <MenuItem value={"Empty"}>Empty Trailer</MenuItem>
