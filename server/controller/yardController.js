@@ -51,7 +51,7 @@ const updateBay = asyncHandler(async(req,res) => {
     res.json(newBay.updatedAt)
 })
 
-const getBays = asyncHandler(async(req, res) => {
+const getEmptyTrailers = asyncHandler(async(req, res) => {
 
     const bays = await Bay.find({fullTrailer:"Empty"}).exec()
     if (!bays) {
@@ -78,4 +78,4 @@ const getBay = asyncHandler(async(req,res) => {
 
 
 
-export{createBay, getBays,getBay, updateBay}
+export{createBay, getEmptyTrailers,getBay, updateBay}
