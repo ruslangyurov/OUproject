@@ -6,8 +6,9 @@ import {Server} from 'socket.io';
 const app = express();
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
-//import {logger} from './middleware/logger.js';
+//import * as bodyParser from 'body-parser'
 import { defaultRoute } from './routes/root.js';
+import {logger} from './middleware/logger.js';
 import yardRoute from './routes/yardRoute.js';
 import userAuthRoute from './routes/userAuthRoute.js';
 import userRoute from './routes/userRoute.js';
@@ -20,6 +21,8 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 dotenv.config();
+app.use(logger)
+//app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.json({extended:true}))
 app.use(express.urlencoded({extended:true}))
 app.use(cors());
