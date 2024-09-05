@@ -73,8 +73,13 @@ function ResponsiveAppBar() {
   const location = useLocation()
 
   useEffect(() => {
-    location.pathname === "/Login" ? setPages([""]):setPages(["Login", "EmptyTrailers"])
+    location.pathname === "/" || location.pathname === "/Login"? setPages(["Login"]):setPages(["Login", "EmptyTrailers"])
+    //location.pathname === "/Login" ? setPages([""]):setPages(["Login", "EmptyTrailers"])
   }, [location.pathname])
+
+  // useEffect(() => {
+  //   location.pathname === "/Login" ? setPages([""]):setPages(["Login", "EmptyTrailers"])
+  // }, [location.pathname])
 
   
   const Navigate = useNavigate();
