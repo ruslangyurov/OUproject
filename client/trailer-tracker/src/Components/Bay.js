@@ -14,12 +14,12 @@ import { Typography } from '@mui/material';
 
 export default function Bay(props) {
     const[checked, setChecked] = useState(false)
-    const trestleRef = useRef(null)
+   
 
     const onClick = () => {
         props.onClick(props.index)
     }
-    if (props.state === true && props.filter === true) {
+    if (props.state === true && props.filter === true) { 
         return ""
 
     } else {

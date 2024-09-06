@@ -25,7 +25,7 @@ export const Search = () => {
     },[state])
 
     
-    const URL_SEARCH = '/yard/search'   
+    const URL_SEARCH = '/yard/Search'   
     const resp = () => {
         axios.get(URL_SEARCH, {params: {trailerNumber:state}}).then((res) => setResults(res.bay)).then(console.log(results)).catch((err) => {
             if (err.request) {

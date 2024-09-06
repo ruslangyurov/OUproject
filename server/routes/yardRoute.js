@@ -12,6 +12,9 @@ router.route('/')
     .patch(yardController.updateBay)
     .delete()
 
+router.route('/FullTrailers').get(yardController.getFullTrailers)
+
+router.route('/Search').get(yardController.getBay)
 
 
 export default router;

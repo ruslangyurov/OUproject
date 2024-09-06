@@ -61,15 +61,26 @@ const getEmptyTrailers = asyncHandler(async(req, res) => {
     res.json(bays)
 })
 
+const getFullTrailers = asyncHandler(async(req, res) => {
+
+    const bays = await Bay.find({fullTrailer:"Full"}).exec()
+    if (!bays) {
+        return res.status(400).json("No bays found")
+    
+    }
+    res.json(bays)
+})
+
 const getBay = asyncHandler(async(req,res) => {
-    const {trailerNumber} = req.query
+    const trailerNumber = req.query.trailerNumber
+    console.log(trailerNumber)
     const bay = await Bay.findOne({trailerNumber:trailerNumber}).exec()
     
     if (!bay) {
         return res.status(400).json({mesage: "Trailer not found."})
      
 
-    res.json({bay:{id:bay.id, bayNumber:bay.bayNumber, trailerNumber:bay.trailerNumber, stockDelivered:bay.stockDelivered, comment:bay.comment}})
+    res.json(bay)
    
 }})
 
@@ -78,4 +89,4 @@ const getBay = asyncHandler(async(req,res) => {
 
 
 
-export{createBay, getEmptyTrailers,getBay, updateBay}
+export{createBay, getEmptyTrailers,getBay, updateBay, getFullTrailers}

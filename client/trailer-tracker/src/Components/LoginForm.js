@@ -31,8 +31,6 @@ export const BasicLogin = () => {
     axios.post(LOGIN_URL, {username, password}).then(() => setIsAuth(true)).catch(err => {
       if (!err?.response) {
         setErrMsg("No Server Response");
-      } else if (err.response?.status === 409) {
-        setErrMsg("Username Taken");
       } else if (err.response.status === 404) {
         setErrMsg("Page not found");
       } else if (err.response.status === 400) {
@@ -43,7 +41,7 @@ export const BasicLogin = () => {
     })
     setUsername("")
     setPassword("")
-    //setIsAuth(true)
+
   }
      
     

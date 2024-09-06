@@ -73,9 +73,19 @@ function ResponsiveAppBar() {
   const location = useLocation()
 
   useEffect(() => {
-    location.pathname === "/" || location.pathname === "/Login"? setPages(["Login"]):setPages(["Login", "EmptyTrailers"])
-    //location.pathname === "/Login" ? setPages([""]):setPages(["Login", "EmptyTrailers"])
+    if (location.pathname === '/Login') {
+      setPages([""])
+    } else if (location.pathname === '/') {
+      setPages(["Login"])
+    } else if (location.pathname === '/EmptyTrailers') {
+      setPages([""])
+    } else {
+      setPages(["EmptyTrailers"])
+    }
   }, [location.pathname])
+  //    location.pathname === "/Login"? setPages([""]):setPages(["Login", "EmptyTrailers"])
+  //   //location.pathname === "/Login" ? setPages([""]):setPages(["Login", "EmptyTrailers"])
+  // }, [location.pathname])
 
   // useEffect(() => {
   //   location.pathname === "/Login" ? setPages([""]):setPages(["Login", "EmptyTrailers"])
@@ -111,7 +121,7 @@ function ResponsiveAppBar() {
   return (
     <AppBar position="static">
       <Container maxWidth="xl">
-        <Toolbar disableGutters>
+        <Toolbar disableGutters xs = {{m: "flex"}}>
           <WorkIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
           <Typography onClick={() => Navigate("/")}
             variant="h6"

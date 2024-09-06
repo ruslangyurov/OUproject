@@ -14,9 +14,7 @@ const BaySchema = new Schema ({
     stockDelivered: String,
     fullTrailer: String,
     comment: String,
-    trestleOn: {
-        type:Boolean
-    }
+    
 },{timestamps:true})
 
 const Bay = mongoose.model("Bay",BaySchema)
