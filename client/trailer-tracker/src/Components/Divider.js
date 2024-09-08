@@ -8,6 +8,9 @@ import Button from '@mui/material/Button';
 import {Link} from 'react-router-dom'
 import { palette } from '@mui/system';
 import Typography from '@mui/material/Typography';
+import { useNavigate } from "react-router-dom";
+import { useContext } from 'react';
+import isAuthContext from '../isAuth';
 
 
 const style = {
@@ -31,33 +34,43 @@ const style = {
   
 };
 
+
+
 export default function ListDividers() {
+
+  const navigate = useNavigate()
 
   const [selectedIndex, setSelectedIndex] = React.useState(1);
   const handleListItemClick = (event, index) => {setSelectedIndex(index)};
-  return (
-    <List sx={style} component = 'nav' aria-label="mailbox folders">
-      <ListItemButton
-        
-        selected={selectedIndex === 0}
-        onClick={(event) => handleListItemClick(event, 0)}
-        component={Link} to= '/Inbound'>
-        <ListItemText disableTypography primary="Inbound" sx={{textAlign:'center'}} />
-      </ListItemButton>
-      <Divider component="li"/>
-      <ListItemButton
-        selected={selectedIndex === 0}
-        onClick={(event) => handleListItemClick(event, 0)}
-        component={Link} to= '/Outbound'>
-        <ListItemText disableTypography primary="Outbound" sx={{textAlign: 'center'}} />
-      </ListItemButton>
-      <Divider component="li" />
-      <ListItemButton
-        selected={selectedIndex === 0}
-        onClick={(event) => handleListItemClick(event, 0)}
-        component={Link} to= '/Parking'>
-        <ListItemText disableTypography primary="Parking" sx={{textAlign: 'center'}} />
-      </ListItemButton>
-    </List>
-  );
+  const {isAuth, setAuth} = useContext(isAuthContext)
+  if (isAuth) {
+    return (
+      <List sx={style} component = 'nav' aria-label="mailbox folders">
+        <ListItemButton
+          
+          selected={selectedIndex === 0}
+          onClick={(event) => handleListItemClick(event, 0)}
+          component={Link} to= '/Inbound'>
+          <ListItemText disableTypography primary="Inbound" sx={{textAlign:'center'}} />
+        </ListItemButton>
+        <Divider component="li"/>
+        <ListItemButton
+          selected={selectedIndex === 0}
+          onClick={(event) => handleListItemClick(event, 0)}
+          component={Link} to= '/Outbound'>
+          <ListItemText disableTypography primary="Outbound" sx={{textAlign: 'center'}} />
+        </ListItemButton>
+        <Divider component="li" />
+        <ListItemButton
+          selected={selectedIndex === 0}
+          onClick={(event) => handleListItemClick(event, 0)}
+          component={Link} to= '/Parking'>
+          <ListItemText disableTypography primary="Parking" sx={{textAlign: 'center'}} />
+        </ListItemButton>
+      </List>
+    );
+  } else {
+    return <h2>Please Log in</h2>
+  }
+ 
 }

@@ -5,6 +5,7 @@ import Bay from '../Components/Bay'
 
 
 export const Inbound = () => {
+  // By default each bay has no trestles
   const [trestle, setTrestle] = useState([false, false, false, false])
   const [filter, setFilter] = useState(false)
  

@@ -5,6 +5,8 @@ import SendIcon from '@mui/icons-material/Send';
 import { useState, useEffect} from "react";
 import { useNavigate } from "react-router-dom";
 import axios from '../apiAxios/axios';
+import { useContext } from 'react';
+import isAuthContext from '../isAuth';
 
 
 
@@ -14,7 +16,7 @@ export const BasicLogin = () => {
   const[username, setUsername] = useState("")
   const[password, setPassword] = useState("")
   const [errMsg, setErrMsg] = useState("")
-  const[isAuth, setIsAuth] = useState(false)
+  const {isAuth, setAuth} = useContext(isAuthContext)
   const LOGIN_URL = '/auth'
 
   const navigate = useNavigate();
@@ -23,12 +25,10 @@ export const BasicLogin = () => {
     setErrMsg("")
   },[username, password])
 
-  useEffect(() => {
-    if (isAuth) navigate('/')}, [isAuth])
-
   const handleLogin = (e) => {
     e.preventDefault();
-    axios.post(LOGIN_URL, {username, password}).then(() => setIsAuth(true)).catch(err => {
+    // change isAuth to true when user is logged in and navigate back to the home page
+    axios.post(LOGIN_URL, {username, password}).then(setAuth).then(navigate('/')).catch(err => {
       if (!err?.response) {
         setErrMsg("No Server Response");
       } else if (err.response.status === 404) {

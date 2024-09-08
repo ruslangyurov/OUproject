@@ -14,11 +14,12 @@ import { Typography } from '@mui/material';
 
 export default function Bay(props) {
     const[checked, setChecked] = useState(false)
-   
 
     const onClick = () => {
+        // the function that we passed for changing the trestle state
         props.onClick(props.index)
     }
+    // bay has trestle, so we don't need to see it
     if (props.state === true && props.filter === true) { 
         return ""
 

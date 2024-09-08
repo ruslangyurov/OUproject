@@ -13,10 +13,12 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import WorkIcon from '@mui/icons-material/Work';
 import {Link, useNavigate, useLocation} from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useEffect, useState,useContext } from 'react';
 import { styled, alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
+import isAuthContext from '../isAuth';
+
 
 
 const Search = styled('div')(({ theme }) => ({
@@ -71,26 +73,23 @@ function ResponsiveAppBar() {
   const [value, setValue] = useState("")
   const [pages, setPages] = useState(["Login", "EmptyTrailers"])
   const location = useLocation()
+  const{isAuth, setAuth} = useContext(isAuthContext)
 
   useEffect(() => {
     if (location.pathname === '/Login') {
       setPages([""])
-    } else if (location.pathname === '/') {
-      setPages(["Login"])
+    } else if (location.pathname === '/'&& isAuth) {
+      setPages(["Logout"])
+    } else if (location.pathname === '/'&& isAuth === false) {
+      setPages(["Logout"])
+    
     } else if (location.pathname === '/EmptyTrailers') {
       setPages([""])
     } else {
-      setPages(["EmptyTrailers"])
+      setPages(["EmptyTrailers", "Logout"])
     }
   }, [location.pathname])
-  //    location.pathname === "/Login"? setPages([""]):setPages(["Login", "EmptyTrailers"])
-  //   //location.pathname === "/Login" ? setPages([""]):setPages(["Login", "EmptyTrailers"])
-  // }, [location.pathname])
-
-  // useEffect(() => {
-  //   location.pathname === "/Login" ? setPages([""]):setPages(["Login", "EmptyTrailers"])
-  // }, [location.pathname])
-
+ 
   
   const Navigate = useNavigate();
   const [anchorElNav, setAnchorElNav] = React.useState(null);

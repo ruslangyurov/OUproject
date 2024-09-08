@@ -14,16 +14,14 @@ import Paper from '@mui/material/Paper';
 export const EmptyTrailers = () => {
   const [emptyTrailers, setEmptyTrailers] = useState([])
   const [errMsg, setErrMsg] = useState("")
-  const [loading, setLoading] = useState(true)
   const YARD_URL = "/yard"
 
   useEffect(() => {
     getResults()
   }, [])
 
-  const getResults = () => {
-    setLoading(true)
-    axios.get(YARD_URL).then((res) => setEmptyTrailers(res.data)).catch(err => {
+  const getResults = async() => {
+    await axios.get(YARD_URL).then((res) => setEmptyTrailers(res.data)).catch(err => {
       if (err.request) {
           setErrMsg(err.request.data)
             }
@@ -33,7 +31,7 @@ export const EmptyTrailers = () => {
            setErrMsg(err.response.data.message)
       } else {setErrMsg(err.response.data.message)}
           })
-    setLoading(false)
+    
         }
 
     if (emptyTrailers.length > 0) {

@@ -24,14 +24,14 @@ export default function FormPropsTextFields(props) {
   const [comment, setComment] = useState("")
   const [msg, setErrMsg] = useState("")
   const [updated, setUpdated] = useState("")
-  const [checked, setChecked] = useState(true)
+  const [emptyBay, setEmptyBay] = useState(true)
 
   useEffect(() => {
     setErrMsg("")}, [valueNumber, valueStock, empty, comment])
 
 
     useEffect(() => {
-      setChecked(localStorage.getItem("checked" + props.child) === "true"?true:false)
+      setEmptyBay(localStorage.getItem("emptyBay" + props.child) === "true"?true:false)
       setValueStock(localStorage.getItem("stock" + props.child))
       setValueNumber(localStorage.getItem('trailerNumber' + props.child))
       setComment(localStorage.getItem('comment' + props.child))
@@ -59,7 +59,9 @@ export default function FormPropsTextFields(props) {
     }
 
     
-    await axios.patch(YARD_URL,bay).then((res) => setUpdated(res.data)).then(() => setChecked(false)).catch(err => {
+    await axios.patch(YARD_URL,bay).then((res) => setUpdated(res.data)).then(() => {
+      setEmptyBay(false)
+      localStorage.setItem("emptyBay" + props.child, false)}).catch(err => {
             if (err.request) {
               setErrMsg(err.request.data)
             }
@@ -81,13 +83,14 @@ export default function FormPropsTextFields(props) {
       comment: ""
     }
     
+    // This will act as a delete operation on the app
     await axios.patch(YARD_URL,bayDelete).then((res) => setUpdated(res.data)).then(() => 
-      setChecked(true),
+      setEmptyBay(true),
       setValueNumber(""),
       setValueStock(""),
       setEmpty(""),
       setComment(""),
-      localStorage.setItem("checked" + props.child, "true"),
+      localStorage.setItem("emptyBay" + props.child, "true"),
       localStorage.setItem("trailerNumber" + props.child, ""),
       localStorage.setItem("stock" + props.child, ""),
       localStorage.setItem("fullTrailer" + props.child, ""),
@@ -175,7 +178,7 @@ export default function FormPropsTextFields(props) {
             
           </Select>
         </FormControl>
-        <FormControlLabel control={<Switch checked={checked} onChange = {handleDelete} />} label="Empty bay"></FormControlLabel>
+        <FormControlLabel control={<Switch checked={emptyBay} onChange = {handleDelete} />} label="Empty bay"></FormControlLabel>
         <FormControlLabel control={<Switch defaultChecked = {false} color = 'warning'/>} label="Broken Bay" sx = {{m:"auto"}} />
         <Button type = "submit" onSubmit = {handleSubmit} variant="contained" endIcon={<SendIcon />}  sx={{ml:8,mt:1,height:50, width:100}}>
          
