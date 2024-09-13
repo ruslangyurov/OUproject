@@ -15,19 +15,21 @@ import Paper from '@mui/material/Paper';
 export const Search = () => {
     const [results, setResults] = useState([]);
     const [errMsg, setErrMsg] = useState("");
-    const [loaded, setLoaded] = useState(false)
+  
 
     const {state} = useLocation()
     useEffect(() => {
-        resp()
-        setErrMsg("")
-        setLoaded(true)
+        setResults("")
+        // send the request to the server when the page renders
+        findTrailer()
+
     },[state])
 
     
     const URL_SEARCH = '/yard/Search'   
-    const resp = () => {
-        axios.get(URL_SEARCH, {params: {trailerNumber:state}}).then((res) => setResults(res.bay)).then(console.log(results)).catch((err) => {
+    const findTrailer = async() => {
+        await axios.get(URL_SEARCH, {params: {trailerNumber:state}}).
+        then((res) => setResults(res.data)).catch((err) => {
             if (err.request) {
                 setErrMsg(err.request.data)
               }
@@ -41,7 +43,7 @@ export const Search = () => {
     }
    
         
-    if (results.length > 0) {
+    if (results) {
         return (
             <TableContainer component={Paper}>
                 <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -54,24 +56,24 @@ export const Search = () => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {results.map((bay) => (
+                        {/* {results.map((bay) => ( */}
                         <TableRow
-                            key={bay.id}
+                            key={results.id}
                             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                         >
                             <TableCell component="th" scope="row">
-                            {bay}
+                            {results.bayNumber}
                             </TableCell>
-                            <TableCell align="right">{bay.trailerNumber}</TableCell>
-                            <TableCell align="right">{bay.stockDelivered}</TableCell>
-                            <TableCell align="right">{bay.comment}</TableCell>
+                            <TableCell align="right">{results.trailerNumber}</TableCell>
+                            <TableCell align="right">{results.stockDelivered}</TableCell>
+                            <TableCell align="right">{results.comment}</TableCell>
                             
                         </TableRow>
-                        ))}
+                        
                     </TableBody>
                 </Table>
             </TableContainer>
         )
-    }
+    } else { return <h2>{errMsg}</h2>}
 
 }

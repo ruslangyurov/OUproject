@@ -28,7 +28,7 @@ export const BasicLogin = () => {
   const handleLogin = (e) => {
     e.preventDefault();
     // change isAuth to true when user is logged in and navigate back to the home page
-    axios.post(LOGIN_URL, {username, password}).then(setAuth).then(navigate('/')).catch(err => {
+    axios.post(LOGIN_URL, {username, password}).then(setAuth).then(() => {if (isAuth === true) {navigate('/')}}).catch(err => {
       if (!err?.response) {
         setErrMsg("No Server Response");
       } else if (err.response.status === 404) {

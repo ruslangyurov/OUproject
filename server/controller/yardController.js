@@ -79,10 +79,10 @@ const getBay = asyncHandler(async(req,res) => {
     if (!bay) {
         return res.status(400).json({mesage: "Trailer not found."})
      
-
+    }
     res.json(bay)
    
-}})
+})
 
 
 

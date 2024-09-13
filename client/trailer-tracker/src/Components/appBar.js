@@ -80,8 +80,8 @@ function ResponsiveAppBar() {
       setPages([""])
     } else if (location.pathname === '/'&& isAuth) {
       setPages(["Logout"])
-    } else if (location.pathname === '/'&& isAuth === false) {
-      setPages(["Logout"])
+    } else if (location.pathname === '/'&& !isAuth) {
+      setPages(["Login"])
     
     } else if (location.pathname === '/EmptyTrailers') {
       setPages([""])
