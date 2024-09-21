@@ -33,7 +33,7 @@ const updateBay = asyncHandler(async(req,res) => {
     
 
     const update = {
-        trailerNumber:req.body.trailerNumber,
+        trailerNumber:req.body.trailerNumber.toLowerCase(),
         stockDelivered:stockDelivered === "Stock Delivered"||stockDelivered === ""?"No Information":stockDelivered,
         fullTrailer:fullTrailer,
         comment:comment
@@ -72,8 +72,8 @@ const getFullTrailers = asyncHandler(async(req, res) => {
 })
 
 const getBay = asyncHandler(async(req,res) => {
-    const trailerNumber = req.query.trailerNumber
-    console.log(trailerNumber)
+    const trailerNumber = req.query.trailerNumber.toLowerCase()
+    
     const bay = await Bay.findOne({trailerNumber:trailerNumber}).exec()
     
     if (!bay) {

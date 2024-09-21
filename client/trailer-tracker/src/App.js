@@ -3,9 +3,11 @@ import {BrowserRouter as Router, Routes,Route, useActionData} from "react-router
 import {Inbound} from "./pages/Inbound";
 import {Home} from "./pages/Home";
 import {EmptyTrailers} from "./pages/EmptyTrailers"
+import {FullTrailers} from "./pages/FullTrailers"
 import {Outbound} from "./pages/Outbound";
 import { Parking } from './pages/Parking';
 import Login from './pages/Login'
+import Logout from './pages/Logout';
 import ResponsiveAppBar from './Components/appBar';
 import { Layout } from './Components/Layout';
 import ListDividers from './Components/Divider';
@@ -18,7 +20,7 @@ import isAuthContext from './isAuth';
 export function App() {
   const [isAuth, setIsAuth] = useState(false)
   const setAuth = () => {
-    setIsAuth(!isAuth);
+    setIsAuth(!isAuth)
 };
   return (
     <isAuthContext.Provider value={{isAuth, setAuth}}>
@@ -31,7 +33,9 @@ export function App() {
             <Route path = '/Outbound' element = {<Outbound />}/>
             <Route path = '/Parking' element = {<Parking />}/>
             <Route path = '/Login' element = {<Login />}/>
-            <Route path = '/EmptyTrailers' element = {<EmptyTrailers />}/>
+            <Route path = '/Logout' element = {<Logout />}/>
+            <Route path = '/Empty Trailers' element = {<EmptyTrailers />}/>
+            <Route path = '/Full Trailers' element = {<FullTrailers />}/>
             <Route path = '/Search' element = {<Search />}/>
           </Route>
         </Routes>

@@ -2,12 +2,13 @@
 import axios from "axios";
 
 
-export default axios.create({
+const axiosInstanse = axios.create({
+ // withCredentials: true,
   baseURL: "http://localhost:5000",
   headers: { "Content-Type": "application/json" }
 })
 
-axios.interceptors.request.use(
+axiosInstanse.interceptors.request.use(
   (config) => {
     const accessToken = localStorage.getItem('accessToken'); // get stored access token
     if (accessToken) {
@@ -19,3 +20,5 @@ axios.interceptors.request.use(
     return Promise.reject(error);
   }
 );
+
+export default axiosInstanse;

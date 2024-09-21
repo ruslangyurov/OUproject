@@ -28,7 +28,7 @@ export const Search = () => {
     
     const URL_SEARCH = '/yard/Search'   
     const findTrailer = async() => {
-        await axios.get(URL_SEARCH, {params: {trailerNumber:state}}).
+        await axios.get(URL_SEARCH, {params: {trailerNumber:state.toLowerCase()}}).
         then((res) => setResults(res.data)).catch((err) => {
             if (err.request) {
                 setErrMsg(err.request.data)

@@ -11,18 +11,19 @@ import Paper from '@mui/material/Paper';
 
 
 
-export const EmptyTrailers = () => {
-  const [emptyTrailers, setEmptyTrailers] = useState([])
+export const FullTrailers = () => {
+  const [fullTrailers, setfullTrailers] = useState([])
   const [errMsg, setErrMsg] = useState("")
   const [loading, setLoading] = useState(true)
-  const YARD_URL = "/yard"
+  const YARD_URL = "/yard/FullTrailers"
 
   useEffect(() => {
     getResults()
+   
   }, [])
 
   const getResults = async() => {
-    await axios.get(YARD_URL).then((res) => setEmptyTrailers(res.data)).then(setLoading(false)).catch(err => {
+    await axios.get(YARD_URL).then((res) => setfullTrailers(res.data)).then(setLoading(false)).catch(err => {
       if (err.request) {
           setErrMsg(err.request.data)
             }
@@ -38,7 +39,7 @@ export const EmptyTrailers = () => {
     if (loading) {
         return ""
 
-     } else if (emptyTrailers.length > 0) {
+    } else if (fullTrailers.length > 0) {
         return (
             <TableContainer component={Paper}>
                 <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -51,7 +52,7 @@ export const EmptyTrailers = () => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {emptyTrailers.map((bay) => (
+                        {fullTrailers.map((bay) => (
                         <TableRow
                             key={bay.id}
                             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
@@ -70,7 +71,7 @@ export const EmptyTrailers = () => {
             </TableContainer>
         )
     } else {
-        return <h2>No Empty Trailers at the moment.</h2>
+        return <h2>No full trailers at the moment.</h2>
     }
 }
        

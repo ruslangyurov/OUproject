@@ -48,7 +48,7 @@ const login = asyncHandler(async (req, res) => {
         maxAge: 7 * 24 * 60 * 60 * 1000 //cookie expiry: set to match rT
     })
 
-    // Send accessToken containing username and roles 
+    // Send accessToken containing username
     res.json({ accessToken })
 })
 
@@ -79,7 +79,7 @@ const refresh = (req, res) => {
                         "roles": foundUser.roles
                     }
                 },
-                process.env.ACCESS_TOKEN_SECRET,
+                process.env.TOKEN_SECRET,
                 { expiresIn: '15m' }
             )
 

@@ -18,6 +18,7 @@ import { styled, alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
 import isAuthContext from '../isAuth';
+import { set } from 'mongoose';
 
 
 
@@ -71,7 +72,7 @@ const settings = ['Profile'];
 function ResponsiveAppBar() {
 
   const [value, setValue] = useState("")
-  const [pages, setPages] = useState(["Login", "EmptyTrailers"])
+  const [pages, setPages] = useState(["Logout"])
   const location = useLocation()
   const{isAuth, setAuth} = useContext(isAuthContext)
 
@@ -79,14 +80,16 @@ function ResponsiveAppBar() {
     if (location.pathname === '/Login') {
       setPages([""])
     } else if (location.pathname === '/'&& isAuth) {
-      setPages(["Logout"])
+      setPages(["Logout", "Full Trailers", "Empty Trailers"])
     } else if (location.pathname === '/'&& !isAuth) {
       setPages(["Login"])
+    } else if (location.pathname === "/Inbound") {
+      setPages(["Logout","Empty Trailers", "Full Trailers"])
     
-    } else if (location.pathname === '/EmptyTrailers') {
-      setPages([""])
-    } else {
-      setPages(["EmptyTrailers", "Logout"])
+    } else if (location.pathname === '/Empty%20Trailers') {
+      setPages(["Full Trailers", "Logout"])
+    } else if (location.pathname === "/Full%20Trailers") {
+      setPages([ "Logout", "Empty Trailers"])
     }
   }, [location.pathname])
  
@@ -118,7 +121,7 @@ function ResponsiveAppBar() {
   };
 
   return (
-    <AppBar position="static">
+    <AppBar position="relative">
       <Container maxWidth="xl">
         <Toolbar disableGutters xs = {{m: "flex"}}>
           <WorkIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />

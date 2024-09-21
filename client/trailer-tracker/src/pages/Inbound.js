@@ -29,9 +29,9 @@ export const Inbound = () => {
     if (filter === false) {
         return (
             <>
-                 
+                  <div> <Button variant="contained" onClick={() => {setFilter(true)}} sx={{position:"absolute",mb:"2px",height:53, width:100}}>Filter</Button></div>  
                   {bayList}
-                  <Button variant="contained" onClick={() => {setFilter(true)}} sx={{ml:2,height:53, width:100}}>Filter</Button>
+                 
             </>
            
             )
