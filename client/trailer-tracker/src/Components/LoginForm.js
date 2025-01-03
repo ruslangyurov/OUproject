@@ -6,7 +6,7 @@ import { useState, useEffect} from "react";
 import { useNavigate } from "react-router-dom";
 import axios from '../apiAxios/axios';
 import { useContext } from 'react';
-import { AuthContext } from '../apiContext/authContext';
+import { AuthContext } from '../apiContext/AuthContext';
 
 
 
@@ -28,7 +28,7 @@ export const BasicLogin = () => {
   const handleLogin = (e) => {
     e.preventDefault();
     // change isAuth to true when user is logged in and navigate back to the home page
-    axios.post(LOGIN_URL, {username, password}).then((res) => {
+   axios.post(LOGIN_URL, {username, password}).then((res) => {
       if (res.data) {
         setAuth({username, password, "token":res.data.accessToken})
         navigate('/')

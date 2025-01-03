@@ -10,7 +10,7 @@ import { palette } from '@mui/system';
 import Typography from '@mui/material/Typography';
 import { useNavigate } from "react-router-dom";
 import { useContext } from 'react';
-import isAuthContext from '../isAuth';
+
 
 
 const style = {
@@ -42,8 +42,7 @@ export default function ListDividers() {
 
   const [selectedIndex, setSelectedIndex] = React.useState(1);
   const handleListItemClick = (event, index) => {setSelectedIndex(index)};
-  const {isAuth, setAuth} = useContext(isAuthContext)
-  if (isAuth) {
+  
     return (
       <List sx={style} component = 'nav' aria-label="mailbox folders">
         <ListItemButton
@@ -69,8 +68,7 @@ export default function ListDividers() {
         </ListItemButton>
       </List>
     );
-  } else {
-    return <h2>Please Log in</h2>
+ 
   }
  
-}
+

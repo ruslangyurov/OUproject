@@ -3,14 +3,14 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { useNavigate } from "react-router-dom";
 import { useEffect, useContext, useState } from 'react';
-import isAuthContext from '../isAuth';
+import {AuthContext} from '../apiContext/AuthContext';
 import axios from '../apiAxios/axios';
 import axiosInstanse from '../apiAxios/axios';
 
 
 export default function Logout() {
   const [errMsg, setErrMsg] = useState("")
-  const {isAuth, setAuth} = useContext(isAuthContext)
+  const {auth, setAuth} = useContext(AuthContext)
   const LOGOUT_URL = '/auth/logout'
   
   const navigate = useNavigate();
@@ -21,7 +21,7 @@ export default function Logout() {
 
   const handleLogout = async(e) => {
     //Change isAuth to false and navigate user to the home page
-    await axiosInstanse.post(LOGOUT_URL).then(setAuth).then(() => navigate('/')).catch(err => {
+    await axiosInstanse.post(LOGOUT_URL).then(setAuth(auth.token = "")).then(() => navigate('/')).catch(err => {
       if (!err?.response) {
         setErrMsg("No Server Response");
       } else if (err.response.status === 404) {

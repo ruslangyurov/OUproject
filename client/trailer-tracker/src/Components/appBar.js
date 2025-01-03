@@ -17,8 +17,8 @@ import { useEffect, useState,useContext } from 'react';
 import { styled, alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
-import isAuthContext from '../isAuth';
 import { set } from 'mongoose';
+import { useAuth } from '../apiContext/AuthContext';
 
 
 
@@ -74,14 +74,14 @@ function ResponsiveAppBar() {
   const [value, setValue] = useState("")
   const [pages, setPages] = useState(["Logout"])
   const location = useLocation()
-  const{isAuth, setAuth} = useContext(isAuthContext)
+  const {isAuth} = useAuth()
 
   useEffect(() => {
     if (location.pathname === '/Login') {
       setPages([""])
-    } else if (location.pathname === '/'&& isAuth) {
+    } else if (location.pathname === '/' && isAuth) {
       setPages(["Logout", "Full Trailers", "Empty Trailers"])
-    } else if (location.pathname === '/'&& !isAuth) {
+    } else if (location.pathname === '/' && !isAuth) {
       setPages(["Login"])
     } else if (location.pathname === "/Inbound") {
       setPages(["Logout","Empty Trailers", "Full Trailers"])

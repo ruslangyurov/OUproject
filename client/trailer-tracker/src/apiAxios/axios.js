@@ -1,7 +1,8 @@
 
 import axios from "axios";
-import { AuthContext } from "../apiContext/authContext";
+import { AuthContext } from "../apiContext/AuthContext";
 import { useContext } from "react";
+import { response } from "express";
 
 
 const axiosInstance = axios.create({
@@ -23,22 +24,23 @@ axiosInstance.interceptors.request.use(
   }
 );
 
-axiosInstance.interceptors.response.use(function (response) {
-  return response;
-}, async function (error) {
-  const originalRequest = error.config;
-  if (error.response.status === 401 && !originalRequest._retry) {
-    originalRequest._retry = true; // Mark the request as retried to avoid infinite loops.
-    try {
-      const res = await axios.post('/auth/refresh')
-      const newAccessToken = res.data.accessToken
-      axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${newAccessToken}`;
-      return axiosInstance(originalRequest);
-    } catch(err) {
-      return Promise.reject(error);
-  }
-}
+// axiosInstance.interceptors.response.use(
+//   response => response,
+//   async function (error) {
+  
+//   const originalRequest = error.config;
+//   if (error.response.status === 401 && !originalRequest._retry) {
+//     originalRequest._retry = true; // Mark the request as retried to avoid infinite loops.
+//     try {
+//       const res = await axios.post('/auth/refresh')
+//       const newAccessToken = res.data.accessToken
+//       axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${newAccessToken}`;
+//       return axiosInstance(originalRequest);
+//     } catch(err) {
+//       return Promise.reject(error);
+//   }
+// }
  
-});
+// });
 
-export default axiosInstance;
+// export default axiosInstance;

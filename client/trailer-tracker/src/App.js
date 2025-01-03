@@ -13,7 +13,8 @@ import { Layout } from './Components/Layout';
 import ListDividers from './Components/Divider';
 import {Search} from './pages/Search'
 import { useState } from 'react';
-import { AuthContextProvider } from './apiContext/authContext';
+import { AuthContextProvider } from './apiContext/AuthContext';
+import {ProtectedRoute} from './Components/ProtectedRoute';
 
 
 
@@ -27,7 +28,11 @@ export function App() {
           <Routes>
             <Route path = "/" element = {<Layout />}> 
               <Route index element = {<ListDividers/>}/>
-              <Route path = '/Inbound' element = {<Inbound />}/>
+              <Route element = {<ProtectedRoute/>}>
+                <Route path = '/Inbound' element = {<Inbound />}/>
+              </Route>
+
+              
               <Route path = '/Outbound' element = {<Outbound />}/>
               <Route path = '/Parking' element = {<Parking />}/>
               <Route path = '/Login' element = {<Login />}/>
