@@ -6,7 +6,7 @@ import { useState, useEffect} from "react";
 import { useNavigate } from "react-router-dom";
 import axios from '../apiAxios/axios';
 import { useContext } from 'react';
-import isAuthContext from '../isAuth';
+import { AuthContext } from '../apiContext/AuthContext';
 
 
 
@@ -16,7 +16,7 @@ export const BasicLogin = () => {
   const[username, setUsername] = useState("")
   const[password, setPassword] = useState("")
   const [errMsg, setErrMsg] = useState("")
-  const {isAuth, setAuth} = useContext(isAuthContext)
+  const {setAuth} = useContext(AuthContext)
   const LOGIN_URL = '/auth'
 
   const navigate = useNavigate();
@@ -28,7 +28,12 @@ export const BasicLogin = () => {
   const handleLogin = (e) => {
     e.preventDefault();
     // change isAuth to true when user is logged in and navigate back to the home page
-    axios.post(LOGIN_URL, {username, password}).then(setAuth).then(() => {{navigate('/')}}).catch(err => {
+   axios.post(LOGIN_URL, {username, password}).then((res) => {
+      if (res.data) {
+        setAuth({username, password, "token":res.data.accessToken})
+        navigate('/')
+      }
+    } ).catch(err => {
       if (!err?.response) {
         setErrMsg("No Server Response");
       } else if (err.response.status === 404) {
@@ -78,4 +83,3 @@ export const BasicLogin = () => {
   )
 
   }
-

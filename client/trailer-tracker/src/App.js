@@ -13,35 +13,39 @@ import { Layout } from './Components/Layout';
 import ListDividers from './Components/Divider';
 import {Search} from './pages/Search'
 import { useState } from 'react';
-import isAuthContext from './isAuth';
+import { AuthContextProvider } from './apiContext/AuthContext';
+import {ProtectedRoute} from './Components/ProtectedRoute';
 
 
 
 export function App() {
-  const [isAuth, setIsAuth] = useState(false)
-  const setAuth = () => {
-    setIsAuth(!isAuth)
-};
-  return (
-    <isAuthContext.Provider value={{isAuth, setAuth}}>
-      <div className='App'>
+  
 
-        <Routes>
-          <Route path = "/" element = {<Layout />}> 
-            <Route index element = {<ListDividers/>}/>
-            <Route path = '/Inbound' element = {<Inbound />}/>
-            <Route path = '/Outbound' element = {<Outbound />}/>
-            <Route path = '/Parking' element = {<Parking />}/>
-            <Route path = '/Login' element = {<Login />}/>
-            <Route path = '/Logout' element = {<Logout />}/>
-            <Route path = '/Empty Trailers' element = {<EmptyTrailers />}/>
-            <Route path = '/Full Trailers' element = {<FullTrailers />}/>
-            <Route path = '/Search' element = {<Search />}/>
-          </Route>
-        </Routes>
+  return (
+    
+      <div className='App'>
+        <AuthContextProvider>
+          <Routes>
+            <Route path = "/" element = {<Layout />}> 
+              <Route index element = {<ListDividers/>}/>
+              <Route element = {<ProtectedRoute/>}>
+                <Route path = '/Inbound' element = {<Inbound />}/>
+              </Route>
+
+              
+              <Route path = '/Outbound' element = {<Outbound />}/>
+              <Route path = '/Parking' element = {<Parking />}/>
+              <Route path = '/Login' element = {<Login />}/>
+              <Route path = '/Logout' element = {<Logout />}/>
+              <Route path = '/Empty Trailers' element = {<EmptyTrailers />}/>
+              <Route path = '/Full Trailers' element = {<FullTrailers />}/>
+              <Route path = '/Search' element = {<Search />}/>
+            </Route>
+          </Routes>
+        </AuthContextProvider>
+        
       </div>
-    </isAuthContext.Provider>
-  );
+  )
 }
 
 // Log to console
