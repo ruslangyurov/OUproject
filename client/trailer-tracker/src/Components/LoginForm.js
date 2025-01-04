@@ -16,7 +16,7 @@ export const BasicLogin = () => {
   const[username, setUsername] = useState("")
   const[password, setPassword] = useState("")
   const [errMsg, setErrMsg] = useState("")
-  const {setAuth} = useContext(AuthContext)
+  const {auth,setAuth} = useContext(AuthContext)
   const LOGIN_URL = '/auth'
 
   const navigate = useNavigate();
@@ -30,7 +30,9 @@ export const BasicLogin = () => {
     // change isAuth to true when user is logged in and navigate back to the home page
    axios.post(LOGIN_URL, {username, password}).then((res) => {
       if (res.data) {
-        setAuth({username, password, "token":res.data.accessToken})
+        setAuth({username, password, "accessToken":res.data.accessToken})
+        console.log(res.data.accessToken)
+        console.log(auth)
         navigate('/')
       }
     } ).catch(err => {
