@@ -8,6 +8,7 @@ import axios from '../apiAxios/axios';
 
 
 
+
 export default function Logout() {
   const [errMsg, setErrMsg] = useState("")
   const {auth, setAuth} = useContext(AuthContext)
@@ -21,7 +22,7 @@ export default function Logout() {
 
   const handleLogout = async(e) => {
     //Change isAuth to false and navigate user to the home page
-    await axios.post(LOGOUT_URL).then(setAuth(auth.token = "")).then(() => navigate('/')).catch(err => {
+    await axios.post(LOGOUT_URL).then(setAuth(auth.accessToken = "")).then(navigate('/')).catch(err => {
       if (!err?.response) {
         setErrMsg("No Server Response");
       } else if (err.response.status === 404) {
@@ -30,5 +31,5 @@ export default function Logout() {
  
 })
   }
-  return (<h2>bla</h2>)
+  
 }

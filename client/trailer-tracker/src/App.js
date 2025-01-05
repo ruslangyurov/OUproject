@@ -30,16 +30,14 @@ export function App() {
               <Route index element = {<ListDividers/>}/>
               <Route element = {<ProtectedRoute/>}>
                 <Route path = '/Inbound' element = {<Inbound />}/>
+                <Route path = '/Outbound' element = {<Outbound />}/>
+                <Route path = '/Parking' element = {<Parking />}/>
+                <Route path = '/Empty Trailers' element = {<EmptyTrailers />}/>
+                <Route path = '/Full Trailers' element = {<FullTrailers />}/>
+                <Route path = '/Search' element = {<Search />}/>
               </Route>
-
-              
-              <Route path = '/Outbound' element = {<Outbound />}/>
-              <Route path = '/Parking' element = {<Parking />}/>
               <Route path = '/Login' element = {<Login />}/>
-              <Route path = '/Logout' element = {<Logout />}/>
-              <Route path = '/Empty Trailers' element = {<EmptyTrailers />}/>
-              <Route path = '/Full Trailers' element = {<FullTrailers />}/>
-              <Route path = '/Search' element = {<Search />}/>
+              <Route path = '/Logout' element = {<Logout />}/> 
             </Route>
           </Routes>
         </AuthContextProvider>

@@ -5,7 +5,7 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-import axiosInstanse from '../apiAxios/axios';
+import axios from '../apiAxios/axios';
 import SendIcon from '@mui/icons-material/Send';
 import Button from '@mui/material/Button';
 import { useState, useEffect } from 'react';
@@ -59,7 +59,7 @@ export default function FormPropsTextFields(props) {
     }
 
     
-    await axiosInstanse.patch(YARD_URL,bay).then((res) => setUpdated(res.data)).then(() => {
+    await axios.patch(YARD_URL,bay).then((res) => setUpdated(res.data)).then(() => {
       setEmptyBay(false)
       localStorage.setItem("emptyBay" + props.child, false)}).catch(err => {
             if (err.request) {
@@ -84,7 +84,7 @@ export default function FormPropsTextFields(props) {
     }
     
     // This will act as a delete operation on the app
-    await axiosInstanse.patch(YARD_URL,bayDelete).then((res) => setUpdated(res.data)).then(() => 
+    await axios.patch(YARD_URL,bayDelete).then((res) => setUpdated(res.data)).then(() => 
       setEmptyBay(true),
       setValueNumber(""),
       setValueStock(""),

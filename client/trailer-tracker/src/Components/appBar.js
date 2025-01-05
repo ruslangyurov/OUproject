@@ -84,10 +84,10 @@ function ResponsiveAppBar() {
     } else if (location.pathname === '/' && !isAuth) {
       setPages(["Login"])
     } else if (location.pathname === "/Inbound") {
-      setPages(["Logout","Empty Trailers", "Full Trailers"])
+      setPages(["Logout","Full Trailers", "Empty Trailers"])
     
     } else if (location.pathname === '/Empty%20Trailers') {
-      setPages(["Full Trailers", "Logout"])
+      setPages(["Logout", "Full Trailers"])
     } else if (location.pathname === "/Full%20Trailers") {
       setPages([ "Logout", "Empty Trailers"])
     }

@@ -7,10 +7,11 @@ export const AuthContextProvider = ({children}) => {
     
     const[auth, setAuth] = useState({})
 
-    const isAuth  = !! auth.token
+    const isAuth  = !! auth.accessToken
+    const accessToken = auth.accessToken
 
     return (
-        <AuthContext.Provider value = {{isAuth, auth, setAuth}}>
+        <AuthContext.Provider value = {{accessToken, isAuth, auth, setAuth}}>
             {children}
         </AuthContext.Provider>
     )
