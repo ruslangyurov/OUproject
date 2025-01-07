@@ -10,7 +10,11 @@ const userSchema = new Schema( {
         type:String,
         required:true
     },
-    
+
+    role: {
+        type:string, 
+        default:"Employee"
+    },
     
 })
 

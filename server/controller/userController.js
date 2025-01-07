@@ -23,12 +23,12 @@ export const getAllUsers = asyncHandler(async (req,res) => {
 export const createNewUser = asyncHandler(async (req,res) => {
    
    //confirm data
-   const {username, password} = req.body;
+   const {username, password, role} = req.body;
    if (!username || !password) {
     res.status(400).json({message: "All fields are required"})
    }
    const hashedPwd = await bcrypt.hash(password,10) //salt rounds
-   const userObj = {username, 'password':hashedPwd}
+   const userObj = {username, 'password':hashedPwd, role}
    // Create and store new user
    const user = await User.create(userObj)
    .then(() => res.status(201).json({message:"New user added"}))
