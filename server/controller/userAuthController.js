@@ -25,10 +25,12 @@ const login = asyncHandler(async (req, res) => {
 
     if (!match) return res.status(401).json({ message: 'Unauthorized' })
 
-    const accessToken = jwt.sign(
+    const accessToken = jwt.sign({"userInfo": 
         {
-            username
-            },
+            "username":foundUser.username,
+            "role":foundUser.role
+            }
+        },
         
         process.env.TOKEN_SECRET,
         { expiresIn: '15m' }

@@ -28,6 +28,131 @@
   color: #61dafb;
 }
 
+.footer {
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+  background-color: gainsboro;
+  letter-spacing: 2px;
+  font-size: 25px;
+  font-family: monospace;
+  font-weight: 700;
+  text-align: left;
+  padding-left: 30px;
+  word-spacing: 20px;
+}
+
+.link {
+  color: royalblue;
+}
+
+menu.admin {
+  display: flex;
+  flex-direction: column;
+  margin-top: 0;
+  background-color: beige;
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  font-weight: bold;
+  align-items: center;
+
+  justify-content: center;
+}
+
+li.admin {
+  display: block;
+  width: 30%;
+  height: 10%;
+  font-size: calc(5px + 2vmin);
+  font-family: "Times New Roman", Times, serif;
+  letter-spacing: 1px;
+}
+
+.admin_link {
+  color: black;
+  text-decoration: none;
+}
+
+.admin_link:hover {
+  color: burlywood;
+}
+
+.admin_header_container {
+  display: flex;
+  margin-top: 0px;
+  height: 50px;
+  background-color: olive;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  color: white;
+  font-size: calc(7px + 2vmin);
+  font-family: "Times New Roman", Times, serif;
+  letter-spacing: 4px;
+}
+
+.admin_homeIcon {
+  position: absolute;
+  margin-top: 10px;
+  margin-left: 3px;
+}
+
+.newUser_homeIcon {
+  position: absolute;
+  margin-top: 10px;
+  margin-left: 30px;
+}
+
+.newUser_container {
+  position: fixed;
+  height: 100vh;
+  width: 100vw;
+  background-color: beige;
+  padding-top: 90px;
+  align-items: center;
+}
+
+.newUser_container_input {
+  box-sizing: border-box;
+  margin: 15px;
+  width: 20%;
+  background-color: #f2f2f2;
+  padding: 14px 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.newUser_select {
+  margin: 15px;
+  width: 30%;
+  background-color: #f2f2f2;
+  padding: 14px 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.newUser_container label {
+  font-size: 15px;
+  display: block;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 27px;
+}
+
+.newUser_submit_button {
+  background-color: #4caf50;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.newUser_sumbit_button:hover {
+  background-color: black;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

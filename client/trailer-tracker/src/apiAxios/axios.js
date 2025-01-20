@@ -11,30 +11,17 @@ const axiosInstanse = axios.create({
   headers: { "Content-Type": "application/json" }
 })
 
-const user = () => {
-  const {isAuth, accessToken} = useAuth();
-  return 
-}
-
-
-axiosInstanse.interceptors.request.use(() => 
+axiosInstanse.interceptors.request.use(
   (config) => {
-  
     if (config.url !== '/auth') {
-     
-     
-     
-      if (isAuth) {
-        console.log(config)
+      const {accessToken} = useAuth() // get stored access token
+      if (accessToken) {
         config.headers.Authorization = `Bearer ${accessToken}`; // set in header
-       
       }
-      
     }
-   
+    return config;
   },
   (error) => {
-    
     return Promise.reject(error);
   }
 );

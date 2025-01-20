@@ -10,6 +10,7 @@ import Login from './pages/Login'
 import Logout from './pages/Logout';
 import ResponsiveAppBar from './Components/appBar';
 import { Layout } from './Components/Layout';
+import {Admin} from './pages/Admin';
 import ListDividers from './Components/Divider';
 import {Search} from './pages/Search'
 import { useState } from 'react';
@@ -27,7 +28,7 @@ export function App() {
         <AuthContextProvider>
           <Routes>
             <Route path = "/" element = {<Layout />}> 
-              <Route index element = {<ListDividers/>}/>
+              <Route index element = {<Home/>}/>
               <Route element = {<ProtectedRoute/>}>
                 <Route path = '/Inbound' element = {<Inbound />}/>
                 <Route path = '/Outbound' element = {<Outbound />}/>
@@ -35,6 +36,7 @@ export function App() {
                 <Route path = '/Empty Trailers' element = {<EmptyTrailers />}/>
                 <Route path = '/Full Trailers' element = {<FullTrailers />}/>
                 <Route path = '/Search' element = {<Search />}/>
+                <Route path = 'Admin' element = {<Admin />}/>
               </Route>
               <Route path = '/Login' element = {<Login />}/>
               <Route path = '/Logout' element = {<Logout />}/> 

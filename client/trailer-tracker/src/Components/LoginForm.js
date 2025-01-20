@@ -30,7 +30,7 @@ export const BasicLogin = () => {
     // change isAuth to true when user is logged in and navigate back to the home page
    axios.post(LOGIN_URL, {username, password}).then((res) => {
       if (res.data) {
-        setAuth({username, password, "accessToken":res.data.accessToken})
+        setAuth({"accessToken":res.data.accessToken})
         console.log(res.data.accessToken)
         console.log(auth)
         navigate('/')
@@ -57,7 +57,7 @@ export const BasicLogin = () => {
    
    <div>
         <h1>{errMsg}</h1>
-        <TextField
+        <TextField sx={{display:"flex", float:"left"}}
           required
           type = "String"
           id="Username"
@@ -67,7 +67,7 @@ export const BasicLogin = () => {
           onChange={(e) => {setUsername(e.target.value)}}
           
         />
-        <TextField 
+        <TextField sx={{display:"flex", float:"left"}}
           required
           type = "Password"
           id="Password"
@@ -77,7 +77,7 @@ export const BasicLogin = () => {
           onChange={(e) => {setPassword(e.target.value)}}
         />
 
-        <Button variant="contained" endIcon={<SendIcon />} onClick={handleLogin} sx={{ml:2,height:53, width:100}}>Submit</Button>
+        <Button variant="contained" endIcon={<SendIcon />} onClick={handleLogin} sx={{display:"flex", float:"left",height:53, width:100}}>Submit</Button>
         
 
 
