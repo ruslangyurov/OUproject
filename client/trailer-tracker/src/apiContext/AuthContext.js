@@ -4,11 +4,11 @@ import {jwtDecode} from "jwt-decode";
 export const AuthContext = createContext();
 
 export const AuthContextProvider = ({ children }) => {
-  const [auth, setAuth] = useState({});
+  const [auth, setAuth] = useState("");
 
-  const isAuth = !!auth.accessToken;
+  const isAuth = !!auth;
   if (isAuth) {
-    const decoded = jwtDecode(auth.accessToken);
+    const decoded = jwtDecode(auth);
     const { username, role } = decoded.userInfo
     
     return (

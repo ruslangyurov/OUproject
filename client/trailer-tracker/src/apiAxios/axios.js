@@ -14,11 +14,17 @@ const axiosInstanse = axios.create({
 axiosInstanse.interceptors.request.use(
   (config) => {
     if (config.url !== '/auth') {
-      const {accessToken} = useAuth() // get stored access token
-      if (accessToken) {
-        config.headers.Authorization = `Bearer ${accessToken}`; // set in header
+      const {auth} = useAuth() // get stored access token
+      const bla = '2lsdf'
+      console.log(bla)
+     
+      console.log(auth) 
+      if (auth) {
+        config.headers.Authorization = `Bearer ${auth}`; // set in header
+        
       }
     }
+    console.log(config)
     return config;
   },
   (error) => {
@@ -26,24 +32,24 @@ axiosInstanse.interceptors.request.use(
   }
 );
 
-axiosInstanse.interceptors.response.use(
-  response => response,
-  (error) => {
-    console.log(error.status)
-    const originalRequest = error.config;
-    if (error.response.status === 401 && !originalRequest._retry && error.response.config.url !== '/auth') { // Code inside this block will refresh the auth token
+// axiosInstanse.interceptors.response.use(
+//   response => response,
+//   (error) => {
+//     console.log(error.status)
+//     const originalRequest = error.config;
+//     if (error.response.status === 401 && !originalRequest._retry && error.response.config.url !== '/auth') { // Code inside this block will refresh the auth token
  
-      originalRequest._retry = true;
-      const refreshToken = axiosInstanse.get("/auth/refresh")
-      if (refreshToken) {
-          const [auth, setAuth] = useContext(AuthContext)
-          setAuth({"accessToken":refreshToken})
-          axiosInstanse.defaults.headers.common['Authorization'] = 'Bearer ' + refreshToken;
-          return axios(originalRequest);
-      }   
-  } 
-  return Promise.reject(error);
-});
+//       originalRequest._retry = true;
+//       const refreshToken = axiosInstanse.get("/auth/refresh")
+//       if (refreshToken) {
+//           const [auth, setAuth] = useContext(AuthContext)
+//           setAuth({"accessToken":refreshToken})
+//           axiosInstanse.defaults.headers.common['Authorization'] = 'Bearer ' + refreshToken;
+//           return axios(originalRequest);
+//       }   
+//   } 
+//   return Promise.reject(error);
+// });
   
 
 

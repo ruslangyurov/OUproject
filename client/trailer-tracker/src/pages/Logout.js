@@ -22,7 +22,7 @@ export default function Logout() {
 
   const handleLogout = async(e) => {
     //Change isAuth to false and navigate user to the home page
-    await axios.post(LOGOUT_URL).then(setAuth(auth.accessToken = "")).then(navigate('/')).catch(err => {
+    await axios.post(LOGOUT_URL).then(setAuth(auth = "")).then(navigate('/')).catch(err => {
       if (!err?.response) {
         setErrMsg("No Server Response");
       } else if (err.response.status === 404) {
