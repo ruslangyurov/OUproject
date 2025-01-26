@@ -9,7 +9,7 @@ import { dirname } from 'path';
 //import * as bodyParser from 'body-parser'
 import {connectDB} from './config/DBcon.js';
 import { defaultRoute } from './routes/root.js';
-import {logger} from './middleware/logger.js';
+//import {logger} from './middleware/logger.js';
 import yardRoute from './routes/yardRoute.js';
 import userAuthRoute from './routes/userAuthRoute.js';
 import userRoute from './routes/userRoute.js';
@@ -22,7 +22,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 dotenv.config();
-app.use(logger)
+
 //app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.json({extended:true}))
 app.use(express.urlencoded({extended:true}))
