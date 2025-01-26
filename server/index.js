@@ -30,8 +30,9 @@ app.use(cors());
 app.use(cookieParser())
 const mongoDb = "mongodb+srv://ruslangyurov:UPhkK4FkI2nVFUii@oucluster.dqizjw9.mongodb.net/?retryWrites=true&w=majority"
 
-const PORT = process.env.PORT || 10000;
-const server = app.listen(PORT);
+const PORT = process.env.PORT || 5000;
+cosnt HOST = process.env.HOST
+const server = app.listen(PORT, HOST);
 const io = new Server(server);
 export default io;
 
