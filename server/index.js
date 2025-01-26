@@ -7,7 +7,7 @@ const app = express();
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 //import * as bodyParser from 'body-parser'
-import {connectDB} from './config'
+import {connectDB} from './config/DBcon.js';
 import { defaultRoute } from './routes/root.js';
 import {logger} from './middleware/logger.js';
 import yardRoute from './routes/yardRoute.js';
