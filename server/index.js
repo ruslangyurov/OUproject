@@ -14,6 +14,7 @@ import yardRoute from './routes/yardRoute.js';
 import userAuthRoute from './routes/userAuthRoute.js';
 import userRoute from './routes/userRoute.js';
 import cookieParser from 'cookie-parser';
+import * as path from 'path';
 
 //app.use(logger)
 
@@ -30,14 +31,14 @@ app.use(cors());
 app.use(cookieParser())
 const mongoDb = "mongodb+srv://ruslangyurov:UPhkK4FkI2nVFUii@oucluster.dqizjw9.mongodb.net/?retryWrites=true&w=majority"
 
-app.use(express.static(path.join(__dirname, 'build')));
+app.use('/', express.static(path.join(__dirname, 'public')))
 
 app.get('/*', function (req, res) {
   res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
 
 const PORT = process.env.PORT || 5000;
-const HOST = process.env.HOST
+const HOST = process.env.HOST || "localhost";
 const server = app.listen(PORT, HOST);
 const io = new Server(server);
 export default io;
