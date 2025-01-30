@@ -25,10 +25,9 @@ export default function Bay(props) {
 
     } else {
         return (
-            <Accordion>
+        <Accordion disableGutters>
             <AccordionSummary
-                disableGutters
-                expandIcon={<ExpandMoreIcon />}
+               expandIcon={<ExpandMoreIcon />}
                 aria-controls="panel1-content"
                 id="panel1-header"
                 sx = {{m:'auto', bgcolor:'#e3f2fd', height:'15%'}}>

@@ -17,6 +17,7 @@ import {Search} from './pages/Search'
 import { useState } from 'react';
 import { AuthContextProvider } from './apiContext/AuthContext';
 import {ProtectedRoute} from './Components/ProtectedRoute';
+import { AxiosInterceptor } from './apiAxios/axios';
 
 
 
@@ -27,6 +28,7 @@ export function App() {
     
       <div className='App'>
         <AuthContextProvider>
+          <AxiosInterceptor/>
           <Routes>
             <Route path = "/" element = {<Layout />}> 
               <Route index element = {<Home/>}/>

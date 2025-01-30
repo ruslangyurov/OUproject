@@ -4,7 +4,7 @@ import jwt from 'jsonwebtoken';
 const { sign, verify } = jwt;
 import pkg from 'express-async-handler';
 const asyncHandler = pkg;
-import {verifyJWT} from '../middleware/verifyToken.js'
+import {verifyJWT} from '../middleware/verifyJWT.js'
 
 
 

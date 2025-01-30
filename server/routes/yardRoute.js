@@ -1,9 +1,9 @@
 import express from 'express';
 const router = express.Router();
 import * as yardController from '../controller/yardController.js';
-import {verifyJWT} from '../middleware/verifyToken.js';
+import {verifyJWT} from '../middleware/verifyJWT.js';
 
-//router.use(verifyJWT)
+router.use(verifyJWT)
 
 
 router.route('/')

@@ -1,5 +1,5 @@
 import express from 'express';
-import dotenv from 'dotenv';
+import "dotenv/config";
 import mongoose from 'mongoose';
 import cors from 'cors';
 import {Server} from 'socket.io';
@@ -22,7 +22,7 @@ import * as path from 'path';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-dotenv.config();
+
 
 //app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.json({extended:true}))

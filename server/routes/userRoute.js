@@ -1,7 +1,7 @@
 import express from 'express';
 const router = express.Router()
 import * as userController from '../controller/userController.js';
-import * as verifyToken from '../middleware/verifyToken.js';
+import * as verifyToken from '../middleware/verifyJWT.js';
 
 //router.use(verifyToken.verifyJWT)
 
