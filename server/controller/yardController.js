@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import pkg from 'express-async-handler';
 const asyncHandler = pkg;
-import io from '../index.js';
+// import io from '../index.js';
 import Bay from '../models/bay.js';
 
 const createBay = asyncHandler(async(req,res) => {

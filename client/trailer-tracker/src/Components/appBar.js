@@ -136,7 +136,7 @@ function ResponsiveAppBar() {
               textDecoration: 'none',
             }}
           >
-            ARLA
+            Morty
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -192,7 +192,7 @@ function ResponsiveAppBar() {
               textDecoration: 'none',
             }}
           >
-            WORK
+            Fixxxer
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (

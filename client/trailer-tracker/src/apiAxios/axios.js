@@ -7,7 +7,7 @@ import { useContext, useEffect } from "react";
 
 const axiosInstanse = axios.create({
  // withCredentials: true,
-  baseURL: "http://localhost:10000",
+  baseURL: "https://vigilant-guacamole-wrx955w64vq3694-10000.app.github.dev/",
   headers: { "Content-Type": "application/json" }
 })
 
