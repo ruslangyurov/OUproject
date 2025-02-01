@@ -11,7 +11,7 @@ const axiosInstanse = axios.create({
   headers: { "Content-Type": "application/json" }
 })
 
-export const AxiosInterceptor = () => {
+export const RequestInterceptor = () => {
   const {auth} = useAuth();
 
   useEffect(() => {
@@ -39,26 +39,31 @@ export const AxiosInterceptor = () => {
 
 
 export const ResponseInterceptor = () => {
-  const {auth, setAuth} = useAuth()
-  axiosInstanse.interceptors.response.use(
-    response => response,
-    (error) => {
-      console.log(error.status)
-      const originalRequest = error.config;
-      if (error.response.status === 401 && !originalRequest._retry && error.response.config.url !== '/auth') { // Code inside this block will refresh the auth token
-   
-        originalRequest._retry = true;
-        const refreshToken = axiosInstanse.get("/auth/refresh")
-        if (refreshToken) {
-           
+  const {auth} = useAuth()
+
+  useEffect(() => {
+    axiosInstanse.interceptors.response.use(
+      (response) => {
+        return response
+      },
+      (error) => {
+        
+        const originalRequest = error.config;
+        if (error.response.status === 403 && !originalRequest._retry && error.response.config.url !== '/auth') { // Code inside this block will refresh the auth token
+     
+          originalRequest._retry = true;
+          const refreshToken = axiosInstanse.get("/auth/refresh")
+          if (refreshToken) {
+             
             axiosInstanse.defaults.headers.common['Authorization'] = 'Bearer ' + refreshToken;
             return axios(originalRequest);
-        }   
-    } 
-    return Promise.reject(error);
-  });
-}
+          }   
+      } 
+      return Promise.reject(error);
+    });
+    })
   
+}
 
 
 export default axiosInstanse;

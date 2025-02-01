@@ -122,7 +122,7 @@ function ResponsiveAppBar() {
       <Container maxWidth="xl">
         <Toolbar disableGutters xs = {{m: "flex"}}>
           <WorkIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
-          <Typography onClick={() => Navigate("/")}
+          <Typography onClick={() => <Link to = {'/Home'}></Link>}
             variant="h6"
             noWrap
             component= {Link} to = {"/"}

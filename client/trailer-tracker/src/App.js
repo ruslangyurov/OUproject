@@ -17,7 +17,7 @@ import {Search} from './pages/Search'
 import { useState } from 'react';
 import { AuthContextProvider } from './apiContext/AuthContext';
 import {ProtectedRoute} from './Components/ProtectedRoute';
-import { AxiosInterceptor } from './apiAxios/axios';
+import { RequestInterceptor, ResponseInterceptor } from './apiAxios/axios';
 
 
 
@@ -28,22 +28,23 @@ export function App() {
     
       <div className='App'>
         <AuthContextProvider>
-          <AxiosInterceptor/>
+          <RequestInterceptor/>
+          <ResponseInterceptor/>
           <Routes>
             <Route path = "/" element = {<Layout />}> 
               <Route index element = {<Home/>}/>
-              <Route element = {<ProtectedRoute/>}>
+            
                 <Route path = '/Inbound' element = {<Inbound />}/>
                 <Route path = '/Outbound' element = {<Outbound />}/>
                 <Route path = '/Parking' element = {<Parking />}/>
                 <Route path = '/Empty Trailers' element = {<EmptyTrailers />}/>
                 <Route path = '/Full Trailers' element = {<FullTrailers />}/>
                 <Route path = '/Search' element = {<Search />}/>
-              </Route>
+          
               <Route path = '/Login' element = {<Login />}/>
               <Route path = '/Logout' element = {<Logout />}/>
             </Route> 
-            <Route element = {<ProtectedRoute/>}>
+            <Route>
               <Route path = '/Admin' element = {<Admin />}/>
               <Route path = '/NewUser' element = {<NewUser />}/>
             </Route>
@@ -60,3 +61,18 @@ export function App() {
 console.log('Hello console')
 
 export default App;
+
+{/* <Route element = {<ProtectedRoute/>}>
+  <Route path = '/Inbound' element = {<Inbound />}/>
+  <Route path = '/Outbound' element = {<Outbound />}/>
+  <Route path = '/Parking' element = {<Parking />}/>
+  <Route path = '/Empty Trailers' element = {<EmptyTrailers />}/>
+  <Route path = '/Full Trailers' element = {<FullTrailers />}/>
+  <Route path = '/Search' element = {<Search />}/>
+</Route> */}
+
+
+            // <Route element = {<ProtectedRoute/>}>
+            //   <Route path = '/Admin' element = {<Admin />}/>
+            //   <Route path = '/NewUser' element = {<NewUser />}/>
+            // </Route>

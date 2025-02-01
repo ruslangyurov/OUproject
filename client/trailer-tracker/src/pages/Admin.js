@@ -1,11 +1,17 @@
 import { Link } from "react-router-dom";
 import HomeIcon from "@mui/icons-material/Home";
+import { useNavigate } from "react-router-dom";
 
 export const Admin = () => {
+
+  const navigate = useNavigate()
+
+  
+  
   return (
     <>
       <div className="admin_homeIcon">
-        <HomeIcon
+        <HomeIcon onClick = {navigate('/Login')}
           sx={{
             color: "white",
             cursor: "pointer",
