@@ -11,6 +11,7 @@ export const Admin = () => {
   
   return (
     <>
+    
       <div className="admin_homeIcon">
         <HomeIcon onClick = {() => navigate('/')}
           sx={{
@@ -24,14 +25,14 @@ export const Admin = () => {
         <div className="admin_header_text">Admin</div>
       </div>
       <div className="admin">
-        <div className="admin-menu">
-          <Link className="admin-link"><h3>Create New User</h3></Link>
+        {/* <div className="admin-menu"> */}
+          <Link className="admin-link" to = "new-user"><h3>Create New User</h3></Link>
           <Link className="admin-link"><h3>Update User</h3></Link>
           <Link className="admin-link"><h3>Delete User</h3></Link>
           <Link className="admin-link"><h3>Create Bay</h3></Link>
           <Link className="admin-link"><h3>Update Bay</h3></Link>
           <Link className="admin-link"><h3>Delete Bay</h3></Link>
-        </div>  
+        {/* </div>   */}
       </div>
           
         {/* <li class="admin">
@@ -60,7 +61,7 @@ export const Admin = () => {
           </Link>
         </li>
       </menu> */}
-      <Outlet />
+     
     </>
   );
 };

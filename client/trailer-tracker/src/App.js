@@ -41,11 +41,11 @@ export function App() {
               <Route path = 'Search' element = {<Search />}/>
               <Route path = 'Login' element = {<Login />}/>
               <Route path = 'Logout' element = {<Logout />}/>
-              
-            </Route> 
-            <Route path = '/Admin' element = {<Admin/>}>
-              <Route path = 'new-user' element = {<NewUser />} />
             </Route>
+
+            <Route path = '/Admin' element = {<Admin/>}></Route>
+            <Route path = '/Admin/new-user' element = {<NewUser/>}></Route>
+          
            
           </Routes>
         </AuthContextProvider>
