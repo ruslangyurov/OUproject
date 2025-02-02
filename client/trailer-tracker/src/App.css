@@ -18,35 +18,47 @@
   color: royalblue;
 }
 
-menu.admin {
+.admin {
+  position: fixed;
   display: flex;
-  flex-direction: column;
   margin-top: 0;
   background-color: beige;
-  position: fixed;
   width: 100vw;
   height: 100vh;
-  font-weight: bold;
-  align-items: center;
-
   justify-content: center;
+  
+  
 }
 
-li.admin {
-  display: block;
-  width: 30%;
-  height: 10%;
+.admin-menu  {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: auto;
+  height: auto;
   font-size: calc(5px + 2vmin);
   font-family: "Times New Roman", Times, serif;
-  letter-spacing: 1px;
+  letter-spacing: 4px;
+  background-color: beige;
+  
+  
+ 
 }
 
-.admin_link {
-  color: black;
+
+.admin-link {
+  display:block;
+  width: 100vw;
   text-decoration: none;
+  padding: 0 30px;
+  color: black;
+  box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.5);
+  border-radius: 5px;
 }
 
-.admin_link:hover {
+
+.admin-link:hover {
   color: burlywood;
 }
 

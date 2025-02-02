@@ -33,23 +33,20 @@ export function App() {
           <Routes>
             <Route path = "/" element = {<Layout />}> 
               <Route index element = {<Home/>}/>
-            
-                <Route path = '/Inbound' element = {<Inbound />}/>
-                <Route path = '/Outbound' element = {<Outbound />}/>
-                <Route path = '/Parking' element = {<Parking />}/>
-                <Route path = '/Empty Trailers' element = {<EmptyTrailers />}/>
-                <Route path = '/Full Trailers' element = {<FullTrailers />}/>
-                <Route path = '/Search' element = {<Search />}/>
-          
-              <Route path = '/Login' element = {<Login />}/>
-              <Route path = '/Logout' element = {<Logout />}/>
-            </Route> 
-            <Route>
-              <Route path = '/Admin' element = {<Admin />}/>
-              <Route path = '/NewUser' element = {<NewUser />}/>
-            </Route>
+              <Route path = 'Inbound' element = {<Inbound />}/>
+              <Route path = 'Outbound' element = {<Outbound />}/>
+              <Route path = 'Parking' element = {<Parking />}/>
+              <Route path = 'Empty Trailers' element = {<EmptyTrailers />}/>
+              <Route path = 'Full Trailers' element = {<FullTrailers />}/>
+              <Route path = 'Search' element = {<Search />}/>
+              <Route path = 'Login' element = {<Login />}/>
+              <Route path = 'Logout' element = {<Logout />}/>
               
-            
+            </Route> 
+            <Route path = '/Admin' element = {<Admin/>}>
+              <Route path = 'new-user' element = {<NewUser />} />
+            </Route>
+           
           </Routes>
         </AuthContextProvider>
         

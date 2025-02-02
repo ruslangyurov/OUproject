@@ -1,6 +1,7 @@
-import { Link } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import HomeIcon from "@mui/icons-material/Home";
 import { useNavigate } from "react-router-dom";
+
 
 export const Admin = () => {
 
@@ -11,7 +12,7 @@ export const Admin = () => {
   return (
     <>
       <div className="admin_homeIcon">
-        <HomeIcon onClick = {navigate('/Login')}
+        <HomeIcon onClick = {() => navigate('/')}
           sx={{
             color: "white",
             cursor: "pointer",
@@ -22,13 +23,18 @@ export const Admin = () => {
       <div className="admin_header_container">
         <div className="admin_header_text">Admin</div>
       </div>
-      <menu class="admin">
-        <li class="admin">
-          <Link className="admin_link" to={"/newUser"}>
-            <h3>Create new user</h3>
-          </Link>
-        </li>
-        <li class="admin">
+      <div className="admin">
+        <div className="admin-menu">
+          <Link className="admin-link"><h3>Create New User</h3></Link>
+          <Link className="admin-link"><h3>Update User</h3></Link>
+          <Link className="admin-link"><h3>Delete User</h3></Link>
+          <Link className="admin-link"><h3>Create Bay</h3></Link>
+          <Link className="admin-link"><h3>Update Bay</h3></Link>
+          <Link className="admin-link"><h3>Delete Bay</h3></Link>
+        </div>  
+      </div>
+          
+        {/* <li class="admin">
           <Link className="admin_link" to={"/newUser"}>
             <h3>Update user</h3>
           </Link>
@@ -53,7 +59,8 @@ export const Admin = () => {
             <h3>Delete bay</h3>
           </Link>
         </li>
-      </menu>
+      </menu> */}
+      <Outlet />
     </>
   );
 };
