@@ -1,9 +1,12 @@
 import { Link, Outlet } from "react-router-dom";
 import HomeIcon from "@mui/icons-material/Home";
-import { useNavigate } from "react-router-dom";
+import { useNavigate} from "react-router-dom";
+import { useEffect } from "react";
+import { useAdminLocation } from "../Components/Location";
+import { AdminLayout } from "../Components/AdminLayout";
 
 
-export const Admin = () => {
+export const AdminMenu = () => {
 
   const navigate = useNavigate()
 
@@ -12,21 +15,10 @@ export const Admin = () => {
   return (
     <>
     
-      <div className="admin_homeIcon">
-        <HomeIcon onClick = {() => navigate('/')}
-          sx={{
-            color: "white",
-            cursor: "pointer",
-            "&:hover": { color: "black" },
-          }}
-        />
-      </div>
-      <div className="admin_header_container">
-        <div className="admin_header_text">Admin</div>
-      </div>
+         
       <div className="admin">
         {/* <div className="admin-menu"> */}
-          <Link className="admin-link" to = "new-user"><h3>Create New User</h3></Link>
+          <Link className="admin-link" to = "/Admin/menu/new-user"><h3>Create New User</h3></Link>
           <Link className="admin-link"><h3>Update User</h3></Link>
           <Link className="admin-link"><h3>Delete User</h3></Link>
           <Link className="admin-link"><h3>Create Bay</h3></Link>

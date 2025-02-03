@@ -16,7 +16,7 @@ export const Home = () => {
 
       <div className='footer'>
         <p className='footer-text-left'>
-          <Link to='/Admin' className='link'>
+          <Link to='/menu' className='link'>
             Admin
           </Link>
         </p>

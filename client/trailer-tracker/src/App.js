@@ -8,17 +8,16 @@ import {Outbound} from "./pages/Outbound";
 import { Parking } from './pages/Parking';
 import Login from './pages/Login'
 import Logout from './pages/Logout';
-import ResponsiveAppBar from './Components/appBar';
 import { Layout } from './Components/Layout';
-import {Admin} from './pages/Admin';
+import {AdminLayout} from './Components/AdminLayout';
+import {AdminMenu} from './pages/AdminMenu';
 import {NewUser} from './pages/NewUser';
-import ListDividers from './Components/Divider';
 import {Search} from './pages/Search'
 import { useState } from 'react';
 import { AuthContextProvider } from './apiContext/AuthContext';
 import {ProtectedRoute} from './Components/ProtectedRoute';
 import { RequestInterceptor, ResponseInterceptor } from './apiAxios/axios';
-
+import "./App.css"; 
 
 
 export function App() {
@@ -42,12 +41,14 @@ export function App() {
               <Route path = 'Login' element = {<Login />}/>
               <Route path = 'Logout' element = {<Logout />}/>
             </Route>
-
-            <Route path = '/Admin' element = {<Admin/>}></Route>
-            <Route path = '/Admin/new-user' element = {<NewUser/>}></Route>
+            <Route path = '/Admin' element = {<AdminLayout />}>
+              <Route path = 'menu' element = {<AdminMenu/>}></Route>
+              <Route path = 'new-user' element = {<NewUser/>}></Route>
+            </Route>
+          </Routes>
           
            
-          </Routes>
+         
         </AuthContextProvider>
         
       </div>

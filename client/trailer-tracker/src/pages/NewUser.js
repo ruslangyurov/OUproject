@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "../apiAxios/axios";
 import { useContext } from "react";
 import { AuthContext } from "../apiContext/AuthContext";
+import { useAdminLocation } from "../Components/Location";
 
 export const NewUser = () => {
   const [username, setUsername] = useState("");
@@ -13,7 +14,11 @@ export const NewUser = () => {
   const [role, setRole] = useState("");
   const [errMsg, setErrMsg] = useState("");
 
+  const location = useAdminLocation();
+
   const Navigate = useNavigate();
+
+  
 
   const createNewUser = async () => {
     await axios.post("/user", { username, password, role }).catch((err) => {
@@ -54,7 +59,7 @@ export const NewUser = () => {
         />
       </div>
       <div className="admin_header_container">
-        <p>Create New User</p>
+        <p>{location}</p>
       </div>
       <div className="newUser_container">
         <form onSubmit={createNewUser}>
