@@ -15,8 +15,8 @@ export const useAdminLocation = () => {
         
         case '/Admin/menu': setHeaderText("Admin")
           break
-        case '/Admin/new-user':setHeaderText("Create New User")
-       
+        case '/Admin/menu/new-user':setHeaderText("Create New User")
+          break
 }
     },[location.pathname])
 

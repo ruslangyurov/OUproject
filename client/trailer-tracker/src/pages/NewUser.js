@@ -14,7 +14,7 @@ export const NewUser = () => {
   const [role, setRole] = useState("");
   const [errMsg, setErrMsg] = useState("");
 
-  const location = useAdminLocation();
+  
 
   const Navigate = useNavigate();
 
@@ -40,27 +40,7 @@ export const NewUser = () => {
 
   return (
     <>
-      <div className="admin_homeIcon">
-        <ArrowBackIcon
-          onClick={handleClick}
-          sx={{
-            color: "white",
-            "&:hover": { color: "black", cursor: "pointer" },
-          }}
-        />
-      </div>
-      <div className="newUser_homeIcon">
-        <HomeIcon
-          sx={{
-            color: "white",
-            cursor: "pointer",
-            "&:hover": { color: "black" },
-          }}
-        />
-      </div>
-      <div className="admin_header_container">
-        <p>{location}</p>
-      </div>
+    
       <div className="newUser_container">
         <form onSubmit={createNewUser}>
           <label>Username</label>

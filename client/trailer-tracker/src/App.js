@@ -42,9 +42,10 @@ export function App() {
               <Route path = 'Logout' element = {<Logout />}/>
             </Route>
             <Route path = '/Admin' element = {<AdminLayout />}>
-              <Route path = 'menu' element = {<AdminMenu/>}></Route>
-              <Route path = 'new-user' element = {<NewUser/>}></Route>
+              <Route path = 'menu' element = {<AdminMenu/>}>
+                <Route path = 'new-user' element = {<NewUser/>}></Route>
             </Route>
+           </Route>
           </Routes>
           
            

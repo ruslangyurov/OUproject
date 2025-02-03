@@ -15,16 +15,16 @@ export const AdminMenu = () => {
   return (
     <>
     
-         
+       
       <div className="admin">
-        {/* <div className="admin-menu"> */}
-          <Link className="admin-link" to = "/Admin/menu/new-user"><h3>Create New User</h3></Link>
+        
+          <Link className="admin-link" to = "new-user"><h3>Create New User</h3></Link>
           <Link className="admin-link"><h3>Update User</h3></Link>
           <Link className="admin-link"><h3>Delete User</h3></Link>
           <Link className="admin-link"><h3>Create Bay</h3></Link>
           <Link className="admin-link"><h3>Update Bay</h3></Link>
           <Link className="admin-link"><h3>Delete Bay</h3></Link>
-        {/* </div>   */}
+       
       </div>
           
         {/* <li class="admin">
