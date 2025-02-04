@@ -35,7 +35,7 @@ export const BasicLogin = () => {
    await axiosInstanse.post(LOGIN_URL, {username, password}).then((res) => {
       if (res.data) {
         setAuth(res.data.accessToken)
-        console.log(res.data.accessToken)
+       
         console.log(auth)
         navigate('/')
       }

@@ -7,13 +7,14 @@ import { useContext, useEffect } from "react";
 
 const axiosInstanse = axios.create({
  // withCredentials: true,
-  baseURL: "https://vigilant-guacamole-wrx955w64vq3694-10000.app.github.dev/",
+  // baseURL: 
+  baseURL: "http://localhost:10000",
   headers: { "Content-Type": "application/json" }
 })
 
 export const RequestInterceptor = () => {
   const {auth} = useAuth();
-
+  console.log(auth)
   useEffect(() => {
     const requestInterceptor = axiosInstanse.interceptors.request.use(
       (config) => {
@@ -23,6 +24,7 @@ export const RequestInterceptor = () => {
           config.headers.Authorization = `Bearer ${auth}`; // set in header 
         }
         return config;
+        console.log(config)
       },
       (error) => {
         return Promise.reject(error);
