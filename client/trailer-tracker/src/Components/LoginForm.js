@@ -29,33 +29,35 @@ export const BasicLogin = () => {
     setErrMsg("")
   },[username, password])
 
+  useEffect(() => {
+    if (auth) {
+      navigate("/"); // Redirect on successful login
+     
+    }
+  }, [auth, navigate]);
+
   const handleLogin = async(e) => {
     e.preventDefault();
     // change isAuth to true when user is logged in and navigate back to the home page
-   await axiosInstanse.post(LOGIN_URL, {username, password}).then((res) => {
-      if (res.data) {
-        setAuth(res.data.accessToken)
-       
-        console.log(auth)
-        navigate('/')
-      }
-    } ).catch(err => {
+    try {
+      const res = await axiosInstanse.post(LOGIN_URL, { username, password });
+      setAuth(res.data.accessToken); // Save auth token
+    } catch (err) {
       if (!err?.response) {
         setErrMsg("No Server Response");
       } else if (err.response.status === 404) {
         setErrMsg("Page not found");
       } else if (err.response.status === 400) {
-        setErrMsg("All fields are required")
-      } else if (err.response.status === 401){
-        setErrMsg("Unknown username or password")
-      } else {setErrMsg("Unknown error")}
-    })
-    setUsername("")
-    setPassword("")
-
-  }
+        setErrMsg("All fields are required");
+      } else if (err.response.status === 401) {
+        setErrMsg("Unknown username or password");
+      } else {
+        setErrMsg("Unknown error");
+      }
+    }
+  };
      
-    
+  
 
   return (
    

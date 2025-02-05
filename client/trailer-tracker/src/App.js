@@ -46,13 +46,8 @@ export function App() {
                   <Route path = '/Admin' element = {<AdminMenu />}/>
                   <Route path = '/NewUser' element = {<NewUser />}/>
               </Route>
-
-           
-           </Route>
+            </Route>
           </Routes>
-          
-           
-         
         </AuthContextProvider>
         
       </div>

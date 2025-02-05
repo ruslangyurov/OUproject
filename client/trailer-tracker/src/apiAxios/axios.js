@@ -1,71 +1,88 @@
-
 import axios from "axios";
-import {useAuth, AuthContext} from "../apiContext/AuthContext";
-import { useContext, useEffect } from "react";
+import { useAuth } from "../apiContext/AuthContext";
+import { useEffect } from "react";
+import { jwtDecode } from "jwt-decode";
 
-
-
+// Create an axios instance
 const axiosInstanse = axios.create({
- // withCredentials: true,
-  // baseURL: 
-  baseURL: "http://localhost:10000",
+  withCredentials:true,
+  baseURL: "http://localhost:10000", 
   headers: { "Content-Type": "application/json" }
-})
+});
 
+// Request Interceptor
 export const RequestInterceptor = () => {
-  const {auth} = useAuth();
-  console.log(auth)
+  const { auth } = useAuth();
+
   useEffect(() => {
     const requestInterceptor = axiosInstanse.interceptors.request.use(
       (config) => {
-       
-        if (config.url !== '/auth') { 
-         // get stored access token
-          config.headers.Authorization = `Bearer ${auth}`; // set in header 
+        if (config.url !== '/auth' && config.url !== '/auth/logout') {
+          // If there's an auth token, attach it to the request
+          if (auth) {
+            config.headers.Authorization = `Bearer ${auth}`;
+          }
         }
         return config;
-        console.log(config)
       },
       (error) => {
         return Promise.reject(error);
       }
     );
     return () => {
-      axios.interceptors.request.eject(requestInterceptor);
-    } 
+      axiosInstanse.interceptors.request.eject(requestInterceptor);
+    };
   }, [auth]);
-}
+};
 
-
-
-
-
+// Response Interceptor
 export const ResponseInterceptor = () => {
-  const {auth} = useAuth()
+  const { auth, setAuth } = useAuth(); // Assuming you want to update auth token if refreshed
 
   useEffect(() => {
-    axiosInstanse.interceptors.response.use(
+    const responseInterceptor = axiosInstanse.interceptors.response.use(
       (response) => {
-        return response
+        return response;
       },
-      (error) => {
-        
+      async (error) => {
         const originalRequest = error.config;
-        if (error.response.status === 403 && !originalRequest._retry && error.response.config.url !== '/auth') { // Code inside this block will refresh the auth token
-     
-          originalRequest._retry = true;
-          const refreshToken = axiosInstanse.get("/auth/refresh")
-          if (refreshToken) {
-             
-            axiosInstanse.defaults.headers.common['Authorization'] = 'Bearer ' + refreshToken;
-            return axios(originalRequest);
-          }   
-      } 
-      return Promise.reject(error);
-    });
-    })
-  
-}
 
+        // If the response status is 403 (token expired)
+        if (error.response.status === 403 && !originalRequest._retry && originalRequest.url !== '/auth/refresh') {
+          originalRequest._retry = true;
+
+          // Try to refresh the token
+          try {
+            const refreshResponse = await axiosInstanse.get("/auth/refresh", {withCredentials:true});
+            const newAccessToken = refreshResponse.data.accessToken;
+            const dec = jwtDecode(newAccessToken)
+            console.log(dec.exp * 1000)
+
+            // Update the auth context with the new token
+            setAuth(newAccessToken);
+
+            // Retry the original request with the new token
+            originalRequest.headers['Authorization'] = `Bearer ${newAccessToken}`;
+            return axiosInstanse(originalRequest);
+          } catch (refreshError) {
+            // Handle refresh token failure (e.g., log out the user)
+            console.log("Failed to refresh token:", refreshError);
+            return Promise.reject(refreshError);
+          }
+        }
+
+        // If not a 403 error, reject the promise
+        return Promise.reject(error);
+      }
+    );
+
+    // Cleanup the interceptor on component unmount
+    return () => {
+      axiosInstanse.interceptors.response.eject(responseInterceptor);
+    };
+  }, [auth, setAuth]); // You might want to update auth context on a refresh
+
+  return null; // No UI rendering needed for this component
+};
 
 export default axiosInstanse;

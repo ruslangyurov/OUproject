@@ -27,16 +27,16 @@ const __dirname = dirname(__filename);
 //app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.json({extended:true}))
 app.use(express.urlencoded({extended:true}))
-app.use(cors());
+app.use(cors({origin: "http://localhost:3000", credentials:true}));
 app.options('*', cors());
 app.use(cookieParser())
 const mongoDb = "mongodb+srv://ruslangyurov:UPhkK4FkI2nVFUii@oucluster.dqizjw9.mongodb.net/?retryWrites=true&w=majority"
 
 app.use('/', express.static(path.join(__dirname, 'public')))
 
-app.get('/*', function (req, res) {
-  res.sendFile(path.join(__dirname, 'index.html'));
-});
+// app.get('/*', function (req, res) {
+//   res.sendFile(path.join(__dirname, 'index.html'));
+// });
 
 const PORT = process.env.PORT || 5000;
 const HOST = process.env.HOST || "localhost";
