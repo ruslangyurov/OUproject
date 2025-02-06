@@ -76,7 +76,7 @@ const refresh = (req, res) => {
 
             const accessToken = jwt.sign(
                 {
-                    "UserInfo": {
+                    "userInfo": {
                         "username": foundUser.username,
                         "roles": foundUser.role
                     }

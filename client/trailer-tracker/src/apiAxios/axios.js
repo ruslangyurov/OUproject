@@ -55,8 +55,8 @@ export const ResponseInterceptor = () => {
           try {
             const refreshResponse = await axiosInstanse.get("/auth/refresh", {withCredentials:true});
             const newAccessToken = refreshResponse.data.accessToken;
-            const dec = jwtDecode(newAccessToken)
-            console.log(dec.exp * 1000)
+            // const dec = jwtDecode(newAccessToken)
+            // console.log(dec.exp * 1000)
 
             // Update the auth context with the new token
             setAuth(newAccessToken);

@@ -11,6 +11,7 @@ import Paper from '@mui/material/Paper';
 
 
 
+
 export const EmptyTrailers = () => {
   const [emptyTrailers, setEmptyTrailers] = useState([])
   const [errMsg, setErrMsg] = useState("")
@@ -21,19 +22,24 @@ export const EmptyTrailers = () => {
     getResults()
   }, [])
 
-  const getResults = async() => {
-    await axios.get(YARD_URL).then((res) => setEmptyTrailers(res.data)).then(setLoading(false)).catch(err => {
-      if (err.request) {
-          setErrMsg(err.request.data)
-            }
-      if (!err?.response) {
-           setErrMsg("No Server Response");
-      } else if (err.response.status === 400) {
-           setErrMsg(err.response.data.message)
-      } else {setErrMsg(err.response.data.message)}
-          })
-    
+  const getResults = async () => {
+    try {
+        const res = await axios.get(YARD_URL);
+        if (res.data) {
+            setEmptyTrailers(res.data);
+            setLoading(false);
         }
+    } catch (err) {
+        if (!err.response) {
+            setErrMsg("No Server Response");
+        } else if (err.response.status === 400) {
+            setErrMsg(err.response.data.message);
+        } else {
+            setErrMsg(err.response.data?.message || "An error occurred");
+        }
+    }
+};
+
 
     if (loading) {
         return ""

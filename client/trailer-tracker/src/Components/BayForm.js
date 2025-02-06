@@ -5,7 +5,7 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-import axios from '../apiAxios/axios';
+import axiosInstance from '../apiAxios/axios';
 import SendIcon from '@mui/icons-material/Send';
 import Button from '@mui/material/Button';
 import { useState, useEffect } from 'react';
@@ -14,6 +14,7 @@ import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import BayForm from '../Components/BayForm'
 import { redirect } from 'react-router-dom';
+import {format} from 'date-fns';
 
 
 
@@ -59,7 +60,7 @@ export default function FormPropsTextFields(props) {
     }
 
     
-    await axios.patch(YARD_URL,bay).then((res) => setUpdated(res.data)).then(() => {
+    await axiosInstance.patch(YARD_URL,bay).then((res) => setUpdated(res.data)).then(() => {
       setEmptyBay(false)
       localStorage.setItem("emptyBay" + props.child, false)}).catch(err => {
             if (err.request) {
@@ -84,7 +85,7 @@ export default function FormPropsTextFields(props) {
     }
     
     // This will act as a delete operation on the app
-    await axios.patch(YARD_URL,bayDelete).then((res) => setUpdated(res.data)).then(() => 
+    await axiosInstance.patch(YARD_URL,bayDelete).then((res) => setUpdated(res.data)).then(() => 
       setEmptyBay(true),
       setValueNumber(""),
       setValueStock(""),
