@@ -60,19 +60,16 @@ export default function FormPropsTextFields(props) {
     }
 
     
-    await axiosInstance.patch(YARD_URL,bay).then((res) => setUpdated(res.data)).then(() => {
+    await axiosInstance.patch(YARD_URL,bay).then((res) => {
+      setUpdated(format(new Date(res.data), 'ppPP'))}).then(() => {
       setEmptyBay(false)
       localStorage.setItem("emptyBay" + props.child, false)}).catch(err => {
             if (err.request) {
               setErrMsg(err.request.data)
-            }
-            if (!err?.response) {
-              setErrMsg("No Server Response");
-            } else if (err.response.status === 400) {
-                setErrMsg(err.response.data)
-            } else {setErrMsg(err.response.data.message)}
+            } else {setErrMsg(err.message)}
           })
-        };
+        }
+    
    
   const handleDelete = async (e) => {
     e.preventDefault();
