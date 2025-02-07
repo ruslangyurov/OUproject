@@ -40,7 +40,23 @@ export const createNewUser = asyncHandler(async (req,res) => {
 // @access private
 
 const updateUser = asyncHandler(async (req,res) => {
-   
+   const {username, role, newUsername, newPassword, newRole} = req.body
+
+   const user = User.findOne({username:username, role:role})
+
+   if (!user) {
+    res.status(400).json({message: "User does not exist"})
+   }
+
+   user.username = newUsername !== "" ? newUsername:username
+   user.role = newRole !== "" ? newRole:role
+   user.password = password !== "" ? newPassword:user.password
+
+   const updatedUser = await user.save().then(() => {
+    res.status(200).json({message: "User info succesfully updated"}).catch(err => {
+        res.status(400).json({message: "Sth went wrong"})
+    })
+   })
 })
 // @desc delete user
 // @route DELETE /users

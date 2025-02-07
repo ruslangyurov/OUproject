@@ -10,8 +10,8 @@ import Login from './pages/Login'
 import Logout from './pages/Logout';
 import { Layout } from './Components/Layout';
 import {AdminLayout} from './Components/AdminLayout';
-import {AdminMenu} from './pages/AdminMenu';
-import {NewUser} from './pages/NewUser';
+import {AdminMenu} from './AdminPages/AdminMenu';
+import {NewUser} from './AdminPages/NewUser';
 import {Search} from './pages/Search'
 import { useState } from 'react';
 import { AuthContextProvider } from './apiContext/AuthContext';
@@ -34,19 +34,21 @@ export function App() {
               <Route index element = {<Home/>}/>
               <Route path = '/Login' element = {<Login/>} />
               <Route path = '/Logout' element = {<Logout />} />
-              <Route element = {<ProtectedRoute/>}>
-                <Route path = '/Inbound' element = {<Inbound />}/>
-                <Route path = '/Outbound' element = {<Outbound />}/>
-                <Route path = '/Parking' element = {<Parking />}/>
-                <Route path = '/Empty Trailers' element = {<EmptyTrailers />}/>
-                <Route path = '/Full Trailers' element = {<FullTrailers />}/>
-                <Route path = '/Search' element = {<Search />}/>
-             </Route> 
-              <Route element = {<ProtectedRoute/>}>
-                  <Route path = '/Admin' element = {<AdminMenu />}/>
-                  <Route path = '/NewUser' element = {<NewUser />}/>
-              </Route>
+              <Route path = '/Inbound' element = {<Inbound />}/>
+              <Route path = '/Outbound' element = {<Outbound />}/>
+              <Route path = '/Parking' element = {<Parking />}/>
+              <Route path = '/Empty Trailers' element = {<EmptyTrailers />}/>
+              <Route path = '/Full Trailers' element = {<FullTrailers />}/>
+              <Route path = '/Search' element = {<Search />}/>
+            </Route> 
+            
+            <Route path="/Admin" element={<AdminLayout />}>
+              <Route path="menu" element={<AdminMenu />} />
+              <Route path="menu/new-user" element={<NewUser />} />  
+              <Route path="menu/update - user" element={<NewUser />} /> 
+              <Route path="menu/delete-user" element={<NewUser />} /> 
             </Route>
+
           </Routes>
         </AuthContextProvider>
         
@@ -59,3 +61,28 @@ console.log('Hello console')
 
 export default App;
 
+
+
+{/* <AuthContextProvider>
+<RequestInterceptor/>
+<ResponseInterceptor/>
+<Routes>
+  <Route path = "/" element = {<Layout />}> 
+    <Route index element = {<Home/>}/>
+    <Route path = '/Login' element = {<Login/>} />
+    <Route path = '/Logout' element = {<Logout />} />
+    <Route element = {<ProtectedRoute/>}>
+      <Route path = '/Inbound' element = {<Inbound />}/>
+      <Route path = '/Outbound' element = {<Outbound />}/>
+      <Route path = '/Parking' element = {<Parking />}/>
+      <Route path = '/Empty Trailers' element = {<EmptyTrailers />}/>
+      <Route path = '/Full Trailers' element = {<FullTrailers />}/>
+      <Route path = '/Search' element = {<Search />}/>
+   </Route> 
+    <Route element = {<ProtectedRoute/>}>
+        <Route path = '/Admin' element = {<AdminMenu />}/>
+        <Route path = '/NewUser' element = {<NewUser />}/>
+    </Route>
+  </Route>
+</Routes>
+</AuthContextProvider> */}

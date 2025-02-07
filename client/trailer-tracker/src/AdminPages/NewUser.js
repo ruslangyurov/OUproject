@@ -3,9 +3,7 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import HomeIcon from "@mui/icons-material/Home";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "../apiAxios/axios";
-import { useContext } from "react";
-import { AuthContext } from "../apiContext/AuthContext";
+import axiosInstance from "../apiAxios/axios";
 import { useAdminLocation } from "../Components/Location";
 
 export const NewUser = () => {
@@ -20,8 +18,8 @@ export const NewUser = () => {
 
   
 
-  const createNewUser = async () => {
-    await axios.post("/user", { username, password, role }).catch((err) => {
+  const createNewUser = async() => {
+    await axiosInstance.post("/user", { username, password, role }).catch((err) => {
       if (!err?.response) {
         setErrMsg("No Server Response");
       } else if (err.response.status === 404) {
