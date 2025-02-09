@@ -27,12 +27,22 @@ export const createNewUser = asyncHandler(async (req,res) => {
    if (!username || !password) {
     res.status(400).json({message: "All fields are required"})
    }
+
+   const duplicate = User.findOne({username:username}).collation({locale:'en', strength:2}).lean().exec()
+   if (duplicate) {
+    return res.status(409).json({message:"Username already exists."})
+   }
+
    const hashedPwd = await bcrypt.hash(password,10) //salt rounds
    const userObj = {username, 'password':hashedPwd, role}
    // Create and store new user
    const user = await User.create(userObj)
-   .then(() => res.status(201).json({message:"New user added"}))
-   .catch(err => res.status(400).json("Error: " + err))
+   
+   if (user) {
+    return res.status(201).json({message:"Username succesfully created."})
+   } else {
+    return res.status(400).json({message:"Invalid data."})
+   }
 })
 
 // @desc update user
