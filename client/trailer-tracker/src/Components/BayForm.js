@@ -10,56 +10,66 @@ import SendIcon from '@mui/icons-material/Send';
 import Button from '@mui/material/Button';
 import { useState, useEffect } from 'react';
 import Switch from '@mui/material/Switch';
-import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import BayForm from '../Components/BayForm'
-import { redirect } from 'react-router-dom';
 import {format} from 'date-fns';
 
 
 
-export default function FormPropsTextFields(props) {
-  const [valueNumber, setValueNumber] = useState("Trailer Number")
-  const [valueStock, setValueStock] = useState("Stock Delivered")
-  const [empty, setEmpty] = useState('');
-  const [comment, setComment] = useState("")
-  const [msg, setErrMsg] = useState("")
-  const [updated, setUpdated] = useState("")
-  const [emptyBay, setEmptyBay] = useState(true)
 
+export default function BayForm(props) {
+  const [formData, setFormData] = useState({
+    trailerNumber: "Trailer Number",
+    stockDelivered: "Stock Delivered",
+    fullTrailer: '',
+    comment: '',
+  });
+  const [msg, setErrMsg] = useState("");
+  const [updated, setUpdated] = useState("");
+  const [emptyBay, setEmptyBay] = useState(true);
+
+  // Sync localStorage values with state when the component loads
   useEffect(() => {
-    setErrMsg("")}, [valueNumber, valueStock, empty, comment])
+    const localStorageData = {
+      trailerNumber: localStorage.getItem('trailerNumber' + props.child) || "Trailer Number",
+      stockDelivered: localStorage.getItem('stock' + props.child) || "Stock Delivered",
+      comment: localStorage.getItem('comment' + props.child) || "",
+      fullTrailer: localStorage.getItem('empty' + props.child) || '',
+    };
+    setFormData(localStorageData);
+    setEmptyBay(localStorage.getItem("emptyBay" + props.child) === "true");
+  }, [props.child]);
 
 
-    useEffect(() => {
-      setEmptyBay(localStorage.getItem("emptyBay" + props.child) === "true"?true:false)
-      setValueStock(localStorage.getItem("stock" + props.child))
-      setValueNumber(localStorage.getItem('trailerNumber' + props.child))
-      setComment(localStorage.getItem('comment' + props.child))
-      setEmpty(localStorage.getItem('fullTrailer' + props.child));
-    }, []);
+  // const handleClick = () => {
+  //   props.onClick(props.index)
+  // }
+
+  const updateStorage = (field, value) => {
+    localStorage.setItem(field + props.child, value);
+    setFormData(prevState => ({...prevState, [field]:value}))
+  }
+
+  //Function to create a new entry for a particular bay in the database
 
   const bay = {
     bayNumber: props.child,
-    trailerNumber: valueNumber, 
-    stockDelivered: valueStock,
-    fullTrailer: empty,
-    comment: comment,
+    trailerNumber:formData.trailerNumber, 
+    stockDelivered:formData.stock,
+    fullTrailer: formData.empty,
+    comment: formData.comment,
     trestleOn: false
   }
 
-  const handleClick = () => {
-    props.onClick(props.index)
-  }
+  
+
+  
 
   const YARD_URL = "/yard"
-  const handleSubmit = async (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
-    if (valueNumber === "Trailer number" || props.empty === "None") {
+    if (formData.trailerNumber === "Trailer number" || formData.trailerNumber === "") {
       setErrMsg("Please fill in all the required fields")
     }
-
-    
     await axiosInstance.patch(YARD_URL,bay).then((res) => {
       setUpdated(format(new Date(res.data), 'ppPP'))}).then(() => {
       setEmptyBay(false)
@@ -70,6 +80,7 @@ export default function FormPropsTextFields(props) {
           })
         }
     
+  // Bay is empty. Data is reset
    
   const handleDelete = async (e) => {
     e.preventDefault();
@@ -80,39 +91,40 @@ export default function FormPropsTextFields(props) {
       fullTrailer: "full",
       comment: ""
     }
+
+    const newFormData = {trailerNumber:"", stock: "", empty:"full", comment:""}
     
     // This will act as a delete operation on the app
-    await axiosInstance.patch(YARD_URL,bayDelete).then((res) => setUpdated(res.data)).then(() => 
-      setEmptyBay(true),
-      setValueNumber(""),
-      setValueStock(""),
-      setEmpty(""),
-      setComment(""),
-      localStorage.setItem("emptyBay" + props.child, "true"),
-      localStorage.setItem("trailerNumber" + props.child, ""),
-      localStorage.setItem("stock" + props.child, ""),
-      localStorage.setItem("fullTrailer" + props.child, ""),
-      localStorage.setItem("comment" + props.child, "")).catch(err => {
-                  if (err.request) {
-                    setErrMsg(err.request.data)
-                  }
-                  if (!err?.response) {
-                    setErrMsg("No Server Response");
-                  } else if (err.response.status === 400) {
-                      setErrMsg(err.response.data)
-                  } else {setErrMsg(err.response.data.message)}
-                })
+
     
-  }   
-  
+    await axiosInstance.patch(YARD_URL,bayDelete).then((res) => setUpdated(res.data)).then(() => {
+      setFormData(newFormData);
+      localStorage.removeItem("emptyBay" + props.child);
+      localStorage.removeItem("trailerNumber" + props.child);
+      localStorage.removeItem("stock" + props.child);
+      localStorage.removeItem("empty" + props.child);
+      localStorage.removeItem("comment" + props.child);
+    }).catch((err) => {
+      setErrMsg(err.request ? err.request.data : err.message);
     
-      
-  return (
+  });
+}
     
-    <Box
-      component="form" onSubmit={handleSubmit}
+return (
+    
+  <Box
+      component="form"
+      onSubmit={handleSubmit}
       sx={{
-        '& .MuiTextField-root': {m: 0, width: '30ch' },
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        gap: 2,
+        maxWidth: 500,
+        width: "100%",
+        mx: "auto",
+        p: 2,
+        boxSizing: "border-box",
       }}
       noValidate
       autoComplete="off"
@@ -124,36 +136,30 @@ export default function FormPropsTextFields(props) {
       
       <div>
         <TextField
+        
           required
-          onClick = {() => {if (valueNumber === "Trailer Number") {setValueNumber("")}}}
-          onChange = {(e) => {
-            setValueNumber(e.target.value)
-            localStorage.setItem('trailerNumber'+ props.child, e.target.value)
+          onClick = {() => {if (formData.trailerNumber === "Trailer Number") {setFormData({...formData, trailerNumber:""})}}}
+          onChange = {(e) => {updateStorage("trailerNumber" + props.child, e.target.value)
           }}
          
           id="outlined-required"
           label="Required"
-          value = {valueNumber}
+          value = {formData.trailerNumber}
           helperText = "Please enter trailer number"
-          error = {valueNumber === "TrailerNumber"|| valueNumber === ""}
+          error = {formData.trailerNumber === "TrailerNumber"||formData.trailerNumber === ""}
         />
         <TextField
-          onClick = {() => {if (valueStock === "Stock Delivered") {setValueStock("")}}}
-          onChange = {(e) => {
-            setValueStock(e.target.value)
-            localStorage.setItem('stock' + props.child, e.target.value)}}
+          onClick = {() => {if (formData.stock === "Stock Delivered") {setFormData({...formData, stock:""})}}}
+          onChange = {(e) => {updateStorage("stock" + props.child, e.target.value)}}
           id="Stock - text"
-          value= {valueStock}
+          value= {FormData.stock}
           label = 'Stock'
           helperText="Enter type of stock delivered"
         />
        
         <TextField
-          onClick = {() => {if (comment === "Comment") {setComment("")}}}
-          onChange = {(e) => {
-            setComment(e.target.value)
-            localStorage.setItem('comment' + props.child, e.target.value)
-          }}
+          onClick = {() => {if (formData.comment === "Comment") {setFormData({...formData, comment:""})}}}
+          onChange = {(e) => {updateStorage("comment" + props.child, e.target.value)}}
           id="Comment - text"
           label='Comment'
           
@@ -163,14 +169,11 @@ export default function FormPropsTextFields(props) {
           <Select
             labelId="StandTrailer"
             id="Trailer"
-            value={empty}
+            value={formData.empty}
             label="Stand Trailer"
-            error = {empty === ""}
-            onChange = {(e) => {
-              setEmpty(e.target.value)
-              localStorage.setItem('fullTrailer' + props.child, e.target.value)
-            }}
-          >
+            error = {formData.empty === ""}
+            onChange = {(e) => {updateStorage("empty" + props.child, e.target.value)}}
+             >
             <MenuItem value={"Full"}>Full Trailer</MenuItem>
             <MenuItem value={"Empty"}>Empty Trailer</MenuItem>
             

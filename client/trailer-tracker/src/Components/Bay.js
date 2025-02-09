@@ -30,9 +30,9 @@ export default function Bay(props) {
                expandIcon={<ExpandMoreIcon />}
                 aria-controls="panel1-content"
                 id="panel1-header"
-                sx = {{m:'auto', bgcolor:'#e3f2fd', height:'15%'}}>
+                sx = {{bgcolor:'#e3f2fd', height:'15%'}}>
                     {props.child}
-                    <BayForm child = {props.child} state = {props.state} filter = {props.filter}/>
+                    <BayForm  child = {props.child} state = {props.state} filter = {props.filter}sx = {{position:"absolute",m:0}}/>
             </AccordionSummary>
             <AccordionActions>
                 <FormGroup>

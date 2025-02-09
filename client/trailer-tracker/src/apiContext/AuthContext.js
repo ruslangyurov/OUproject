@@ -9,10 +9,10 @@ export const AuthContextProvider = ({ children }) => {
   const isAuth = !!auth;
   if (isAuth) {
     const decoded = jwtDecode(auth);
-    const { username, role } = decoded.userInfo
+    const { username, role, user_id } = decoded.userInfo
     
     return (
-        <AuthContext.Provider value={{ username, role, isAuth, auth, setAuth }}>
+        <AuthContext.Provider value={{ username, user_id, role, isAuth, auth, setAuth }}>
             {children}
         </AuthContext.Provider>
   );
