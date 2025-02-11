@@ -2,8 +2,8 @@ import express from 'express';
 import "dotenv/config";
 import mongoose from 'mongoose';
 import cors from 'cors';
+import {createServer} from "http"
 import {Server} from 'socket.io';
-const app = express();
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 //import * as bodyParser from 'body-parser'
@@ -17,6 +17,11 @@ import cookieParser from 'cookie-parser';
 import * as path from 'path';
 
 //app.use(logger)
+
+const app = express();
+const httpServer = createServer(app);
+const io = new Server(httpServer);
+
 
 
 const __filename = fileURLToPath(import.meta.url);
@@ -34,41 +39,24 @@ const mongoDb = "mongodb+srv://ruslangyurov:UPhkK4FkI2nVFUii@oucluster.dqizjw9.m
 
 app.use('/', express.static(path.join(__dirname, 'public')))
 
-// app.get('/*', function (req, res) {
-//   res.sendFile(path.join(__dirname, 'index.html'));
-// });
+
 
 const PORT = process.env.PORT || 5000;
 const HOST = process.env.HOST || "localhost";
-const server = app.listen(PORT, HOST);
-// const io = new Server(server);
-// export default io;
+httpServer.listen(PORT, HOST);
 
 
 mongoose.connect(mongoDb).then(() => console.log(
     `server is runnin on port ${PORT}`
 )).catch(err => console.log(err))
 
-// io.on('connection', (socket) => {
-//     console.log('A user connected');
-  
-    // Send existing messages to the connected client
-    // Message.find().then((messages) => {
-    //   socket.emit('init', messages);
-    // });
-  
-    // Listen for new messages from the client
-  //   socket.on('message', (msg) => {
-  //     const message = new Message(msg);
-  //     message.save().then(() => {
-  //       io.emit('message', message); // Broadcast the message to all connected clients
-  //     });
-  //   });
-  
-  //   socket.on('disconnect', () => {
-  //     console.log('A user disconnected');
-  //   });
-  // });
+const onConnection = (socket) => {
+    bayUpdateHandler(io, socket)
+}
+
+io.on("connection", (socket) => {
+    console.log("A new user is connected.")
+})
   
  app.use('/', defaultRoute)
  app.use('/yard', yardRoute)

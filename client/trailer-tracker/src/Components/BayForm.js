@@ -16,6 +16,7 @@ import {format} from 'date-fns';
 
 
 
+
 export default function BayForm(props) {
   const [formData, setFormData] = useState({
     trailerNumber: "Trailer Number",

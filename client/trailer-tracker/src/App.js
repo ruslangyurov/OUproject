@@ -18,10 +18,16 @@ import { AuthContextProvider } from './apiContext/AuthContext';
 import {ProtectedRoute} from './Components/ProtectedRoute';
 import { RequestInterceptor, ResponseInterceptor } from './apiAxios/axios';
 import "./App.css"; 
+import {io} from 'socket.io-client';
 
 
 export function App() {
-  
+
+  const socket = io("http://localhost:10000")
+
+  socket.on("connect", () => {
+    console.log("Socket " + socket.id  + " connected.")
+  })
 
   return (
     
