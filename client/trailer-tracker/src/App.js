@@ -22,13 +22,16 @@ import {io} from 'socket.io-client';
 
 
 export function App() {
+  const[wsConnected, setWsConnected] = useState(false)
 
-  const socket = io("http://localhost:10000")
+  const onConnect = () => {
+    setWsConnected(true)
+  }
 
-  socket.on("connect", () => {
-    console.log("Socket " + socket.id  + " connected.")
-  })
-
+  const onDisconnect = () => {
+    setWsConnected(false)
+  }
+ 
   return (
     
       <div className='App'>

@@ -3,7 +3,7 @@ import "dotenv/config";
 import mongoose from 'mongoose';
 import cors from 'cors';
 import {createServer} from "http"
-import {Server} from 'socket.io';
+import { InitialiseSocketio } from './middleware/socketio.js';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 //import * as bodyParser from 'body-parser'
@@ -20,7 +20,7 @@ import * as path from 'path';
 
 const app = express();
 const httpServer = createServer(app);
-const io = new Server(httpServer);
+InitialiseSocketio(httpServer)
 
 
 

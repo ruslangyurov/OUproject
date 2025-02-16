@@ -26,24 +26,29 @@ export const Inbound = () => {
               onClick = {onBayClick} filter = {filter} index = {j} sx={{m:0}}/>)
              }
 
-    if (filter === false) {
-        return (
-            <>
-                  <div> <Button variant="contained" onClick={() => {setFilter(true)}} sx={{position:"absolute",mb:"2px",height:53, width:100}}>Filter</Button></div>  
+             return (
+                <>
+                  {!filter && (
+                    <Button
+                      variant="contained"
+                      onClick={() => setFilter(true)}
+                      sx={{ position: "absolute", mb: "2px", height: 53, width: 100 }}
+                    >
+                      Filter
+                    </Button>
+                  )}
+            
                   {bayList}
-                 
-            </>
-           
-            )
-    } else {
-        return (
-            <>
-                 
-                  {bayList}
-                  <Button variant="contained" onClick={() => {setFilter(false)}} sx={{ml:2,height:53, width:100}}>Unfilter</Button>
-            </>
-           
-            )
-    }
-    
-}
+            
+                  {filter && (
+                    <Button
+                      variant="contained"
+                      onClick={() => setFilter(false)}
+                      sx={{ ml: 2, height: 53, width: 100 }}
+                    >
+                      Unfilter
+                    </Button>
+                  )}
+                </>
+              );
+            };

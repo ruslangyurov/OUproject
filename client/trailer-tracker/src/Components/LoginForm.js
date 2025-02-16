@@ -18,7 +18,7 @@ export const BasicLogin = () => {
   const[username, setUsername] = useState("")
   const[password, setPassword] = useState("")
   const [errMsg, setErrMsg] = useState("")
-  const {auth,setAuth} = useContext(AuthContext)
+  const {auth,setAuth, onConnect, onDisconnect} = useContext(AuthContext)
   const LOGIN_URL = '/auth'
 
   const navigate = useNavigate();
@@ -31,10 +31,19 @@ export const BasicLogin = () => {
 
   useEffect(() => {
     if (auth) {
+      const newSocket = io("ws://localhost:10000")
+      newSocket.on("connect", onConnect)
+      newSocket.on("disconnect", onDisconnect)
       navigate("/"); // Redirect on successful login
+
+      return () => {
+        newSocket.off("connect", onConnect);
+        newSocket.off("disconnect", onDisconnect)
+        newSocket.close();
+      }
      
     }
-  }, [auth, navigate]);
+  }, [auth, navigate, onConnect, onDisconnect]);
 
   const handleLogin = async(e) => {
     e.preventDefault();
