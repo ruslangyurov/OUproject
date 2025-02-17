@@ -12,18 +12,18 @@ import { useState, useEffect } from 'react';
 import Switch from '@mui/material/Switch';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import {format} from 'date-fns';
+import {socket} from './socket'
+import { useAuth } from '../apiContext/AuthContext';
 
 
 
 
 
 export default function BayForm(props) {
-  const [formData, setFormData] = useState({
-    trailerNumber: "Trailer Number",
-    stockDelivered: "Stock Delivered",
-    fullTrailer: '',
-    comment: '',
-  });
+
+  const {username} = isAuth();
+
+  
   const [msg, setErrMsg] = useState("");
   const [updated, setUpdated] = useState("");
   const [emptyBay, setEmptyBay] = useState(true);
@@ -36,7 +36,7 @@ export default function BayForm(props) {
       comment: localStorage.getItem('comment' + props.child) || "",
       fullTrailer: localStorage.getItem('empty' + props.child) || '',
     };
-    setFormData(localStorageData);
+    props.setFormData(localStorageData);
     setEmptyBay(localStorage.getItem("emptyBay" + props.child) === "true");
   }, [props.child]);
 
@@ -45,9 +45,12 @@ export default function BayForm(props) {
   //   props.onClick(props.index)
   // }
 
+
+
   const updateStorage = (field, value) => {
     localStorage.setItem(field + props.child, value);
     setFormData(prevState => ({...prevState, [field]:value}))
+    socket.emit("userTyping", username)
   }
 
   //Function to create a new entry for a particular bay in the database
@@ -66,19 +69,8 @@ export default function BayForm(props) {
   
 
   const YARD_URL = "/yard"
-  const handleSubmit = async(e) => {
-    e.preventDefault();
-    if (formData.trailerNumber === "Trailer number" || formData.trailerNumber === "") {
-      setErrMsg("Please fill in all the required fields")
-    }
-    await axiosInstance.patch(YARD_URL,bay).then((res) => {
-      setUpdated(format(new Date(res.data), 'ppPP'))}).then(() => {
-      setEmptyBay(false)
-      localStorage.setItem("emptyBay" + props.child, false)}).catch(err => {
-            if (err.request) {
-              setErrMsg(err.request.data)
-            } else {setErrMsg(err.message)}
-          })
+  const handleSubmit = () => {
+      socket.emit("bayUpdated", formData)
         }
     
   // Bay is empty. Data is reset

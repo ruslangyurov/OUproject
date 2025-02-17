@@ -8,6 +8,7 @@ import axios from '../apiAxios/axios';
 import { useContext } from 'react';
 import { AuthContext } from '../apiContext/AuthContext';
 import axiosInstanse from '../apiAxios/axios';
+import { socket } from './socket';
 
 
 
@@ -31,7 +32,7 @@ export const BasicLogin = () => {
 
   useEffect(() => {
     if (auth) {
-      const newSocket = io("ws://localhost:10000")
+      const newSocket = socket
       newSocket.on("connect", onConnect)
       newSocket.on("disconnect", onDisconnect)
       navigate("/"); // Redirect on successful login
