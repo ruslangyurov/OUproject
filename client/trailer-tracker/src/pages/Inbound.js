@@ -17,9 +17,7 @@ export const Inbound = () => {
       comment: '',
     });
   
-  const setBayData = () => {
-
-  }
+  
 
  
   const bayList = useMemo(() => {

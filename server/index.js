@@ -3,7 +3,7 @@ import "dotenv/config";
 import mongoose from 'mongoose';
 import cors from 'cors';
 import {createServer} from "http"
-import { InitialiseSocketio } from './middleware/socketio.js';
+import { InitialiseSocketio, getIO } from './middleware/socketio.js';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 //import * as bodyParser from 'body-parser'
@@ -15,6 +15,7 @@ import userAuthRoute from './routes/userAuthRoute.js';
 import userRoute from './routes/userRoute.js';
 import cookieParser from 'cookie-parser';
 import * as path from 'path';
+import { updateBay } from './controller/yardController.js';
 
 //app.use(logger)
 
@@ -22,7 +23,11 @@ const app = express();
 const httpServer = createServer(app);
 InitialiseSocketio(httpServer)
 
+io = getIO()
+io.on("bayUpdated",(formData, response) => {
+   updateBay(formData, callback);
 
+})
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);

@@ -32,9 +32,9 @@ export default function BayForm(props) {
   useEffect(() => {
     const localStorageData = {
       trailerNumber: localStorage.getItem('trailerNumber' + props.child) || "Trailer Number",
-      stockDelivered: localStorage.getItem('stock' + props.child) || "Stock Delivered",
+      stockDelivered: localStorage.getItem('stockDelivered' + props.child) || "Stock Delivered",
       comment: localStorage.getItem('comment' + props.child) || "",
-      fullTrailer: localStorage.getItem('empty' + props.child) || '',
+      fullTrailer: localStorage.getItem('fullTrailer' + props.child) || '',
     };
     props.setFormData(localStorageData);
     setEmptyBay(localStorage.getItem("emptyBay" + props.child) === "true");
@@ -55,22 +55,9 @@ export default function BayForm(props) {
 
   //Function to create a new entry for a particular bay in the database
 
-  const bay = {
-    bayNumber: props.child,
-    trailerNumber:formData.trailerNumber, 
-    stockDelivered:formData.stock,
-    fullTrailer: formData.empty,
-    comment: formData.comment,
-    trestleOn: false
-  }
-
-  
-
-  
-
   const YARD_URL = "/yard"
   const handleSubmit = () => {
-      socket.emit("bayUpdated", formData)
+      socket.emit("bayUpdated", props.formData)
         }
     
   // Bay is empty. Data is reset
