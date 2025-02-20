@@ -23,11 +23,11 @@ const createBay = asyncHandler(async(req,res) => {
    .catch(err => res.status(400).json("Error: " + err))
 })
 
-const updateBay = asyncHandler((data, callback) => {
+const updateBay = asyncHandler(async(data) => {
     const {bayNumber, trailerNumber, stockDelivered, fullTrailer, comment} = data
 
     if (!bayNumber||!fullTrailer || !trailerNumber) {
-        callback({status: "400", message: "Please fill out all the required fields"})
+        return ({status: "400"})
     }
     
     
@@ -39,17 +39,14 @@ const updateBay = asyncHandler((data, callback) => {
         comment:comment
     }
 
-    var newBay = Bay.findOneAndUpdate({bayNumber:req.body.bayNumber}, update).exec()
+    const newBay =  await Bay.findOneAndUpdate({bayNumber:bayNumber}, update, {new:true, runValidators:true}).exec()
 
     if (!newBay) {
-        return res.status(400).json("No bay found")
-    }
-
-   
-
-
-    res.json(newBay.updatedAt)
+        return ({status: "401"})
+    } 
+    return {status: "200", bayInfo: newBay, UpdateTime:newBay.updatedAt}
 })
+
 
 const getEmptyTrailers = asyncHandler(async(req, res) => {
 

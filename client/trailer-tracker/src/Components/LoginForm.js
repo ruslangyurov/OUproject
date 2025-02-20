@@ -6,7 +6,7 @@ import { useState, useEffect} from "react";
 import { useNavigate } from "react-router-dom";
 import axios from '../apiAxios/axios';
 import { useContext } from 'react';
-import { AuthContext } from '../apiContext/AuthContext';
+import { AuthContext } from '../Config/AuthContext';
 import axiosInstanse from '../apiAxios/axios';
 import { socket } from './socket';
 

@@ -14,7 +14,7 @@ import {AdminMenu} from './AdminPages/AdminMenu';
 import {NewUser} from './AdminPages/NewUser';
 import {Search} from './pages/Search'
 import { useState } from 'react';
-import { AuthContextProvider } from './apiContext/AuthContext';
+import { AuthContextProvider } from './Config/AuthContext';
 import {ProtectedRoute} from './Components/ProtectedRoute';
 import { RequestInterceptor, ResponseInterceptor } from './apiAxios/axios';
 import "./App.css"; 

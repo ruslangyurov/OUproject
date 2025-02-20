@@ -17,7 +17,7 @@ import { useEffect, useState,useContext } from 'react';
 import { styled, alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
-import { useAuth } from '../apiContext/AuthContext';
+import { useAuth } from '../Config/AuthContext';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',

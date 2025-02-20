@@ -3,7 +3,7 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { useNavigate } from "react-router-dom";
 import { useEffect, useContext, useState } from 'react';
-import { AuthContext } from '../apiContext/AuthContext';
+import { AuthContext } from '../Config/AuthContext';
 import axiosInstanse from '../apiAxios/axios';
 
 

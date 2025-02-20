@@ -24,9 +24,19 @@ const httpServer = createServer(app);
 InitialiseSocketio(httpServer)
 
 io = getIO()
-io.on("bayUpdated",(formData, response) => {
-   updateBay(formData, callback);
-
+io.on("bayUpdated", async(formData, callback, socket) => {
+   try {
+    const updatedBay =  await updateBay(formData);
+    if (tryToUpdate.status === "400") {
+      return callback({status: "400",message: "Please fill out all the required fields"})
+    } 
+   if (tryToUpdate.status === "401") {
+      return callback({status: "401",message: "Please fill out all the required fields"})
+   }
+   socket.emit("baySuccesfullyUpdated", updatedBay)
+   } catch (error) {
+      return callback({status: "500", message: "Sth went wrong. Please try again later"})
+   }
 })
 
 const __filename = fileURLToPath(import.meta.url);
@@ -55,13 +65,8 @@ mongoose.connect(mongoDb).then(() => console.log(
     `server is runnin on port ${PORT}`
 )).catch(err => console.log(err))
 
-const onConnection = (socket) => {
-    bayUpdateHandler(io, socket)
-}
 
-io.on("connection", (socket) => {
-    console.log("A new user is connected.")
-})
+
   
  app.use('/', defaultRoute)
  app.use('/yard', yardRoute)

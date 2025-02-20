@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useAuth } from "../apiContext/AuthContext";
+import { useAuth } from "../Config/AuthContext";
 import { useEffect } from "react";
 import { jwtDecode } from "jwt-decode";
 
