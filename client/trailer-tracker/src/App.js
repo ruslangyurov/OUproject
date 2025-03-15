@@ -15,6 +15,7 @@ import {NewUser} from './AdminPages/NewUser';
 import {Search} from './pages/Search'
 import { useState } from 'react';
 import { AuthContextProvider } from './Config/AuthContext';
+import { SocketContextProvider } from './Config/SocketContext';
 import {ProtectedRoute} from './Components/ProtectedRoute';
 import { RequestInterceptor, ResponseInterceptor } from './apiAxios/axios';
 import "./App.css"; 
@@ -36,29 +37,31 @@ export function App() {
     
       <div className='App'>
         <AuthContextProvider>
-          <RequestInterceptor/>
-          <ResponseInterceptor/>
-          <Routes>
-            <Route path = "/" element = {<Layout />}> 
-              <Route index element = {<Home/>}/>
-              <Route path = '/Login' element = {<Login/>} />
-              <Route path = '/Logout' element = {<Logout />} />
-              <Route path = '/Inbound' element = {<Inbound />}/>
-              <Route path = '/Outbound' element = {<Outbound />}/>
-              <Route path = '/Parking' element = {<Parking />}/>
-              <Route path = '/Empty Trailers' element = {<EmptyTrailers />}/>
-              <Route path = '/Full Trailers' element = {<FullTrailers />}/>
-              <Route path = '/Search' element = {<Search />}/>
-            </Route> 
-            
-            <Route path="/Admin" element={<AdminLayout />}>
-              <Route path="menu" element={<AdminMenu />} />
-              <Route path="menu/new-user" element={<NewUser />} />  
-              <Route path="menu/update - user" element={<NewUser />} /> 
-              <Route path="menu/delete-user" element={<NewUser />} /> 
-            </Route>
+          <SocketContextProvider>
+            <RequestInterceptor/>
+            <ResponseInterceptor/>
+            <Routes>
+              <Route path = "/" element = {<Layout />}> 
+                <Route index element = {<Home/>}/>
+                <Route path = '/Login' element = {<Login/>} />
+                <Route path = '/Logout' element = {<Logout />} />
+                <Route path = '/Inbound' element = {<Inbound />}/>
+                <Route path = '/Outbound' element = {<Outbound />}/>
+                <Route path = '/Parking' element = {<Parking />}/>
+                <Route path = '/Empty Trailers' element = {<EmptyTrailers />}/>
+                <Route path = '/Full Trailers' element = {<FullTrailers />}/>
+                <Route path = '/Search' element = {<Search />}/>
+              </Route> 
+              
+              <Route path="/Admin" element={<AdminLayout />}>
+                <Route path="menu" element={<AdminMenu />} />
+                <Route path="menu/new-user" element={<NewUser />} />  
+                <Route path="menu/update - user" element={<NewUser />} /> 
+                <Route path="menu/delete-user" element={<NewUser />} /> 
+              </Route>
 
-          </Routes>
+            </Routes>
+          </SocketContextProvider>
         </AuthContextProvider>
         
       </div>

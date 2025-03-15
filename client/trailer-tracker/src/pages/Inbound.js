@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react'
+import {useCallback, useEffect, useState} from 'react'
 import Button from '@mui/material/Button';
 import Bay from '../Components/Bay'
 import {socket} from '../socket.js'
@@ -10,37 +10,30 @@ export const Inbound = () => {
   // By default each bay has no trestles
   const [trestle, setTrestle] = useState([false, false, false, false])
   const [filter, setFilter] = useState(false)
-  const [formData, setFormData] = useState({
-      trailerNumber: "Trailer Number",
-      stockDelivered: "Stock Delivered",
-      fullTrailer: '',
-      comment: '',
-    });
+  
   
   
 
  
   const bayList = useMemo(() => {
-    trestle.map((state, index) => {
+    return trestle.map((state, index) => {
       <Bay
-        key={j}
-        formData={formData} // Pass formData
-        setFormData={setFormData} // Pass setFormData
-        child={j + 1}
+        key={index}
+        child={index + 1}
         state={state}
         onClick={onBayClick}
         filter={filter}
-        index={j}
+        index={index}
         sx={{ m: 0 }}
       />
     })
-  }, [trestle, filter, formData])
+  }, [trestle, filter])
   
   
 
 
  
-  function onBayClick (bayIndex) {
+  const onBayClick = useCallback((bayIndex) =>  {
         // iterating through the array
         setTrestle(previousPositions => previousPositions.map((it, index) => {
         // if the clicked index matches this one we iterate
@@ -49,7 +42,7 @@ export const Inbound = () => {
         }
         return it // otherwise keep it as it is
         }))
-  }
+  },[])
   
     
 

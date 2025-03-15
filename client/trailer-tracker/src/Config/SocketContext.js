@@ -1,32 +1,56 @@
 import react from 'react';
 import {io} from 'socket.io-client';
-import {useState,useContext} from 'react'
+import {useState,createContext, useRef} from 'react'
 import { useEffect } from 'react';
 import { set } from 'mongoose';
 
 
 
-const socketContextProvider = createContext()
 
-const socketContext = () => {
-    const [InitialiseSocket, setInitialiseSocket] = useState(false);
+const socketContext = createContext()
+
+export const SocketContextProvider = () => {
+    const [isConnected, setIsConnected] = useState(false);
     const [bayUpdated, setBayUpdated] = useState(null)
 
-    const socket = io()
+    const socketRef = useRef(null)
+     
     
     useEffect(() => {
+      if (!socketRef.current) {
+        socketRef.current = io("http://localhost:10000")
+      }
+
+      const socket = socketRef.current;
+
       socket.on("connect", () => {
-        setInitialiseSocket(true)
+        setIsConnected(true)
     })
       socket.on("disconnect", () => {
-        setInitialiseSocket(false)
+        setIsConnected(false)
       })
 
-      socket.on("baySuccesfullyUpdated", (response) => {
-            if (response.status === "200") {
-                setBayUpdated
+      socket.on("bayUpdated", (data) => {
+            if (data.status === "200") {
+                setBayUpdated(data.bayInfo) 
             }
       })
+
+      return () => {
+        socket.off("connect")
+        socket.off("disconnect")
+        socket.off("bayUpdated")
+      }
     
-    })
+    }, [])
+
+  return (
+    <socketContext.Provider value = {{socket, isConnected, bayUpdated}}>
+      {children}
+    </socketContext.Provider>
+  )
+
+  export const getSocketContext = () => {
+    scontext = 
+  }
 }

@@ -21,22 +21,29 @@ import { useAuth } from '../Config/AuthContext';
 
 export default function BayForm(props) {
 
-  const {username} = isAuth();
+  const [formData, setFormData] = useState({
+    trailerNumber: "Trailer Number",
+    stockDelivered: "Stock Delivered",
+    fullTrailer: '',
+    comment: '',
+  });
 
-  
+  const {username} = isAuth();
   const [msg, setErrMsg] = useState("");
   const [updated, setUpdated] = useState("");
   const [emptyBay, setEmptyBay] = useState(true);
 
   // Sync localStorage values with state when the component loads
   useEffect(() => {
+
+  
     const localStorageData = {
       trailerNumber: localStorage.getItem('trailerNumber' + props.child) || "Trailer Number",
       stockDelivered: localStorage.getItem('stockDelivered' + props.child) || "Stock Delivered",
       comment: localStorage.getItem('comment' + props.child) || "",
       fullTrailer: localStorage.getItem('fullTrailer' + props.child) || '',
     };
-    props.setFormData(localStorageData);
+    setFormData(localStorageData);
     setEmptyBay(localStorage.getItem("emptyBay" + props.child) === "true");
   }, [props.child]);
 
@@ -57,7 +64,7 @@ export default function BayForm(props) {
 
   const YARD_URL = "/yard"
   const handleSubmit = () => {
-      socket.emit("bayUpdated", props.formData)
+      socket.emit("bayUpdate", formData)
         }
     
   // Bay is empty. Data is reset
@@ -119,7 +126,7 @@ return (
         
           required
           onClick = {() => {if (formData.trailerNumber === "Trailer Number") {setFormData({...formData, trailerNumber:""})}}}
-          onChange = {(e) => {updateStorage("trailerNumber" + props.child, e.target.value)
+          onChange = {(e) => {updateStorage("trailerNumber", e.target.value)
           }}
          
           id="outlined-required"
