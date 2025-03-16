@@ -1,4 +1,5 @@
 import React from 'react';
+import "normalize.css";
 import {BrowserRouter as Router, Routes,Route, useActionData} from "react-router-dom"
 import {Inbound} from "./pages/Inbound";
 import {Home} from "./pages/Home";

@@ -12,8 +12,9 @@ import { useState, useEffect } from 'react';
 import Switch from '@mui/material/Switch';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import {format} from 'date-fns';
-import {socket} from './socket'
 import { useAuth } from '../Config/AuthContext';
+import {useSocketContext} from '../Config/SocketContext';
+import { socket } from './socket.js';
 
 
 
@@ -28,15 +29,15 @@ export default function BayForm(props) {
     comment: '',
   });
 
-  const {username} = isAuth();
+  const {username} = useAuth();
   const [msg, setErrMsg] = useState("");
   const [updated, setUpdated] = useState("");
   const [emptyBay, setEmptyBay] = useState(true);
 
-  // Sync localStorage values with state when the component loads
-  useEffect(() => {
+  const {bayData} = useSocketContext()
 
-  
+  useEffect(() => {
+    // Load data from local storage when the component mounts
     const localStorageData = {
       trailerNumber: localStorage.getItem('trailerNumber' + props.child) || "Trailer Number",
       stockDelivered: localStorage.getItem('stockDelivered' + props.child) || "Stock Delivered",
@@ -45,7 +46,30 @@ export default function BayForm(props) {
     };
     setFormData(localStorageData);
     setEmptyBay(localStorage.getItem("emptyBay" + props.child) === "true");
-  }, [props.child]);
+  }, [props.child]); // Runs once when `props.child` changes
+  
+  
+  useEffect(() => {
+    if (bayData) {
+      // Update the form with the received socket data
+      setUpdated(bayData.updatedAt)
+      const newData = {
+        trailerNumber: bayData.trailerNumber || "",
+        stockDelivered: bayData.stockDelivered || "",
+        fullTrailer: bayData.fullTrailer || "",
+        comment: bayData.comment || "",
+      };
+  
+      setFormData(newData);
+  
+      // Save to local storage to make it persistent
+      localStorage.setItem("trailerNumber" + props.child, newData.trailerNumber);
+      localStorage.setItem("stockDelivered" + props.child, newData.stockDelivered);
+      localStorage.setItem("fullTrailer" + props.child, newData.fullTrailer);
+      localStorage.setItem("comment" + props.child, newData.comment);
+    }
+  }, [bayData, props.child]); // Runs whenever `bayUpdated` changes
+  
 
 
   // const handleClick = () => {
@@ -55,8 +79,8 @@ export default function BayForm(props) {
 
 
   const updateStorage = (field, value) => {
-    localStorage.setItem(field + props.child, value);
     setFormData(prevState => ({...prevState, [field]:value}))
+    localStorage.setItem(field + props.child, value);
     socket.emit("userTyping", username)
   }
 
@@ -139,7 +163,7 @@ return (
           onClick = {() => {if (formData.stock === "Stock Delivered") {setFormData({...formData, stock:""})}}}
           onChange = {(e) => {updateStorage("stock" + props.child, e.target.value)}}
           id="Stock - text"
-          value= {FormData.stock}
+          value= {formData.stock}
           label = 'Stock'
           helperText="Enter type of stock delivered"
         />

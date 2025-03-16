@@ -1,17 +1,13 @@
-import { Link, Outlet } from "react-router-dom";
-import HomeIcon from "@mui/icons-material/Home";
-import { useNavigate} from "react-router-dom";
-import { useEffect } from "react";
-import { useAdminLocation } from "../Components/Location";
+import { Link } from "react-router-dom";
+
+
 
 
 
 export const AdminMenu = () => {
 
-  const navigate = useNavigate()
+  
 
-  
-  
   return (
     <>
     

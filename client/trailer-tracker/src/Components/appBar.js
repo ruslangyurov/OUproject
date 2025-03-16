@@ -12,8 +12,8 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import WorkIcon from '@mui/icons-material/Work';
-import {Link, useNavigate, useLocation} from 'react-router-dom';
-import { useEffect, useState,useContext } from 'react';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { useState } from 'react';
 import { styled, alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
@@ -26,7 +26,7 @@ const Search = styled('div')(({ theme }) => ({
   '&:hover': {
     backgroundColor: alpha(theme.palette.common.white, 0.25),
   },
-  marginLeft: "auto",
+  marginLeft: 'auto',
   width: '100%',
   [theme.breakpoints.up('sm')]: {
     marginLeft: theme.spacing(1),
@@ -49,7 +49,6 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   width: '100%',
   '& .MuiInputBase-input': {
     padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
     paddingLeft: `calc(1em + ${theme.spacing(4)})`,
     transition: theme.transitions.create('width'),
     [theme.breakpoints.up('sm')]: {
@@ -61,71 +60,53 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-
 const settings = ['Profile'];
 
-
-
 function ResponsiveAppBar() {
+  const [searchValue, setSearchValue] = useState('');
+  const location = useLocation();
+  const navigate = useNavigate();
+  const { isAuth } = useAuth();
+  const [anchorElNav, setAnchorElNav] = useState(null);
+  const [anchorElUser, setAnchorElUser] = useState(null);
 
-  const [value, setValue] = useState("")
-  const [pages, setPages] = useState(["Logout"])
-  const location = useLocation()
-  const {isAuth} = useAuth()
-
-  useEffect(() => {
-    if (location.pathname === '/Login') {
-      setPages([""])
-    } else if (location.pathname === '/' && isAuth) {
-      setPages(["Logout", "Full Trailers", "Empty Trailers"])
-    } else if (location.pathname === '/' && !isAuth) {
-      setPages(["Login"])
-    } else if (location.pathname === "/Inbound") {
-      setPages(["Logout","Full Trailers", "Empty Trailers"])
-    
-    } else if (location.pathname === '/Empty%20Trailers') {
-      setPages(["Logout", "Full Trailers"])
-    } else if (location.pathname === "/Full%20Trailers") {
-      setPages([ "Logout", "Empty Trailers"])
+  const getPages = () => {
+    if (location.pathname === '/Login') return [];
+    if (isAuth) {
+      return [
+        { label: 'Logout', path: '/Logout' },
+        { label: 'Full Trailers', path: '/Full-Trailers' },
+        { label: 'Empty Trailers', path: '/Empty-Trailers' },
+      ];
     }
-  }, [location.pathname])
- 
-  
-  const Navigate = useNavigate();
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
-
-  const handleOpenNavMenu = (event) => {
-    setAnchorElNav(event.currentTarget);
-  };
-  const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget);
+    return [{ label: 'Login', path: '/Login' }];
   };
 
-  const handleCloseNavMenu = (page) => {
-    setAnchorElNav(null);
-    };
+  const pages = getPages();
+
+  const handleOpenNavMenu = (event) => setAnchorElNav(event.currentTarget);
+  const handleCloseNavMenu = () => setAnchorElNav(null);
+  const handleOpenUserMenu = (event) => setAnchorElUser(event.currentTarget);
+  const handleCloseUserMenu = () => setAnchorElUser(null);
 
   const handleSearch = (event) => {
-    event.preventDefault()
-    if (value) {
-      Navigate("/Search", {state:value, replace:true})
+    event.preventDefault();
+    if (searchValue.trim()) {
+      navigate('/Search', { state: searchValue, replace: true });
     }
-  }
-
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
   };
 
   return (
     <AppBar position="relative">
       <Container maxWidth="xl">
-        <Toolbar disableGutters xs = {{m: "flex"}}>
+        <Toolbar disableGutters>
+          {/* Logo and Title */}
           <WorkIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
-          <Typography onClick={() => <Link to = {'/Home'}></Link>}
+          <Typography
             variant="h6"
             noWrap
-            component= {Link} to = {"/"}
+            component={Link}
+            to="/"
             sx={{
               mr: 2,
               display: { xs: 'none', md: 'flex' },
@@ -139,48 +120,32 @@ function ResponsiveAppBar() {
             Morty
           </Typography>
 
+          {/* Mobile Menu Button */}
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
-            <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={handleOpenNavMenu}
-              color="inherit"
-            >
+            <IconButton size="large" onClick={handleOpenNavMenu} color="inherit">
               <MenuIcon />
             </IconButton>
             <Menu
-              id="menu-appbar"
               anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'left',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'left',
-              }}
               open={Boolean(anchorElNav)}
               onClose={handleCloseNavMenu}
-              sx={{
-                display: { xs: 'block', md: 'none' },
-              }}
+              sx={{ display: { xs: 'block', md: 'none' } }}
             >
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu} >
-                 
-                  <Typography textAlign="center">{page}</Typography>
+              {pages.map(({ label, path }) => (
+                <MenuItem key={label} onClick={handleCloseNavMenu} component={Link} to={path}>
+                  <Typography textAlign="center">{label}</Typography>
                 </MenuItem>
               ))}
             </Menu>
           </Box>
+
+          {/* Mobile Logo */}
           <WorkIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
           <Typography
             variant="h5"
             noWrap
-            component="a"
+            component={Link}
+            to="/"
             sx={{
               mr: 2,
               display: { xs: 'flex', md: 'none' },
@@ -194,62 +159,39 @@ function ResponsiveAppBar() {
           >
             Fixxxer
           </Typography>
+
+          {/* Desktop Menu */}
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {pages.map((page) => (
-        
-                 <Button
-                key={page}
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'white', display: 'block' }}
-                component={Link} to= {`/${page}`}
-                
-              >
-                {page}
+            {pages.map(({ label, path }) => (
+              <Button key={label} component={Link} to={path} sx={{ my: 2, color: 'white', display: 'block' }}>
+                {label}
               </Button>
-             
             ))}
-          
           </Box>
-          <Box 
-          component = "form"
-          sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}
-          onSubmit = {handleSearch}
-          >
+
+          {/* Search Bar */}
+          <Box component="form" sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }} onSubmit={handleSearch}>
             <Search>
               <SearchIconWrapper>
                 <SearchIcon />
               </SearchIconWrapper>
-              <StyledInputBase 
-                onChange = {(e) => setValue(e.target.value)}
+              <StyledInputBase
+                value={searchValue}
+                onChange={(e) => setSearchValue(e.target.value)}
                 placeholder="Search…"
                 inputProps={{ 'aria-label': 'search' }}
               />
             </Search>
           </Box>
-          
 
+          {/* User Profile */}
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                <Avatar alt="User Profile" src="/static/images/avatar/2.jpg" />
               </IconButton>
             </Tooltip>
-            <Menu
-              sx={{ mt: '45px' }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
+            <Menu anchorEl={anchorElUser} open={Boolean(anchorElUser)} onClose={handleCloseUserMenu}>
               {settings.map((setting) => (
                 <MenuItem key={setting} onClick={handleCloseUserMenu}>
                   <Typography textAlign="center">{setting}</Typography>
@@ -257,10 +199,10 @@ function ResponsiveAppBar() {
               ))}
             </Menu>
           </Box>
-         
         </Toolbar>
       </Container>
     </AppBar>
   );
 }
+
 export default ResponsiveAppBar;

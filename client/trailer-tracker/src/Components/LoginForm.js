@@ -4,11 +4,10 @@ import Button from '@mui/material/Button';
 import SendIcon from '@mui/icons-material/Send';
 import { useState, useEffect} from "react";
 import { useNavigate } from "react-router-dom";
-import axios from '../apiAxios/axios';
 import { useContext } from 'react';
 import { AuthContext } from '../Config/AuthContext';
 import axiosInstanse from '../apiAxios/axios';
-import { socket } from './socket';
+
 
 
 
@@ -19,7 +18,7 @@ export const BasicLogin = () => {
   const[username, setUsername] = useState("")
   const[password, setPassword] = useState("")
   const [errMsg, setErrMsg] = useState("")
-  const {auth,setAuth, onConnect, onDisconnect} = useContext(AuthContext)
+  const {auth,setAuth, isAuth} = useContext(AuthContext)
   const LOGIN_URL = '/auth'
 
   const navigate = useNavigate();
@@ -32,19 +31,9 @@ export const BasicLogin = () => {
 
   useEffect(() => {
     if (auth) {
-      const newSocket = socket
-      newSocket.on("connect", onConnect)
-      newSocket.on("disconnect", onDisconnect)
       navigate("/"); // Redirect on successful login
-
-      return () => {
-        newSocket.off("connect", onConnect);
-        newSocket.off("disconnect", onDisconnect)
-        newSocket.close();
       }
-     
-    }
-  }, [auth, navigate, onConnect, onDisconnect]);
+  }, [auth]);
 
   const handleLogin = async(e) => {
     e.preventDefault();
