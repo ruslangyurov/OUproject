@@ -1,41 +1,38 @@
 import * as React from "react";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import HomeIcon from "@mui/icons-material/Home";
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import axiosInstance from "../apiAxios/axios";
-import { useAdminLocation } from "../Components/Location";
+import Box from '@mui/material/Box';
+
 
 export const NewUser = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("");
   const [errMsg, setErrMsg] = useState("");
-
+  const [success, setSuccess] = useState("")
   
-
-  const Navigate = useNavigate();
-
   
 
   const createNewUser = async() => {
-    await axiosInstance.post("/user", { username, password, role }).catch((err) => {
-      if (!err?.response) {
-        setErrMsg("No Server Response");
-      } else if (err.response.status === 404) {
-        setErrMsg("Page not found");
-      } else if (err.response.status === 400) {
-        setErrMsg("All fields are required");
-      } else {
-        setErrMsg("Unknown error");
-      }
-    });
+
+    try {
+      await axiosInstance.post("/user", { username, password, role })
+      setSuccess("New user added successfully.")
+
+    } catch (err) {
+        if (!err?.response) {
+          setErrMsg("No Server Response");
+        } else if (err.response.status === 404) {
+          setErrMsg("Page not found");
+        } else if (err.response.status === 400) {
+          setErrMsg("All fields are required");
+        } else {
+          setErrMsg("Unknown error");
+        }
+    };
   };
 
-  const handleClick = () => {
-    Navigate(-1);
-  };
-
+ 
   return (
     <>
     
@@ -45,7 +42,7 @@ export const NewUser = () => {
           <input
             type="text"
             className="newUser_container_input"
-            name="userInput"
+            name="newUserUsername"
             onChange={(e) => setUsername(e.target.value)}
           />
           <label>Password</label>
@@ -66,6 +63,13 @@ export const NewUser = () => {
           <input type="submit" className="newUser_submit_button" />
         </div>
       </div>
+      <Box 
+        sx = {{position:"absolute", bottom:"30%", color:"black", left:"50%", transform:"translate(-50%, -50%)", fontSize:"2vw"}}
+        onChange = {() => {if (success) {setSuccess("")}}}>
+        <p>{success}</p>
+      </Box>
+      
+        
     </>
   );
 };

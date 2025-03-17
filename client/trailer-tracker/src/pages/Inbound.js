@@ -45,27 +45,31 @@ const bayList = useMemo(() => {
 
              return (
                 <>
-                  {!filter && (
-                    <Button
-                      variant="contained"
-                      onClick={() => setFilter(true)}
-                      sx={{ position: "absolute", mb: "2px", height: 53, width: 100 }}
-                    >
-                      Filter
-                    </Button>
-                  )}
-            
-                  {bayList}
-            
-                  {filter && (
-                    <Button
-                      variant="contained"
-                      onClick={() => setFilter(false)}
-                      sx={{ ml: 2, height: 53, width: 100 }}
-                    >
-                      Unfilter
-                    </Button>
-                  )}
+                  <div className='footer'> 
+                    {!filter && (
+                      <Button
+                        variant="contained"
+                        onClick={() => setFilter(true)}
+                        sx={{ ml: 2, height: 53, width: 100, fontSize:"16px" }}
+                      >
+                        Filter
+                      </Button>
+                    )}
+                  </div> 
+                    {bayList}
+                  <div className='footer'> 
+                    {filter && (
+                      <Button
+                        variant="contained"
+                        onClick={() => setFilter(false)}
+                        sx={{ ml: 2, height: 53, width: 100, fontSize:"16px" }}
+                      >
+                        Unfilter
+                      </Button>
+                  
+                    )}
+                  </div>
+                 
                 </>
               );
             };

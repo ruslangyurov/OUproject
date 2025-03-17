@@ -8,6 +8,7 @@ import * as verifyToken from '../middleware/verifyJWT.js';
 router.route('/')
     .get(userController.getAllUsers)
     .post(userController.createNewUser)
+    .patch(userController.updateUser)
     
 
 export default router;
