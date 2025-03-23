@@ -3,6 +3,7 @@ import User from '../models/user.js';
 import pkg from 'express-async-handler';
 const asyncHandler = pkg;
 import bcrypt from 'bcrypt';
+import { DeleteUser } from '../../client/trailer-tracker/src/AdminPages/DeleteUser.js';
 
 // @desc get all users
 // @route GET /users
@@ -72,6 +73,21 @@ const updateUser = asyncHandler(async (req,res) => {
 // @route DELETE /users
 // @access private
 
-const delelteUser = asyncHandler(async (req,res) => {
+const deleteUser = asyncHandler(async (req,res) => {
+   const {username, role} = req.body
+
+   const user =  await User.findOne({username:username, role:role})
+
+   if (!user) {
+    res.status(400).json({messsage:"User does not exist!"})
+   }
+   const deleted = await User.deleteOne({username:username, role:role})
+
+   if  (deleted.deletedCount === 1) {
+    res.status(200).json({message: "User succesfully deleted."})
+   } else {
+    res.status(400).json({message:"Sth went wrong. Please try again later."})
+   }
+
    
 })
