@@ -3,7 +3,7 @@ import User from '../models/user.js';
 import pkg from 'express-async-handler';
 const asyncHandler = pkg;
 import bcrypt from 'bcrypt';
-import { DeleteUser } from '../../client/trailer-tracker/src/AdminPages/DeleteUser.js';
+
 
 // @desc get all users
 // @route GET /users
@@ -50,7 +50,7 @@ export const createNewUser = asyncHandler(async (req,res) => {
 // @route PATCH /users
 // @access private
 
-const updateUser = asyncHandler(async (req,res) => {
+export const updateUser = asyncHandler(async (req,res) => {
    const {username, role, newUsername, newPassword, newRole} = req.body
 
    const user = User.findOne({username:username, role:role})
@@ -73,7 +73,7 @@ const updateUser = asyncHandler(async (req,res) => {
 // @route DELETE /users
 // @access private
 
-const deleteUser = asyncHandler(async (req,res) => {
+export const deleteUser = asyncHandler(async (req,res) => {
    const {username, role} = req.body
 
    const user =  await User.findOne({username:username, role:role})

@@ -23,7 +23,7 @@ const app = express();
 const httpServer = createServer(app);
 InitialiseSocketio(httpServer)
 
-io = getIO()
+const io = getIO()
 io.on("bayUpdated", async(formData, callback, socket) => {
    try {
     const updatedBay =  await updateBay(formData);
