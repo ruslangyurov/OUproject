@@ -19,7 +19,7 @@ export const SocketContextProvider = ({children}) => {
     
     useEffect(() => {
       if (!socketRef.current) {
-        socketRef.current = io("http://localhost:10000", {autoConnect: false});
+        socketRef.current = io("http://localhost:10000", {autoConnect: false, transports:["websocket"]});
       }
 
       const socket = socketRef.current;

@@ -14,13 +14,14 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import {format} from 'date-fns';
 import { useAuth } from '../Config/AuthContext';
 import {useSocketContext} from '../Config/SocketContext';
-import { socket } from './socket.js';
 
 
 
 
 
 export default function BayForm(props) {
+
+  const {socket} = useSocketContext()
 
   const [formData, setFormData] = useState({
     trailerNumber: "Trailer Number",
@@ -81,13 +82,14 @@ export default function BayForm(props) {
   const updateStorage = (field, value) => {
     setFormData(prevState => ({...prevState, [field]:value}))
     localStorage.setItem(field + props.child, value);
-    socket.emit("userTyping", username)
+    
   }
 
   //Function to create a new entry for a particular bay in the database
 
   const YARD_URL = "/yard"
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
+      e.preventDefault()
       socket.emit("bayUpdate", formData)
         }
     

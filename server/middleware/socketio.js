@@ -4,7 +4,7 @@ import { updateBay } from '../controller/yardController.js';
 let io;
 
 const InitialiseSocketio = ({ server }) => {
-    io = new Server(server, { cors: { origin: "*", credentials: true } });
+    io = new Server(server, { cors: { origin: "*", credentials: true }, transports: ['websocket'] });
 
     io.on("connection", (socket) => {
         console.log("New user connected:", socket.id);
