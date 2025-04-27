@@ -21,9 +21,10 @@ import {useSocketContext} from '../Config/SocketContext';
 
 export default function BayForm(props) {
 
-  const {socket} = useSocketContext()
+  const {socket, bayData, updatedAt} = useSocketContext()
 
   const [formData, setFormData] = useState({
+    bayNumber: props.child,
     trailerNumber: "Trailer Number",
     stockDelivered: "Stock Delivered",
     fullTrailer: '',
@@ -35,7 +36,7 @@ export default function BayForm(props) {
   const [updated, setUpdated] = useState("");
   const [emptyBay, setEmptyBay] = useState(true);
 
-  const {bayData} = useSocketContext()
+  
 
   useEffect(() => {
     // Load data from local storage when the component mounts
@@ -53,7 +54,7 @@ export default function BayForm(props) {
   useEffect(() => {
     if (bayData) {
       // Update the form with the received socket data
-      setUpdated(bayData.updatedAt)
+      setUpdated(updatedAt)
       const newData = {
         trailerNumber: bayData.trailerNumber || "",
         stockDelivered: bayData.stockDelivered || "",
@@ -69,7 +70,7 @@ export default function BayForm(props) {
       localStorage.setItem("fullTrailer" + props.child, newData.fullTrailer);
       localStorage.setItem("comment" + props.child, newData.comment);
     }
-  }, [bayData, props.child]); // Runs whenever `bayUpdated` changes
+  }, [bayData,updatedAt, props.child]); // Runs whenever `bayUpdated` changes
   
 
 
@@ -90,8 +91,12 @@ export default function BayForm(props) {
   const YARD_URL = "/yard"
   const handleSubmit = (e) => {
       e.preventDefault()
-      socket.emit("bayUpdate", formData)
+      if (socket) {
+      socket.emit("bayUpdate", formData, (response) => {
+       setErrMsg(response.message)
+      })
         }
+      }
     
   // Bay is empty. Data is reset
    

@@ -13,6 +13,7 @@ const socketContext = createContext()
 export const SocketContextProvider = ({children}) => {
     const [isConnected, setIsConnected] = useState(false);
     const [bayUpdated, setBayUpdated] = useState(null)
+    const [updatedAt, setUpdatedAt] = useState(null)
 
     const socketRef = useRef(null)
     const {isAuth} = useAuth(); 
@@ -28,11 +29,12 @@ export const SocketContextProvider = ({children}) => {
 
       const connectSocket = () => {
         if (isAuth) {
-          socket.connect()
+          socket.connect({transports:["websocket"]})
           setIsConnected(true)
           socket.on("bayUpdated", (data) => {
             if (data.status === "200") {
                 setBayUpdated(data.bayInfo) 
+                setUpdatedAt(data.updatedAt)
             }
       })
 
@@ -54,7 +56,7 @@ export const SocketContextProvider = ({children}) => {
     }, [isAuth])
 
   return (
-    <socketContext.Provider value = {{socket:socketRef.current, isConnected, bayUpdated}}>
+    <socketContext.Provider value = {{socket:socketRef.current, isConnected, bayUpdated, updatedAt}}>
       {children}
     </socketContext.Provider>
   )

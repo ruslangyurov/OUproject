@@ -44,7 +44,7 @@ const updateBay = asyncHandler(async(data) => {
     if (!newBay) {
         return ({status: "401"})
     } 
-    return {status: "200", bayInfo: newBay, UpdateTime:newBay.updatedAt}
+    return {status: "200", bayInfo: newBay, updateTime:newBay.updatedAt}
 })
 
 

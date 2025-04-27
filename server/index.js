@@ -21,23 +21,23 @@ import { updateBay } from './controller/yardController.js';
 
 const app = express();
 const httpServer = createServer(app);
-InitialiseSocketio(httpServer)
+InitialiseSocketio({server:httpServer})
 
-const io = getIO()
-io.on("bayUpdated", async(formData, callback, socket) => {
-   try {
-    const updatedBay =  await updateBay(formData);
-    if (tryToUpdate.status === "400") {
-      return callback({status: "400",message: "Please fill out all the required fields"})
-    } 
-   if (tryToUpdate.status === "401") {
-      return callback({status: "401",message: "Please fill out all the required fields"})
-   }
-   socket.emit("baySuccesfullyUpdated", updatedBay)
-   } catch (error) {
-      return callback({status: "500", message: "Sth went wrong. Please try again later"})
-   }
-})
+// const io = getIO()
+// io.on("bayUpdated", async(formData, callback, socket) => {
+//    try {
+//     const updatedBay =  await updateBay(formData);
+//     if (tryToUpdate.status === "400") {
+//       return callback({status: "400",message: "Please fill out all the required fields"})
+//     } 
+//    if (tryToUpdate.status === "401") {
+//       return callback({status: "401",message: "Please fill out all the required fields"})
+//    }
+//    socket.emit("baySuccesfullyUpdated", updatedBay)
+//    } catch (error) {
+//       return callback({status: "500", message: "Sth went wrong. Please try again later"})
+//    }
+// })
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);

@@ -22,19 +22,11 @@ import { SocketContextProvider } from './Config/SocketContext';
 import {ProtectedRoute} from './Components/ProtectedRoute';
 import { RequestInterceptor, ResponseInterceptor } from './apiAxios/axios';
 import "./App.css"; 
-import {io} from 'socket.io-client';
+
 
 
 export function App() {
-  const[wsConnected, setWsConnected] = useState(false)
-
-  const onConnect = () => {
-    setWsConnected(true)
-  }
-
-  const onDisconnect = () => {
-    setWsConnected(false)
-  }
+ 
  
   return (
     

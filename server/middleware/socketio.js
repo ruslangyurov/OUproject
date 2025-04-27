@@ -14,22 +14,23 @@ const InitialiseSocketio = ({ server }) => {
         });
 
         socket.on("bayUpdate", async (formData, callback) => {
-            try {
+          
                 const bayUpdated = await updateBay(formData);
 
                 if (bayUpdated.status === "400") {
                     return callback({ status: "400", message: "Please fill in all the required fields." });
-                }
-                if (bayUpdated.status === "401") {
-                    return callback({ status: "401", message: "Bay not found. Please try again later." });
+                } else if (bayUpdated.status === "401") {
+                    return callback({ status: "401", message: "Bay not found. Please try again." });
+                } else if (!bayUpdated.status) {
+                    return callback({ status: "500", message: "Something went wrong. Please try again later!" });
+                } else if (bayUpdated.status === "200") {
+                    socket.broadcast.emit("bayUpdated", bayUpdated);
                 }
 
-                // Emit update to all connected clients except the sender
-                socket.broadcast.emit("bayUpdated", bayUpdated);
-                callback({ status: "200", message: "Bay successfully updated", bay: bayUpdated.bayInfo });
-            } catch (error) {
-                return callback({ status: "500", message: "Something went wrong. Please try again later" });
-            }
+                
+                
+               
+            
         });
     });
 };
