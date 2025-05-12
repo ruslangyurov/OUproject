@@ -41,12 +41,13 @@ export default function BayForm(props) {
   useEffect(() => {
     // Load data from local storage when the component mounts
     const localStorageData = {
+
       trailerNumber: localStorage.getItem('trailerNumber' + props.child) || "Trailer Number",
       stockDelivered: localStorage.getItem('stockDelivered' + props.child) || "Stock Delivered",
       comment: localStorage.getItem('comment' + props.child) || "",
       fullTrailer: localStorage.getItem('fullTrailer' + props.child) || '',
     };
-    setFormData(localStorageData);
+    setFormData(prev => ({...formData, ...localStorageData}));
     setEmptyBay(localStorage.getItem("emptyBay" + props.child) === "true");
   }, [props.child]); // Runs once when `props.child` changes
   
@@ -56,6 +57,7 @@ export default function BayForm(props) {
       // Update the form with the received socket data
       setUpdated(updatedAt)
       const newData = {
+        bayNumber: props.child,
         trailerNumber: bayData.trailerNumber || "",
         stockDelivered: bayData.stockDelivered || "",
         fullTrailer: bayData.fullTrailer || "",
@@ -65,6 +67,7 @@ export default function BayForm(props) {
       setFormData(newData);
   
       // Save to local storage to make it persistent
+     
       localStorage.setItem("trailerNumber" + props.child, newData.trailerNumber);
       localStorage.setItem("stockDelivered" + props.child, newData.stockDelivered);
       localStorage.setItem("fullTrailer" + props.child, newData.fullTrailer);
@@ -110,17 +113,17 @@ export default function BayForm(props) {
       comment: ""
     }
 
-    const newFormData = {trailerNumber:"", stock: "", empty:"full", comment:""}
+    const newFormData = {trailerNumber:"", stockDelivered: "", fullTrailer:"", comment:""}
     
     // This will act as a delete operation on the app
 
     
     await axiosInstance.patch(YARD_URL,bayDelete).then((res) => setUpdated(res.data)).then(() => {
-      setFormData(newFormData);
+      setFormData(prevData => ({...formData, ...newFormData}));
       localStorage.removeItem("emptyBay" + props.child);
       localStorage.removeItem("trailerNumber" + props.child);
-      localStorage.removeItem("stock" + props.child);
-      localStorage.removeItem("empty" + props.child);
+      localStorage.removeItem("stockDelivered" + props.child);
+      localStorage.removeItem("fullTrailer" + props.child);
       localStorage.removeItem("comment" + props.child);
     }).catch((err) => {
       setErrMsg(err.request ? err.request.data : err.message);
@@ -167,8 +170,8 @@ return (
           error = {formData.trailerNumber === "TrailerNumber"||formData.trailerNumber === ""}
         />
         <TextField
-          onClick = {() => {if (formData.stock === "Stock Delivered") {setFormData({...formData, stock:""})}}}
-          onChange = {(e) => {updateStorage("stock" + props.child, e.target.value)}}
+          onClick = {() => {if (formData.stockDelivered === "Stock Delivered") {setFormData({...formData, stockDelivered:""})}}}
+          onChange = {(e) => {updateStorage("stockDelivered", e.target.value)}}
           id="Stock - text"
           value= {formData.stock}
           label = 'Stock'
@@ -187,13 +190,14 @@ return (
           <Select
             labelId="StandTrailer"
             id="Trailer"
-            value={formData.empty}
+            value={formData.fullTrailer}
             label="Stand Trailer"
             error = {formData.empty === ""}
-            onChange = {(e) => {updateStorage("empty" + props.child, e.target.value)}}
+            onChange = {(e) => {updateStorage("fullTrailer", e.target.value)}}
              >
             <MenuItem value={"Full"}>Full Trailer</MenuItem>
             <MenuItem value={"Empty"}>Empty Trailer</MenuItem>
+           
             
           </Select>
         </FormControl>
@@ -204,7 +208,7 @@ return (
         </Button>
         <Box
           sx = {{width: 300, mb:"5px", ml:140}}>
-          Updated at {updated}
+          Updated at {updatedAt}
         </Box>
         
       </div>

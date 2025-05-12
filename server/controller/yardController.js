@@ -26,10 +26,10 @@ const createBay = asyncHandler(async(req,res) => {
 const updateBay = asyncHandler(async(data) => {
     const {bayNumber, trailerNumber, stockDelivered, fullTrailer, comment} = data
 
-    if (!bayNumber||!fullTrailer || !trailerNumber) {
+    if (!fullTrailer || !trailerNumber) {
         return ({status: "400"})
     }
-    
+    console.log(trailerNumber)
     
 
     const update = {
