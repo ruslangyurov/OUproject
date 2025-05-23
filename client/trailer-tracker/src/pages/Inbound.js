@@ -32,7 +32,7 @@ const bayList = useMemo(() => {
       onClick={onBayClick}
       filter={filter}
       index={index}
-      sx={{ m: 0 }}
+      
     />
   ));
 }, [trestle, filter]);
@@ -56,7 +56,10 @@ const bayList = useMemo(() => {
                       </Button>
                     )}
                   </div> 
+                  <div className='baylist'>
                     {bayList}
+                  </div>
+                    
                   <div className='footer'> 
                     {filter && (
                       <Button

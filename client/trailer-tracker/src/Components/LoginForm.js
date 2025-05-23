@@ -1,12 +1,12 @@
 import * as React from 'react';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import SendIcon from '@mui/icons-material/Send';
 import { useState, useEffect} from "react";
 import { useNavigate } from "react-router-dom";
 import { useContext } from 'react';
 import { AuthContext } from '../Config/AuthContext';
 import axiosInstanse from '../apiAxios/axios';
+import { Box } from '@mui/material';
 
 
 
@@ -18,7 +18,7 @@ export const BasicLogin = () => {
   const[username, setUsername] = useState("")
   const[password, setPassword] = useState("")
   const [errMsg, setErrMsg] = useState("")
-  const {auth,setAuth, isAuth} = useContext(AuthContext)
+  const {auth,setAuth} = useContext(AuthContext)
   const LOGIN_URL = '/auth'
 
   const navigate = useNavigate();
@@ -33,7 +33,7 @@ export const BasicLogin = () => {
     if (auth) {
       navigate("/"); // Redirect on successful login
       }
-  }, [auth]);
+  }, [auth, navigate]);
 
   const handleLogin = async(e) => {
     e.preventDefault();
@@ -60,9 +60,9 @@ export const BasicLogin = () => {
 
   return (
    
-   <div>
+   <Box sx={{ display:"flex", flexWrap:"wrap",mt:"130px", flexDirection: {xs:"column", sm:"column", md:"row", lg:"row"},justifyContent:"flex-start", alignContent:"center" }}>
         <h1>{errMsg}</h1>
-        <TextField sx={{display:"flex", float:"left"}}
+        <TextField sx={{ width: { xs: "80%", md: "200px" }}}
           required
           type = "String"
           id="Username"
@@ -72,7 +72,7 @@ export const BasicLogin = () => {
           onChange={(e) => {setUsername(e.target.value)}}
           
         />
-        <TextField sx={{display:"flex", float:"left"}}
+        <TextField sx={{ width: { xs: "80%", md: "200px" }}}
           required
           type = "Password"
           id="Password"
@@ -82,11 +82,11 @@ export const BasicLogin = () => {
           onChange={(e) => {setPassword(e.target.value)}}
         />
 
-        <Button variant="contained" endIcon={<SendIcon />} onClick={handleLogin} sx={{display:"flex", float:"left",height:53, width:100}}>Submit</Button>
+        <Button variant="contained" onClick={handleLogin} sx={{height:53, width: {md:"12%", xs:"100px"}}}>Log in</Button>
         
 
 
-    </div>
+    </Box>
   )
 
   }

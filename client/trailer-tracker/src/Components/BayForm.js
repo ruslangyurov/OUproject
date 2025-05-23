@@ -14,6 +14,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import {format} from 'date-fns';
 import { useAuth } from '../Config/AuthContext';
 import {useSocketContext} from '../Config/SocketContext';
+import { Typography } from '@mui/material';
 
 
 
@@ -131,87 +132,164 @@ export default function BayForm(props) {
   });
 }
     
+// Inside BayForm.jsx
 return (
-    
   <Box
-      component="form"
-      onSubmit={handleSubmit}
+    component="form"
+    onSubmit={handleSubmit}
+    sx={{
+     boxSizing:"border-box", 
+     padding: "25px",
+    }}
+    noValidate
+    autoComplete="off"
+  >
+    <Typography sx={{ color: 'green', fontSize: '0.9rem' }}>{msg}</Typography>
+
+    <Box
       sx={{
         display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        gap: 2,
-        maxWidth: 500,
+        flexDirection: {sx:"column", sm:"row"},
+        gap: 3,
         width: "100%",
-        mx: "auto",
-        p: 2,
-        boxSizing: "border-box",
+        flexWrap: "wrap",
+        alignItems:"flex-start",
+        justifyContent:"flex-start",
+        width:"100%"
       }}
-      noValidate
-      autoComplete="off"
     >
-      <Box
-        sx = {{width: 300, ml:2}}>
-          {msg}
-      </Box>
-      
-      <div>
-        <TextField
-        
-          required
-          onClick = {() => {if (formData.trailerNumber === "Trailer Number") {setFormData({...formData, trailerNumber:""})}}}
-          onChange = {(e) => {updateStorage("trailerNumber", e.target.value)
-          }}
-         
-          id="outlined-required"
-          label="Required"
-          value = {formData.trailerNumber}
-          helperText = "Please enter trailer number"
-          error = {formData.trailerNumber === "TrailerNumber"||formData.trailerNumber === ""}
-        />
-        <TextField
-          onClick = {() => {if (formData.stockDelivered === "Stock Delivered") {setFormData({...formData, stockDelivered:""})}}}
-          onChange = {(e) => {updateStorage("stockDelivered", e.target.value)}}
-          id="Stock - text"
-          value= {formData.stock}
-          label = 'Stock'
-          helperText="Enter type of stock delivered"
-        />
+      <TextField
+        required
+        sx={{width: {
+         xs: '100%',  // full width on extra-small screens
+         sm: '80%',   // 80% on small screens
+         md: '60%',   // 60% on medium screens
+         lg: '50%',   // 50% on large screens
+          },
+          minWidth: 100,
+          maxWidth: 400,
+        }}
+        onClick={() => {
+          if (formData.trailerNumber === "Trailer Number")
+            setFormData({ ...formData, trailerNumber: "" });
+        }}
+        onChange={(e) => updateStorage("trailerNumber", e.target.value)}
+        id="outlined-required"
+        label="Trailer Number"
+        value={formData.trailerNumber}
+        helperText="Please enter trailer number"
+        error={
+          formData.trailerNumber === "Trailer Number" ||
+          formData.trailerNumber === ""
+        }
        
-        <TextField
-          onClick = {() => {if (formData.comment === "Comment") {setFormData({...formData, comment:""})}}}
-          onChange = {(e) => {updateStorage("comment" + props.child, e.target.value)}}
-          id="Comment - text"
-          label='Comment'
-          
-        />
-        <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
-          <InputLabel id="StandTrailer">Stand Trailer</InputLabel>
-          <Select
-            labelId="StandTrailer"
-            id="Trailer"
-            value={formData.fullTrailer}
-            label="Stand Trailer"
-            error = {formData.empty === ""}
-            onChange = {(e) => {updateStorage("fullTrailer", e.target.value)}}
-             >
-            <MenuItem value={"Full"}>Full Trailer</MenuItem>
-            <MenuItem value={"Empty"}>Empty Trailer</MenuItem>
-           
-            
-          </Select>
-        </FormControl>
-        <FormControlLabel control={<Switch checked={emptyBay} onChange = {handleDelete} />} label="Empty bay"></FormControlLabel>
-        <FormControlLabel control={<Switch defaultChecked = {false} color = 'warning'/>} label="Broken Bay" sx = {{m:"auto"}} />
-        <Button type = "submit" onSubmit = {handleSubmit} variant="contained" endIcon={<SendIcon />}  sx={{ml:8,mt:1,height:50, width:100}}>
-         
-        </Button>
-        <Box
-          sx = {{width: 300, mb:"5px", ml:140}}>
-          Updated at {updatedAt}
-        </Box>
-        
-      </div>
+      />
+
+      <TextField
+       sx={{width: {
+         xs: '100%',  // full width on extra-small screens
+         sm: '80%',   // 80% on small screens
+         md: '60%',   // 60% on medium screens
+         lg: '50%',   // 50% on large screens
+          },
+          minWidth: 200,
+          maxWidth: 400,
+        }}
+        onClick={() => {
+          if (formData.stockDelivered === "Stock Delivered")
+            setFormData({ ...formData, stockDelivered: "" });
+        }}
+        onChange={(e) => updateStorage("stockDelivered", e.target.value)}
+        id="Stock - text"
+        label="Stock"
+        value={formData.stockDelivered}
+        helperText="Enter type of stock delivered"
+      
+      />
+
+      <TextField
+        required
+        sx={{width: {
+         xs: '100%',  // full width on extra-small screens
+         sm: '80%',   // 80% on small screens
+         md: '60%',   // 60% on medium screens
+         lg: '50%',   // 50% on large screens
+          },
+          minWidth: 200,
+          maxWidth: 400,
+        }}
+        onClick={() => {if (formData.comment === "Comment")
+            setFormData({ ...formData, comment: "" });
+        }}
+        onChange={(e) =>updateStorage("comment", e.target.value)}
+        id="Comment - text"
+        label="Comment"
+        value={formData.comment}
+    
+      />
+
+      <FormControl >
+        <InputLabel id="StandTrailer">Stand Trailer</InputLabel>
+        <Select
+          labelId="StandTrailer"
+          id="Trailer"
+          value={formData.fullTrailer}
+          label="Stand Trailer"
+          onChange={(e) => updateStorage("fullTrailer", e.target.value)}
+           sx={{width: {
+           xs: '100%',  // full width on extra-small screens
+           sm: '80%',   // 80% on small screens
+           md: '60%',   // 60% on medium screens
+          lg: '50%',   // 50% on large screens
+          },
+          minWidth: 200,
+          maxWidth: 400,
+          }}
+        >
+          <MenuItem value={"Full"}>Full Trailer</MenuItem>
+          <MenuItem value={"Empty"}>Empty Trailer</MenuItem>
+        </Select>
+      </FormControl>
+       <Button
+        type="submit"
+        variant="contained"
+        endIcon={<SendIcon />}
+        sx={{ height: 50, width: 120 }}
+      >
+        Submit
+      </Button>  
+
     </Box>
-  );
+
+    <Box 
+     sx={{
+        display: "flex",
+        mt:"15px",
+        gap: 3,
+        flexWrap: "wrap",
+        alignSelf:"flex-start",
+        width:"100%"
+      }}>
+      <FormControlLabel
+        control={<Switch checked={emptyBay} onChange={handleDelete} />}
+        label="Empty bay"
+      />
+
+      <FormControlLabel
+        control={<Switch defaultChecked={false} color="warning" />}
+        label="Broken Bay"
+      />
+
+     
+    </Box>
+
+    <Typography
+      variant="caption"
+      sx={{ mt: 1, alignSelf: "flex-end", color: 'gray' }}
+    >
+      Updated at {updatedAt}
+    </Typography>
+  </Box>
+);
+
 } 

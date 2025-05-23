@@ -1,70 +1,75 @@
-import react from 'react';
-import {useState} from 'react'
-import axiosInstance from '../apiAxios/axios'
-import  Box  from '@mui/material/Box';
-
+import React from 'react';
+import { useState } from 'react';
+import axiosInstance from '../apiAxios/axios';
+import Box from '@mui/material/Box';
 
 export const DeleteUser = () => {
-    const [resutlMessage, setResultMessage] = useState("")
-    const [username, setUsername] = useState("")
-    const [role, setRole] = useState("")
+    const [resultMessage, setResultMessage] = useState("");
+    const [username, setUsername] = useState("");
+    const [role, setRole] = useState("");
 
-    const DELUSER_URL = '/user'
+    const DELUSER_URL = '/user';
 
-    const handleDelete = async(e) => {
-        e.preventDefault()
+    const handleDelete = async (e) => {
+        e.preventDefault();
 
         try {
-            const response = await axiosInstance.delete(DELUSER_URL,{username:username, role:role} )
-            setResultMessage(response.data.message)
-        } catch (err)  {
+            // Axios DELETE requests require payload to be in a 'data' key
+            const response = await axiosInstance.delete(DELUSER_URL, {
+                data: { username, role }
+            });
+            setResultMessage(response.data.message);
+        } catch (err) {
             if (err.request) {
-                setResultMessage("No server response. Please try again later.")
+                setResultMessage("No server response. Please try again later.");
             } else {
-                setResultMessage(err.response.data.message)
+                setResultMessage(err.response?.data?.message || "An error occurred.");
             }
-            
         }
-        }
-    
+    };
 
-
-  return (
-    
-    <div className = "newUser_container">
-
-        <form onSubmit={handleDelete}>
-            <label>Username</label>    
-            <input 
-                className = "newUser_container_input"
-                type = "text"
-                name = "deleteUserUsername"
-                onChange={(e)=> setUsername(e.target.value)}
+    return (
+        <div className="newUser_container">
+            <form className = "form-group"onSubmit={handleDelete}>
+                <label>Username</label>
+                <input
+                    className="newUser_container_input"
+                    type="text"
+                    name="deleteUserUsername"
+                    onChange={(e) => setUsername(e.target.value)}
                 />
-            <label>Role</label>
-            <select 
-            className="newUser_container_input"
-            name = "deleteUserRole"
-            onChange={(e) => setRole(e.target.value)}>
-                <option value="Admin">Admin</option>
-                <option value="Employee">Employee</option>
-                <option value="Manager">Manager</option>
-                <option selected = "blank"></option>
-            </select>
-            <div>
-                <input type="submit" className="newUser_submit_button" />
-            </div>
-        
-        </form>
 
-           
-           <Box 
-                sx = {{position:"absolute", bottom:"30%", color:"black", left:"50%", transform:"translate(-50%, -50%)", fontSize:"2vw"}}
-                onChange = {() => {if (resutlMessage) {setResultMessage("")}}}>
-                <p>{resutlMessage}</p>
-           </Box>
+                <label>Role</label>
+                <select
+                    className="newUser_container_input"
+                    name="deleteUserRole"
+                    onChange={(e) => setRole(e.target.value)}
+                    defaultValue=""
+                >
+                    <option value="Admin">Admin</option>
+                    <option value="Employee">Employee</option>
+                    <option value="Manager">Manager</option>
+                    <option value="" disabled hidden>Select role</option>
+                </select>
 
-    </div>
-    
-  )  
-}
+                <div>
+                    <button type="submit" className="newUser_submit_button">Delete User</button>
+
+                </div>
+            </form>
+
+            <Box
+                sx={{
+                    position: "absolute",
+                    bottom: "30%",
+                    color: "black",
+                    left: "50%",
+                    transform: "translate(-50%, -50%)",
+                    fontSize: "2vw"
+                }}
+            >
+                <p>{resultMessage}</p>
+            </Box>
+        </div>
+    );
+};

@@ -69,8 +69,9 @@
 }
 
 .admin_header_container {
+  position: fixed;
   display: flex;
-  margin-top: 0px;
+  top: 0px;
   height: 60px;
   background-color: olive;
   align-items: center;
@@ -95,14 +96,13 @@
 }
 
 .newUser_container {
-  position: fixed;
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
+ 
+  height: calc(100vh - 60px);
+  margin-top: 60px;
+  box-sizing: border-box;
   width: 100vw;
   background-color: beige;
-  padding-top: 90px;
-  align-items: center;
+  overflow-y: auto;
   
 }
 
@@ -114,11 +114,13 @@ form {
 }
 
 .form-group {
-  width: 100%;
+ 
   display: flex;
+  width: 100%;
   flex-direction: column;
   align-items: center;
   margin-bottom: 90px;
+  margin-top: 40px;
 }
 
 .newUser_container_input {
@@ -130,6 +132,9 @@ form {
   padding: 14px 20px;
   border: 1px solid #ccc;
   border-radius: 8px;
+}
+.baylist {
+  margin-top: 60px;
 }
 
 .newUser_select {
@@ -161,6 +166,54 @@ form {
 .newUser_sumbit_button:hover {
   background-color: black;
 }
+
+/* src/components/ResponsiveToolbar.css */
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  background-color: #1976d2;
+  color: white;
+}
+
+.toolbar .left,
+.toolbar .right {
+  display: flex;
+  align-items: center;
+}
+
+.toolbar .logo {
+  font-weight: bold;
+  font-size: 1.2rem;
+  letter-spacing: 1px;
+}
+
+.toolbar .center {
+  flex-grow: 1;
+  text-align: center;
+  display: none;
+}
+
+.toolbar .center input {
+  padding: 6px 10px;
+  border: none;
+  border-radius: 4px;
+}
+
+/* Show center content only on wider screens */
+@media (min-width: 768px) {
+  .toolbar .center {
+    display: block;
+  }
+}
+
+.toolbar .right img {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+}
+
 
 @keyframes App-logo-spin {
   from {

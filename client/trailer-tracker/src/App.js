@@ -22,6 +22,7 @@ import { SocketContextProvider } from './Config/SocketContext';
 import {ProtectedRoute} from './Components/ProtectedRoute';
 import { RequestInterceptor, ResponseInterceptor } from './apiAxios/axios';
 import "./App.css"; 
+import { Profile } from './Components/Profile';
 
 
 
@@ -46,6 +47,7 @@ export function App() {
                 <Route path = '/Empty Trailers' element = {<EmptyTrailers />}/>
                 <Route path = '/Full Trailers' element = {<FullTrailers />}/>
                 <Route path = '/Search' element = {<Search />}/>
+                <Route path = '/Profile' element = {<Profile />}/>
               </Route> 
               
               <Route path="/Admin" element={<AdminLayout />}>
