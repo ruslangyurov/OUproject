@@ -14,6 +14,7 @@ import Tooltip from '@mui/material/Tooltip';
 import HomeIcon from '@mui/icons-material/Home';
 import {useNavigate, useLocation, Link } from "react-router-dom"
 import {useState} from 'react'
+import { useAuth } from '../Config/AuthContext';
 
 
 
@@ -70,22 +71,27 @@ export default function SearchAppBar() {
 
   const navigate = useNavigate()
   const location = useLocation()
+  const {isAuth} = useAuth()
 
   switch(location.pathname) {
     case "/": 
-      pages = ["Login"]
-      break;
+      if (!isAuth) {
+        pages = ["Login"]
+      } else {
+        pages = ["Logout"]
+      }
+      break
     case "/Login":
       pages = [""]
       break
     case "/Empty-Trailers":
-      pages = ["Logout", "Full Trailers"]
+      pages = ["Logout", "Full-Trailers"]
       break;
     case "/Inbound":
-      pages = ["Logout", "Empty Trailers", "Full Trailers"]
+      pages = ["Logout", "Empty-Trailers", "Full-Trailers"]
       break;
-    case "Full Trailers":
-      pages = ["Logout", "Empty Trailers"]
+    case "/Full-Trailers":
+      pages = ["Logout", "Empty-Trailers"]
       break;
     default:
       pages = [""]

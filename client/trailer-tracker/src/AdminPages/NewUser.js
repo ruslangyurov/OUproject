@@ -21,14 +21,9 @@ export const NewUser = () => {
     } catch (err) {
       if (!err?.response) {
         setErrMsg("No Server Response");
-      } else if (err.response.status === 404) {
-        setErrMsg("Page not found");
-      } else if (err.response.status === 400) {
-        setErrMsg("All fields are required");
       } else {
-        setErrMsg("Unknown error");
+        setErrMsg(err.data.message)
       }
-      setSuccess("");
     }
   };
 
@@ -42,6 +37,7 @@ export const NewUser = () => {
             className="newUser_container_input"
             name="newUserUsername"
             onChange={(e) => setUsername(e.target.value)}
+            onClick={() => {setErrMsg(""); setSuccess("")}}
           />
 
           <label>Password</label>
@@ -49,12 +45,14 @@ export const NewUser = () => {
             type="password"
             className="newUser_container_input"
             onChange={(e) => setPassword(e.target.value)} 
+            onClick={() => {setErrMsg(""); setSuccess("")}}
           />
 
           <label>Role</label>
           <select
             className="newUser_container_input"
-            onChange={(e) => setRole(e.target.value)} 
+            onChange={(e) => setRole(e.target.value)}
+            onClick={() => {setErrMsg(""); setSuccess("")}} 
             defaultValue="" 
           >
             <option value="" disabled hidden>Select role</option>

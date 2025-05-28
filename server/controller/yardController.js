@@ -47,6 +47,12 @@ const updateBay = asyncHandler(async(data) => {
     return {status: "200", bayInfo: newBay, updateTime:newBay.updatedAt}
 })
 
+const getAllBays = asyncHandler(async() => {
+
+    const bays = await Bay.find().sort({ bayNumber: 1 }).exec();
+
+    return bays
+})
 
 const getEmptyTrailers = asyncHandler(async(req, res) => {
 
@@ -86,4 +92,4 @@ const getBay = asyncHandler(async(req,res) => {
 
 
 
-export{createBay, getEmptyTrailers,getBay, updateBay, getFullTrailers}
+export{createBay, getEmptyTrailers,getBay, updateBay, getFullTrailers, getAllBays}

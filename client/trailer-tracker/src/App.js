@@ -44,8 +44,8 @@ export function App() {
                 <Route path = '/Inbound' element = {<Inbound />}/>
                 <Route path = '/Outbound' element = {<Outbound />}/>
                 <Route path = '/Parking' element = {<Parking />}/>
-                <Route path = '/Empty Trailers' element = {<EmptyTrailers />}/>
-                <Route path = '/Full Trailers' element = {<FullTrailers />}/>
+                <Route path = '/Empty-Trailers' element = {<EmptyTrailers />}/>
+                <Route path = '/Full-Trailers' element = {<FullTrailers />}/>
                 <Route path = '/Search' element = {<Search />}/>
                 <Route path = '/Profile' element = {<Profile />}/>
               </Route> 

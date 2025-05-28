@@ -14,7 +14,8 @@ export const SocketContextProvider = ({children}) => {
     const [isConnected, setIsConnected] = useState(false);
     const [bayData, setBayData] = useState(null)
     const [updatedAt, setUpdatedAt] = useState(null)
-
+    const [yard, setYard] = useState([])
+    const [updater, setUpdater] = useState("")
     const socketRef = useRef(null)
     const {isAuth} = useAuth(); 
     
@@ -31,10 +32,19 @@ export const SocketContextProvider = ({children}) => {
         if (isAuth) {
           socket.connect({transports:["websocket"]})
           setIsConnected(true)
+          
+          socket.emit("requestBays")
+          socket.on("allBays", (data) => {
+            if (data) {
+              setYard(data)
+            }
+          })
+
           socket.on("bayUpdated", (data) => {
             if (data.status === "200") {
                 setBayData(data.bayInfo) 
-                setUpdatedAt(data.updatedAt)
+                setUpdatedAt(data.updateTime)
+                setUpdater(data.username)
             }
       })
 
@@ -47,16 +57,18 @@ export const SocketContextProvider = ({children}) => {
 
       connectSocket();
 
-      return () => {
-        if (socket) {
-          socket.disconnect()
-        }
-      }
+     return () => {
+      socket.off('allBays');
+      socket.off('bayUpdated');
+      socket.disconnect();
+    };
+
+  }, [isAuth]);
     
-    }, [isAuth])
+  
 
   return (
-    <socketContext.Provider value = {{socket:socketRef.current, isConnected, bayData, updatedAt}}>
+    <socketContext.Provider value = {{socket:socketRef.current, isConnected, bayData, setBayData, updatedAt, setUpdatedAt, yard}}>
       {children}
     </socketContext.Provider>
   )

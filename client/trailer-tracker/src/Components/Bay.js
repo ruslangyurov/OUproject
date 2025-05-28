@@ -8,8 +8,21 @@ import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import BayForm from '../Components/BayForm';
 import { Typography } from '@mui/material';
+import { useSocketContext } from '../Config/SocketContext';
+import { useEffect, useState } from 'react';
+
 
 export default function Bay(props) {
+
+  const [formData, setFormData] = useState({
+      bayNumber: props.number,
+      trailerNumber: props.trailerNumber,
+      stockDelivered: props.stockDelivered,
+      fullTrailer: props.fullTrailer,
+      comment: props.comment,
+    });
+ 
+
   const onClick = () => {
     props.onClick(props.index);
   };
@@ -43,13 +56,16 @@ export default function Bay(props) {
               fontWeight: 'bold',
             }}
           >
-            {props.child}
+            {props.number}
           </Typography>
 
           <BayForm
-            child={props.child}
+            number={props.number}
             state={props.state}
             filter={props.filter}
+            formData = {formData}
+            setFormData = {setFormData}
+
           />
         </AccordionSummary>
 

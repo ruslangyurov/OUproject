@@ -61,7 +61,7 @@ export const FullTrailers = () => {
         </TableHead>
         <TableBody>
           {fullTrailers.map((bay) => (
-            <TableRow key={bay.id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+            <TableRow key={bay.number} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
               <TableCell component="th" scope="row">{bay.bayNumber}</TableCell>
               <TableCell align="right">{bay.trailerNumber}</TableCell>
               <TableCell align="right">{bay.stockDelivered}</TableCell>

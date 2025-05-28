@@ -1,5 +1,6 @@
 import { Server } from 'socket.io';
 import { updateBay } from '../controller/yardController.js';
+import {getAllBays} from '../controller/yardController.js'
 
 let io;
 
@@ -12,10 +13,14 @@ const InitialiseSocketio = ({ server }) => {
         socket.on("disconnect", () => {
             console.log("User disconnected:", socket.id);
         });
+        socket.on("requestBays", async () => {
+                const data = await getAllBays()
+                socket.emit("allBays", data);
+                });
 
-        socket.on("bayUpdate", async (formData, callback) => {
+        socket.on("bayUpdate", async (data, callback) => {
           
-                const bayUpdated = await updateBay(formData);
+                const bayUpdated = await updateBay(data.formData);
 
                 if (bayUpdated.status === "400") {
                     return callback({ status: "400", message: "Please fill in all the required fields." });
@@ -24,7 +29,9 @@ const InitialiseSocketio = ({ server }) => {
                 } else if (!bayUpdated.status) {
                     return callback({ status: "500", message: "Something went wrong. Please try again later!" });
                 } else if (bayUpdated.status === "200") {
-                    socket.broadcast.emit("bayUpdated", bayUpdated);
+                    // Instead of just socket.broadcast.emit(...)
+                    io.emit("bayUpdated", {...bayUpdated, username: data.username});
+
                 }
 
                 

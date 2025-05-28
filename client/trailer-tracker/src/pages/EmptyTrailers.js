@@ -16,7 +16,7 @@ export const EmptyTrailers = () => {
   const [emptyTrailers, setEmptyTrailers] = useState([])
   const [errMsg, setErrMsg] = useState("")
   const [loading, setLoading] = useState(true)
-  const YARD_URL = "/yard"
+  const YARD_URL = "/yard/EmptyTrailers"
 
   useEffect(() => {
     getResults()
@@ -46,7 +46,7 @@ export const EmptyTrailers = () => {
 
      } else if (emptyTrailers.length > 0) {
         return (
-            <TableContainer component={Paper}>
+            <TableContainer component={Paper} sx={{mt:"60px"}}>
                 <Table sx={{ minWidth: 650 }} aria-label="simple table">
                     <TableHead>
                         <TableRow>

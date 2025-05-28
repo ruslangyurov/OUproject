@@ -29,7 +29,7 @@ export const createNewUser = asyncHandler(async (req,res) => {
     res.status(400).json({message: "All fields are required"})
    }
 
-   const duplicate = User.findOne({username:username}).collation({locale:'en', strength:2}).lean().exec()
+   const duplicate = await User.findOne({username:username}).collation({locale:'en', strength:2}).lean().exec()
    if (duplicate) {
     return res.status(409).json({message:"Username already exists."})
    }

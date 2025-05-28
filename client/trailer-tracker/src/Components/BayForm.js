@@ -22,15 +22,9 @@ import { Typography } from '@mui/material';
 
 export default function BayForm(props) {
 
-  const {socket, bayData, updatedAt} = useSocketContext()
+  const {socket, bayData, updatedAt, updater} = useSocketContext()
 
-  const [formData, setFormData] = useState({
-    bayNumber: props.child,
-    trailerNumber: "Trailer Number",
-    stockDelivered: "Stock Delivered",
-    fullTrailer: '',
-    comment: '',
-  });
+ 
 
   const {username} = useAuth();
   const [msg, setErrMsg] = useState("");
@@ -38,44 +32,25 @@ export default function BayForm(props) {
   const [emptyBay, setEmptyBay] = useState(true);
 
   
+  
+ useEffect(() => {
+  if (bayData && bayData.bayNumber === props.number) {
+    props.setFormData({
+      bayNumber: props.number,
+      trailerNumber: bayData.trailerNumber || "",
+      stockDelivered: bayData.stockDelivered || "",
+      fullTrailer: bayData.fullTrailer || "",
+      comment: bayData.comment || "",
+    });
+    console.log("BayForm updatedAt prop:", updatedAt);
 
-  useEffect(() => {
-    // Load data from local storage when the component mounts
-    const localStorageData = {
-
-      trailerNumber: localStorage.getItem('trailerNumber' + props.child) || "Trailer Number",
-      stockDelivered: localStorage.getItem('stockDelivered' + props.child) || "Stock Delivered",
-      comment: localStorage.getItem('comment' + props.child) || "",
-      fullTrailer: localStorage.getItem('fullTrailer' + props.child) || '',
-    };
-    setFormData(prev => ({...formData, ...localStorageData}));
-    setEmptyBay(localStorage.getItem("emptyBay" + props.child) === "true");
-  }, [props.child]); // Runs once when `props.child` changes
-  
-  
-  useEffect(() => {
-    if (bayData) {
-      // Update the form with the received socket data
-      setUpdated(updatedAt)
-      const newData = {
-        bayNumber: props.child,
-        trailerNumber: bayData.trailerNumber || "",
-        stockDelivered: bayData.stockDelivered || "",
-        fullTrailer: bayData.fullTrailer || "",
-        comment: bayData.comment || "",
-      };
-  
-      setFormData(newData);
-  
-      // Save to local storage to make it persistent
-     
-      localStorage.setItem("trailerNumber" + props.child, newData.trailerNumber);
-      localStorage.setItem("stockDelivered" + props.child, newData.stockDelivered);
-      localStorage.setItem("fullTrailer" + props.child, newData.fullTrailer);
-      localStorage.setItem("comment" + props.child, newData.comment);
+    if (updatedAt) {
+      setUpdated(updatedAt);
+      
     }
-  }, [bayData,updatedAt, props.child]); // Runs whenever `bayUpdated` changes
-  
+  }
+}, [bayData, updatedAt, props.number]);
+
 
 
   // const handleClick = () => {
@@ -85,8 +60,8 @@ export default function BayForm(props) {
 
 
   const updateStorage = (field, value) => {
-    setFormData(prevState => ({...prevState, [field]:value}))
-    localStorage.setItem(field + props.child, value);
+    props.setFormData(prevState => ({...prevState, [field]:value}))
+
     
   }
 
@@ -96,7 +71,7 @@ export default function BayForm(props) {
   const handleSubmit = (e) => {
       e.preventDefault()
       if (socket) {
-      socket.emit("bayUpdate", formData, (response) => {
+      socket.emit("bayUpdate", {formData:props.formData,username}, (response) => {
        setErrMsg(response.message)
       })
         }
@@ -107,25 +82,21 @@ export default function BayForm(props) {
   const handleDelete = async (e) => {
     e.preventDefault();
     const bayDelete = {
-      bayNumber: props.child,
-      trailerNumber: "0", 
-      stockDelivered: "",
-      fullTrailer: "full",
+      bayNumber: props.number,
+      trailerNumber: "Trailer Number", 
+      stockDelivered: "Stock Delivered",
+      fullTrailer: "Empty",
       comment: ""
     }
 
-    const newFormData = {trailerNumber:"", stockDelivered: "", fullTrailer:"", comment:""}
+    
     
     // This will act as a delete operation on the app
 
     
     await axiosInstance.patch(YARD_URL,bayDelete).then((res) => setUpdated(res.data)).then(() => {
-      setFormData(prevData => ({...formData, ...newFormData}));
-      localStorage.removeItem("emptyBay" + props.child);
-      localStorage.removeItem("trailerNumber" + props.child);
-      localStorage.removeItem("stockDelivered" + props.child);
-      localStorage.removeItem("fullTrailer" + props.child);
-      localStorage.removeItem("comment" + props.child);
+      props.setFormData(prevData => ({...prevData, ...bayDelete}));
+     
     }).catch((err) => {
       setErrMsg(err.request ? err.request.data : err.message);
     
@@ -170,17 +141,17 @@ return (
           maxWidth: 400,
         }}
         onClick={() => {
-          if (formData.trailerNumber === "Trailer Number")
-            setFormData({ ...formData, trailerNumber: "" });
+          if (props.formData.trailerNumber === "Trailer Number")
+            props.setFormData({ ...props.formData, trailerNumber: "" });
         }}
         onChange={(e) => updateStorage("trailerNumber", e.target.value)}
         id="outlined-required"
         label="Trailer Number"
-        value={formData.trailerNumber}
+        value={props.formData.trailerNumber}
         helperText="Please enter trailer number"
         error={
-          formData.trailerNumber === "Trailer Number" ||
-          formData.trailerNumber === ""
+          props.formData.trailerNumber === "Trailer Number" ||
+          props.formData.trailerNumber === ""
         }
        
       />
@@ -196,13 +167,13 @@ return (
           maxWidth: 400,
         }}
         onClick={() => {
-          if (formData.stockDelivered === "Stock Delivered")
-            setFormData({ ...formData, stockDelivered: "" });
+          if (props.formData.stockDelivered === "Stock Delivered")
+            props.setFormData({ ...props.formData, stockDelivered: "" });
         }}
         onChange={(e) => updateStorage("stockDelivered", e.target.value)}
         id="Stock - text"
         label="Stock"
-        value={formData.stockDelivered}
+        value={props.formData.stockDelivered}
         helperText="Enter type of stock delivered"
       
       />
@@ -218,13 +189,13 @@ return (
           minWidth: 200,
           maxWidth: 400,
         }}
-        onClick={() => {if (formData.comment === "Comment")
-            setFormData({ ...formData, comment: "" });
+        onClick={() => {if (props.formData.comment === "Comment")
+            props.setFormData({ ...props.formData, comment: "" });
         }}
         onChange={(e) =>updateStorage("comment", e.target.value)}
         id="Comment - text"
         label="Comment"
-        value={formData.comment}
+        value={props.formData.comment}
     
       />
 
@@ -233,7 +204,7 @@ return (
         <Select
           labelId="StandTrailer"
           id="Trailer"
-          value={formData.fullTrailer}
+          value={props.formData.fullTrailer}
           label="Stand Trailer"
           onChange={(e) => updateStorage("fullTrailer", e.target.value)}
            sx={{width: {
@@ -281,13 +252,13 @@ return (
       />
 
      
-    </Box>
+  </Box>
 
     <Typography
       variant="caption"
       sx={{ mt: 1, alignSelf: "flex-end", color: 'gray' }}
     >
-      Updated at {updatedAt}
+       {updated && `Updated at ${format(new Date(updated), 'PPpp')} by ${updater}`}
     </Typography>
   </Box>
 );

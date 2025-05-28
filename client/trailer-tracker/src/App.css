@@ -21,7 +21,7 @@
 .admin {
   position: fixed;
   display: flex;
-  margin-top: 0;
+  margin-top: 60px;
   background-color: beige;
   width: 100vw;
   height: 100vh;
