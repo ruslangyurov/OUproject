@@ -22,7 +22,7 @@ import { Typography } from '@mui/material';
 
 export default function BayForm(props) {
 
-  const {socket, bayData, updatedAt, updater} = useSocketContext()
+  const {socket, bayData, updatedAt, updater, trestleUpdate} = useSocketContext()
 
  
 
@@ -30,6 +30,9 @@ export default function BayForm(props) {
   const [msg, setErrMsg] = useState("");
   const [updated, setUpdated] = useState("");
   const [emptyBay, setEmptyBay] = useState(true);
+  const [trestleSwitch, setTrestleSwitch] = useState(props.trestleOn)
+ 
+  
 
   
   
@@ -37,12 +40,16 @@ export default function BayForm(props) {
   if (bayData && bayData.bayNumber === props.number) {
     props.setFormData({
       bayNumber: props.number,
-      trailerNumber: bayData.trailerNumber || "",
-      stockDelivered: bayData.stockDelivered || "",
+      trailerNumber: bayData.trailerNumber || "Trailer Number",
+      stockDelivered: bayData.stockDelivered || "Stock Delivered",
       fullTrailer: bayData.fullTrailer || "",
-      comment: bayData.comment || "",
+      comment: bayData.comment || "Comment"
     });
-    console.log("BayForm updatedAt prop:", updatedAt);
+
+    
+    if (trestleUpdate && trestleUpdate.bayNumber === props.number) {
+      setTrestleSwitch(trestleUpdate.trestleOn)
+    }
 
     if (updatedAt) {
       setUpdated(updatedAt);
@@ -79,7 +86,7 @@ export default function BayForm(props) {
     
   // Bay is empty. Data is reset
    
-  const handleDelete = async (e) => {
+  const handleDelete = (e) => {
     e.preventDefault();
     const bayDelete = {
       bayNumber: props.number,
@@ -88,20 +95,25 @@ export default function BayForm(props) {
       fullTrailer: "Empty",
       comment: ""
     }
-
+    if (socket) {
+      socket.emit("bayDelete", {data:bayDelete})
+    }
+  }
+  
+  const handleTrestle = () => {
+    const status = !trestleSwitch
+    setTrestleSwitch(status)
+   
+    if (socket) {
+      socket.emit("updateTrestle", ({bayNumber:props.number, trestleOn:status}))
+    }
+  }
     
     
     // This will act as a delete operation on the app
 
     
-    await axiosInstance.patch(YARD_URL,bayDelete).then((res) => setUpdated(res.data)).then(() => {
-      props.setFormData(prevData => ({...prevData, ...bayDelete}));
-     
-    }).catch((err) => {
-      setErrMsg(err.request ? err.request.data : err.message);
-    
-  });
-}
+   
     
 // Inside BayForm.jsx
 return (
@@ -249,6 +261,11 @@ return (
       <FormControlLabel
         control={<Switch defaultChecked={false} color="warning" />}
         label="Broken Bay"
+      />
+
+       <FormControlLabel
+        control={<Switch checked={trestleSwitch} onChange={handleTrestle} />}
+        label="Trestle on"
       />
 
      

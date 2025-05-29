@@ -21,6 +21,8 @@ export default function Bay(props) {
       fullTrailer: props.fullTrailer,
       comment: props.comment,
     });
+
+  
  
 
   const onClick = () => {
@@ -65,18 +67,10 @@ export default function Bay(props) {
             filter={props.filter}
             formData = {formData}
             setFormData = {setFormData}
+            trestleOn = {props.trestleOn}
 
           />
         </AccordionSummary>
-
-        <AccordionActions sx={{ px: 2 }}>
-          <FormGroup>
-            <FormControlLabel
-              control={<Switch checked={props.state} onChange={onClick} />}
-              label="TrestleOn"
-            />
-          </FormGroup>
-        </AccordionActions>
       </Accordion>
     </Box>
   );

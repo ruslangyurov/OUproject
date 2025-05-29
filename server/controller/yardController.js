@@ -47,6 +47,16 @@ const updateBay = asyncHandler(async(data) => {
     return {status: "200", bayInfo: newBay, updateTime:newBay.updatedAt}
 })
 
+const updateTrestle = asyncHandler(async(data) => {
+    const {bayNumber, trestleOn} = data
+
+    const updatedTrestle = await Bay.findOneAndUpdate({bayNumber:bayNumber}, {trestleOn:trestleOn}, {new:true, runValidators:true}).exec()
+    return updatedTrestle
+})
+
+    
+
+
 const getAllBays = asyncHandler(async() => {
 
     const bays = await Bay.find().sort({ bayNumber: 1 }).exec();
@@ -92,4 +102,4 @@ const getBay = asyncHandler(async(req,res) => {
 
 
 
-export{createBay, getEmptyTrailers,getBay, updateBay, getFullTrailers, getAllBays}
+export{createBay, getEmptyTrailers,getBay, updateBay, updateTrestle, getFullTrailers, getAllBays}

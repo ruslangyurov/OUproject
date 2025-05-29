@@ -16,8 +16,11 @@ export const SocketContextProvider = ({children}) => {
     const [updatedAt, setUpdatedAt] = useState(null)
     const [yard, setYard] = useState([])
     const [updater, setUpdater] = useState("")
+    const [trestleUpdate, setTrestleUpdate] = useState(null)
     const socketRef = useRef(null)
     const {isAuth} = useAuth(); 
+
+  
     
     useEffect(() => {
       if (!socketRef.current) {
@@ -48,6 +51,10 @@ export const SocketContextProvider = ({children}) => {
             }
       })
 
+          socket.on("trestleUpdated", (data) => {
+            setTrestleUpdate(data)
+          })
+
         } else {
           if (socket) {
             socket.disconnect()
@@ -68,7 +75,7 @@ export const SocketContextProvider = ({children}) => {
   
 
   return (
-    <socketContext.Provider value = {{socket:socketRef.current, isConnected, bayData, setBayData, updatedAt, setUpdatedAt, yard}}>
+    <socketContext.Provider value = {{socket:socketRef.current, isConnected, bayData, updatedAt, updater, yard, trestleUpdate}}>
       {children}
     </socketContext.Provider>
   )

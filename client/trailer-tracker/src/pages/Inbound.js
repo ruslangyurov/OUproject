@@ -6,14 +6,13 @@ import { useSocketContext } from '../Config/SocketContext';
 
 export const Inbound = () => {
   // By default each bay has no trestles
-  const [trestle, setTrestle] = useState([false, false, false, false])
+  const [trestle, setTrestle] = useState([])
   const [filter, setFilter] = useState(false)
 
   const {yard} = useSocketContext()
 
   useEffect(() => {
   if (yard.length > 0) {
-    console.log(yard)
     const initialTrestle = Object.fromEntries(
       yard.map(bay => [bay.bayNumber, false])
     );
@@ -39,7 +38,7 @@ const bayList = useMemo(() => {
       stockDelivered={bay.stockDelivered}
       comment={bay.comment}
       fullTrailer={bay.fullTrailer}
-      state={trestle[bay.bayNumber] || false}
+      trestleOn = {bay.trestleOn}
       onClick={() => onBayClick(bay.bayNumber)}
       filter={filter}
       index={bay.bayNumber}

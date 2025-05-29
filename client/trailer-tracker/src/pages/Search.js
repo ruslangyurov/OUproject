@@ -45,7 +45,7 @@ export const Search = () => {
         
     if (results) {
         return (
-            <TableContainer component={Paper}>
+            <TableContainer component={Paper} sx = {{mt:"60px"}}>
                 <Table sx={{ minWidth: 650 }} aria-label="simple table">
                     <TableHead>
                         <TableRow>

@@ -1,5 +1,5 @@
 import { Server } from 'socket.io';
-import { updateBay } from '../controller/yardController.js';
+import { updateBay, updateTrestle } from '../controller/yardController.js';
 import {getAllBays} from '../controller/yardController.js'
 
 let io;
@@ -17,6 +17,12 @@ const InitialiseSocketio = ({ server }) => {
                 const data = await getAllBays()
                 socket.emit("allBays", data);
                 });
+
+        socket.on("updateTrestle", async(data) => {
+            const trestleUpdated = await updateTrestle(data)
+            io.emit("trestleUpdated", trestleUpdated)
+        })
+
 
         socket.on("bayUpdate", async (data, callback) => {
           
