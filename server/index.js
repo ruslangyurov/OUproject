@@ -52,7 +52,11 @@ app.options('*', cors());
 app.use(cookieParser())
 const mongoDb = "mongodb+srv://ruslangyurov:UPhkK4FkI2nVFUii@oucluster.dqizjw9.mongodb.net/?retryWrites=true&w=majority"
 
-app.use('/', express.static(path.join(__dirname, 'public')))
+//app.use('/', express.static(path.join(__dirname, 'public')))
+app.use(express.static(path.join(__dirname, "../client/build")));
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "../client/build", "index.html"));
+});
 
 
 
