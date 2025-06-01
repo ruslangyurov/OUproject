@@ -8,6 +8,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Box } from "@mui/material";
+import EditUserInfo from "./EditUserInfo";
 
 export const Profile = () => {
   const [hasRights, setHasRights] = useState(null)
@@ -17,10 +18,10 @@ export const Profile = () => {
   //bla === "admin" ? setHasRights(true):  
   
   return (
-  <Box sx={{width:"100vw", display:"flex", p:"100px", boxSizing:"border-box", gap:2}}> 
-    <Box sx = {{ border: '3px solid #e0e0e0', borderRadius:"2", width:"40%", p:"40px", height:"auto"}}>
+  <Box sx={{width:"100vw", display:"flex", p:"100px", boxSizing:"border-box", gap:2, flexDirection:"column", alignItems:"center"}}> 
+    <Box sx = {{ width:{md:"40%", xs:"90%"}, p:"40px", height:"40%"}}>
       <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 650  }} aria-label="simple table">
+            <Table sx={{minWidth: "70%"}} aria-label="simple table">
               <TableHead>
                 <TableRow>
                   <TableCell sx={{ fontWeight: "bold", fontSize:"1.3rem", border:"0" }}>Personal Info</TableCell>
@@ -44,10 +45,11 @@ export const Profile = () => {
               </TableBody>
             </Table>
       </TableContainer>
+      <EditUserInfo/>
     </Box>
-    <Box sx = {{ border: '3px solid #e0e0e0', borderRadius:"2", width:"40%", p:"40px", height:"auto"}}>
+    <Box sx = {{ width:"40%", p:"40px", height:"40%"}}>
       <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 650  }} aria-label="simple table">
+            <Table sx={{ minWidth: "40%"  }} aria-label="simple table">
               <TableHead>
                 <TableRow>
                   <TableCell sx={{ fontWeight: "bold", fontSize:"1.3rem", border:"0" }}>Employment history</TableCell>

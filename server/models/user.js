@@ -15,6 +15,18 @@ const userSchema = new Schema( {
         type:String, 
         default:"Employee"
     },
+
+    Name:String, 
+    Address:String,
+    PhoneNumber:String,
+    EmploymentHistory: [
+        {
+            role:String,
+            Position:String,
+            Period:String,
+        }
+    ]
+
     
 })
 

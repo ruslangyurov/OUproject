@@ -10,8 +10,8 @@ import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';import Avatar from '@mui/material/Avatar';
-import Tooltip from '@mui/material/Tooltip';
 import HomeIcon from '@mui/icons-material/Home';
+import UserProfileMenu from './UserProfileMenu';
 import {useNavigate, useLocation, Link } from "react-router-dom"
 import {useState} from 'react'
 import { useAuth } from '../Config/AuthContext';
@@ -62,11 +62,10 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 let pages;
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+
 
 export default function SearchAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
   const [searchValue, setSearchValue] = useState('');
 
   const navigate = useNavigate()
@@ -101,17 +100,13 @@ export default function SearchAppBar() {
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
-  const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget);
-  };
+  
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
 
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
-  };
+ 
 
   const handleSearch = (event) => {
     event.preventDefault();
@@ -188,33 +183,7 @@ export default function SearchAppBar() {
             </Search>
           </Box>
            <Box>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src={`${process.env.PUBLIC_URL}/trial.jpg`} />
-              </IconButton>
-            </Tooltip>
-            <Menu
-              sx={{ mt: '45px' }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-              {settings.map((setting) => (
-                <MenuItem key={setting} component = {Link} to = {`/${setting}`} onClick={handleCloseUserMenu}>
-                  <Typography sx={{ textAlign: 'center' }}>{setting}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
+             <UserProfileMenu/>
           </Box>
         </Toolbar>
       </AppBar>
