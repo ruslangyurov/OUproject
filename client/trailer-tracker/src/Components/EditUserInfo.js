@@ -5,6 +5,7 @@ import {
     Typography,
     TextField,
     Button,
+    Box,
   } from "@mui/material";
   import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
   import { useState } from "react";
@@ -20,13 +21,9 @@ import {
     const USER_URL = '/user'
     const {username} = useAuth()
 
-    const handleUserUpdate = (e) => {
+    const handleUserUpdate = async (e) => {
      e.preventDefault();
-     axiosInstance.patch(USER_URL, {userName:username}).then((response) => {
-      setNewUsername(response.data.userName)
-      setNewAddress(response.data.address)
-      setNewPhoneNumber(response.data.phoneNumber)
-     }).catch((error) => {
+     await axiosInstance.patch(USER_URL, {username:username}).catch((error) => {
       setErrMsg(error.response.data.message)
      })
     };
@@ -39,12 +36,28 @@ import {
           <Typography><strong>Edit</strong> </Typography>
         </AccordionSummary>
         <AccordionDetails>
+          <Box sx={{mb:"20px"}}>
+            <Typography variant="body2" color="error" sx={{ mt: 1 }}>{errMsg}</Typography>
+          </Box>
           <TextField
             label="Edit name"
             value={newUsername}
             onChange={(e) => setNewUsername(e.target.value)}
             fullWidth
           />
+          <TextField
+            label="Edit address"
+            value={newAddress}
+            onChange={(e) => setNewAddress(e.target.value)}
+            fullWidth
+          />
+          <TextField
+            label="Edit phone number"
+            value={newPhoneNumber}
+            onChange={(e) => setNewPhoneNumber(e.target.value)}
+            fullWidth
+          />
+          
           <Button
             variant="contained"
             sx={{ mt: 2 }}
@@ -52,6 +65,7 @@ import {
           >
             Save
           </Button>
+          
         </AccordionDetails>
       </Accordion>
     );

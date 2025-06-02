@@ -9,7 +9,7 @@ import InputBase from '@mui/material/InputBase';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';import Avatar from '@mui/material/Avatar';
+import MenuItem from '@mui/material/MenuItem';
 import HomeIcon from '@mui/icons-material/Home';
 import UserProfileMenu from './UserProfileMenu';
 import {useNavigate, useLocation, Link } from "react-router-dom"

@@ -19,11 +19,14 @@ const userSchema = new Schema( {
     Name:String, 
     Address:String,
     PhoneNumber:String,
+
     EmploymentHistory: [
         {
-            role:String,
-            Position:String,
-            Period:String,
+            department:String,
+            position:String,
+            period:String,
+            startDate:Date,
+            endDate:Date
         }
     ]
 

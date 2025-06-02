@@ -50,24 +50,40 @@ export const createNewUser = asyncHandler(async (req,res) => {
 // @route PATCH /users
 // @access private
 
+export const getUserInfo = asyncHandler(async (req,res) => {
+    const {username} = req.query
+    const user = await User.findOne({username:username}).select('-password').lean()
+    if (!user) {
+        res.status(400).json({message: "User does not exist"})
+    }
+    res.status(200).json(user)
+})
+
 export const updateUser = asyncHandler(async (req,res) => {
-   const {username, role, newUsername, newPassword, newRole} = req.body
+   const {username, role, newUsername, newPassword, newRole, position, department, startDate, endDate} = req.body
 
-   const user = User.findOne({username:username, role:role})
+   const newInformation = {
+    username:newUsername,
+    password:newPassword,
+    role:newRole,
+    
+   }
 
+   const employmentHistory = {
+    position:position,
+    department:department,
+    startDate:startDate,
+    endDate:endDate
+   }
+
+   const user = await User.findOneAndUpdate({username:username, role:role}, {$set:newInformation, $push:{employmentHistory:employmentHistory}},  {new:true, runvalidators:tr}).exec()
    if (!user) {
     res.status(400).json({message: "User does not exist"})
    }
 
-   user.username = newUsername !== "" ? newUsername:username
-   user.role = newRole !== "" ? newRole:role
-   user.password = password !== "" ? newPassword:user.password
+   res.status(200).json({message: "User succesfully updated.", user})
 
-   const updatedUser = await user.save().then(() => {
-    res.status(200).json({message: "User info succesfully updated"}).catch(err => {
-        res.status(400).json({message: "Sth went wrong"})
-    })
-   })
+   
 })
 // @desc delete user
 // @route DELETE /users

@@ -11,5 +11,8 @@ router.route('/')
     .patch(userController.updateUser)
     .delete(userController.deleteUser)
     
+router.route('/profile')
+    .get(userController.getUserInfo)
+    
 
 export default router;
