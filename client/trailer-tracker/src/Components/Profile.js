@@ -92,7 +92,7 @@ export const Profile = () => {
                     <TableCell align="right">{user.department}</TableCell>
                     <TableCell align="right">{user.position}</TableCell>
                     <TableCell align="right">{user.startDate}</TableCell>
-                    <TableCell align="right">{user.EndDate}</TableCell>
+                    <TableCell align="right">{user.endDate}</TableCell>
                 </TableRow>
                 
                 ))}
