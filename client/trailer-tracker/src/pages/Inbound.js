@@ -5,88 +5,75 @@ import { useSocketContext } from '../Config/SocketContext';
 
 
 export const Inbound = () => {
-  // By default each bay has no trestles
-  const [trestle, setTrestle] = useState([])
+  
   const [filter, setFilter] = useState(false)
-
-  const {yard} = useSocketContext()
-
-  useEffect(() => {
-  if (yard.length > 0) {
-    const initialTrestle = Object.fromEntries(
-      yard.map(bay => [bay.bayNumber, false])
-    );
-    setTrestle(initialTrestle);
-  }
-  }, [yard]);
-
-
-  const onBayClick = useCallback((bayNumber) => {
-  setTrestle(prev => ({
-    ...prev,
-    [bayNumber]: !prev[bayNumber],
-  }));
-}, []);
+  const {inbound} = useSocketContext()
 
   
-const bayList = useMemo(() => {
-    return yard.map((bay) => (
+
+
+  
+
+  
+  const bayList = useMemo(() => {
+
+    const baysToReturn = filter ? inbound.filter((bay) => bay.trestleOn) : inbound
+    return baysToReturn.map((bay) => (
     <Bay
       key={bay.bayNumber}
-      number={bay.bayNumber}
+      number={bay.bayNumber.toString()}
       trailerNumber={bay.trailerNumber}
       stockDelivered={bay.stockDelivered}
       comment={bay.comment}
       fullTrailer={bay.fullTrailer}
       trestleOn = {bay.trestleOn}
-      onClick={() => onBayClick(bay.bayNumber)}
       filter={filter}
       index={bay.bayNumber}
     />
   ));
-}, [trestle, filter, yard]);
+  }, [filter,inbound]);
 
 
 
-  
+  return (
+    <>
+      <div className='footer'> 
+        {!filter && (
+          <Button
+            variant="contained"
+            onClick={() => setFilter(true)}
+            sx={{ ml: 2, height: 53, width: 100, fontSize:"16px" }}
+          >
+            Filter
+          </Button>
+        )}
+      </div> 
+      <div className='baylist'>
+        {bayList}
+      </div>
+        
+      <div className='footer'> 
+        {filter && (
+          <Button
+            variant="contained"
+            onClick={() => setFilter(false)}
+            sx={{ ml: 2, height: 53, width: 100, fontSize:"16px" }}
+          >
+            Unfilter
+          </Button>
+      
+        )}
+      </div>
+     
+    </>
+  );
+};
   
 
   
     
 
-             return (
-                <>
-                  <div className='footer'> 
-                    {!filter && (
-                      <Button
-                        variant="contained"
-                        onClick={() => setFilter(true)}
-                        sx={{ ml: 2, height: 53, width: 100, fontSize:"16px" }}
-                      >
-                        Filter
-                      </Button>
-                    )}
-                  </div> 
-                  <div className='baylist'>
-                    {bayList}
-                  </div>
-                    
-                  <div className='footer'> 
-                    {filter && (
-                      <Button
-                        variant="contained"
-                        onClick={() => setFilter(false)}
-                        sx={{ ml: 2, height: 53, width: 100, fontSize:"16px" }}
-                      >
-                        Unfilter
-                      </Button>
-                  
-                    )}
-                  </div>
-                 
-                </>
-              );
-            };
+            
 
 
 

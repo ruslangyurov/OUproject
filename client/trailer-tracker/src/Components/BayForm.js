@@ -5,7 +5,6 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-import axiosInstance from '../apiAxios/axios';
 import SendIcon from '@mui/icons-material/Send';
 import Button from '@mui/material/Button';
 import { useState, useEffect } from 'react';
@@ -22,7 +21,7 @@ import { Typography } from '@mui/material';
 
 export default function BayForm(props) {
 
-  const {socket, bayData, updatedAt, updater, trestleUpdate} = useSocketContext()
+  const {socket, bayData, updatedAt, updater} = useSocketContext()
 
  
 
@@ -46,10 +45,6 @@ export default function BayForm(props) {
       comment: bayData.comment || "Comment"
     });
 
-    
-    if (trestleUpdate && trestleUpdate.bayNumber === props.number) {
-      setTrestleSwitch(trestleUpdate.trestleOn)
-    }
 
     if (updatedAt) {
       setUpdated(updatedAt);
@@ -74,7 +69,7 @@ export default function BayForm(props) {
 
   //Function to create a new entry for a particular bay in the database
 
-  const YARD_URL = "/yard"
+ 
   const handleSubmit = (e) => {
       e.preventDefault()
       if (socket) {

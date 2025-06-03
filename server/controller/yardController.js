@@ -59,9 +59,11 @@ const updateTrestle = asyncHandler(async(data) => {
 
 const getAllBays = asyncHandler(async() => {
 
-    const bays = await Bay.find().sort({ bayNumber: 1 }).exec();
-
-    return bays
+    const inbound = await Bay.find({bayNumber:{$lte:40}}).sort({ bayNumber: 1 }).exec();
+    const outbound = await Bay.find({bayNumber:{$gte:41}}).sort({ bayNumber: 1 }).exec();
+    const parking = await Bay.find({bayNumber:{$gte:101}}).sort({ bayNumber: 1 }).exec();
+    const bays = {inbound: inbound, outbound: outbound, parking:parking}
+    return {status: "200", bays: bays}
 })
 
 const getEmptyTrailers = asyncHandler(async(req, res) => {

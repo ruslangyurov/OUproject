@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const BaySchema = new Schema ({
    _id: String,
     bayNumber: {
-        type: String,
+        type: Number,
         required:true
     },
     trailerNumber: {

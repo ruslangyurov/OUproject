@@ -24,7 +24,7 @@ const InitialiseSocketio = ({ server }) => {
         })
 
 
-        socket.on("bayUpdate", async (data, callback) => {
+        socket.on("inboundBayUpdate", async (data, callback) => {
           
                 const bayUpdated = await updateBay(data.formData);
 
