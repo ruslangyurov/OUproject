@@ -17,6 +17,8 @@ router.route('/Search').get(yardController.getBay)
 
 router.route('/EmptyTrailers').get(yardController.getEmptyTrailers)
 
+router.route('/create-bays').post(yardController.createBays)
+
 
 export default router;
 

@@ -15,6 +15,7 @@ import {AdminMenu} from './AdminPages/AdminMenu';
 import {NewUser} from './AdminPages/NewUser';
 import {UpdateUser} from './AdminPages/UpdateUser';
 import {DeleteUser} from './AdminPages/DeleteUser';
+import {CreateBays} from './AdminPages/DeleteUser';
 import {Search} from './pages/Search'
 import { useState } from 'react';
 import { AuthContextProvider } from './Config/AuthContext';
@@ -55,6 +56,7 @@ export function App() {
                 <Route path="menu/new-user" element={<NewUser />} />  
                 <Route path="menu/update-user" element={<UpdateUser />} /> 
                 <Route path="menu/delete-user" element={<DeleteUser />} /> 
+                <Route path="menu/create-bays" element={<CreateBays />} /> 
               </Route>
 
             </Routes>

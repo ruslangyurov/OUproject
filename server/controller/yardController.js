@@ -4,9 +4,35 @@ const asyncHandler = pkg;
 // import io from '../index.js';
 import Bay from '../models/bay.js';
 
+const createBays = asyncHandler(async(req,res) => {
+    const {low, high} = req.body
+    for (i=low; i<=high; i++) {
+        duplicate = await Bay.findOne({bayNumber:i}).lean().exec()
+        if (duplicate) {
+            continue
+        }
+      const bayObj = {
+      bayNumber: i,
+      trailerNumber: "",
+      stockDelivered: "",
+      fullTrailer: "empty",
+      comment: "",
+      trestleOn: false,
+    };
+    
+    await Bay.create(bayObj)
+    .then(() => res.status(201).json({message:"Bay Succesfully created"}))
+    .catch(err => res.status(400).json("Error: " + err))
+    } 
+})
+
 const createBay = asyncHandler(async(req,res) => {
-   const {bayNumber, trailerNumber, stockDelivered, fullTrailer,comment, trestleOn} = req.body
+    const {bayNumber, trailerNumber, stockDelivered, fullTrailer,comment, trestleOn} = req.body
    
+    const duplicate = await Bay.findOne({bayNumber}).lean().exec()
+    if (duplicate) {
+       return res.status(409).json({message: "Bay already exists."})
+    }
 
     const bayObj = {
         bayNumber,

@@ -52,8 +52,13 @@ export const SocketContextProvider = ({children}) => {
             }
       })
 
-          socket.on("inbounTrestleUpdated", (data) => {
+          socket.on("inboundTrestleUpdated", (data) => {
             setInbound(prev => prev.map((bay) => bay.bayNumber === data.bayNumber 
+            ? {...bay, trestleOn: data.trestleOn} : bay))
+          })
+
+           socket.on("outboundTrestleUpdated", (data) => {
+            setOutbound(prev => prev.map((bay) => bay.bayNumber === data.bayNumber 
             ? {...bay, trestleOn: data.trestleOn} : bay))
           })
 

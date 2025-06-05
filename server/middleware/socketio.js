@@ -20,7 +20,12 @@ const InitialiseSocketio = ({ server }) => {
 
         socket.on("updateTrestle", async(data) => {
             const trestleUpdated = await updateTrestle(data)
-            io.emit("trestleUpdated", trestleUpdated)
+            if (trestleUpdated.bayNumber <= 40) {
+                io.emit("inboundTrestleUpdated", trestleUpdated)
+            } else {
+                io.emit("outboundTrestleUpdated", trestleUpdated)
+            }
+            
         })
 
 
@@ -35,15 +40,9 @@ const InitialiseSocketio = ({ server }) => {
                 } else if (!bayUpdated.status) {
                     return callback({ status: "500", message: "Something went wrong. Please try again later!" });
                 } else if (bayUpdated.status === "200") {
-                    // Instead of just socket.broadcast.emit(...)
                     io.emit("bayUpdated", {...bayUpdated, username: data.username});
 
                 }
-
-                
-                
-               
-            
         });
     });
 };
