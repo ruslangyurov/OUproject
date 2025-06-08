@@ -7,14 +7,14 @@ import { useSocketContext } from '../Config/SocketContext';
 
 export const Outbound = () => {
   const [filter, setFilter] = useState(false)
-  const outbound = useSocketContext()
+  const {outbound} = useSocketContext()
 
 
   const bayList = useMemo(() => {
     const baysToReturn = filter ? outbound.filter((bay) => bay.trestleOn === false):outbound
     return baysToReturn.map((bay) => (
       <Bay 
-       key={bay.bayNumber}
+      key={bay.bayNumber}
       number={bay.bayNumber.toString()}
       trailerNumber={bay.trailerNumber}
       stockDelivered={bay.stockDelivered}
@@ -25,7 +25,7 @@ export const Outbound = () => {
       index={bay.bayNumber}
     />
   ));
-  }, [filter,inbound]);
+  }, [filter,outbound]);
 
    
 }

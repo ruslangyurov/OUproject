@@ -15,7 +15,7 @@ import {AdminMenu} from './AdminPages/AdminMenu';
 import {NewUser} from './AdminPages/NewUser';
 import {UpdateUser} from './AdminPages/UpdateUser';
 import {DeleteUser} from './AdminPages/DeleteUser';
-import {CreateBays} from './AdminPages/DeleteUser';
+import {CreateBays} from './AdminPages/CreateBays';
 import {Search} from './pages/Search'
 import { useState } from 'react';
 import { AuthContextProvider } from './Config/AuthContext';

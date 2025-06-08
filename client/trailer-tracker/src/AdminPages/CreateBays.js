@@ -3,8 +3,8 @@ import { useState } from 'react';
 
 export const CreateBays = () => {
   const [number, setNumber] = useState('');
-  const [low, setLow] = useState('');
-  const [high, setHigh] = useState('');
+  const [low, setLow] = useState(1);
+  const [high, setHigh] = useState(1);
   const [errMsg, setErrMsg] = useState('');
   const [success, setSuccess] = useState('');
    
@@ -25,7 +25,7 @@ export const CreateBays = () => {
     <> 
       <div className="newUser_container">
 
-        <form onSubmit={handleSubmitSingle}>
+        <form className='form-group' onSubmit={handleSubmitSingle}>
           <label htmlFor="singleBay">Create single bay</label>
           <input
             id="singleBay"
@@ -34,13 +34,41 @@ export const CreateBays = () => {
             value={number}
             step="1"
             min="1"
-            onChange={(e) => setNumber(e.target.value)}
-            onClick={() => { setErrMsg(""); setSuccess(""); }}
+            onChange={(e) => {
+              const value = e.target.value;
+
+              // Allow empty value so user can delete/backspace
+              if (value === '') {
+                setNumber('');
+                return;
+              }
+
+              const num = parseInt(value, 10);
+
+              // Only allow numbers 1 and above
+              if (num >= 1) {
+                setNumber(value);
+              }
+            }}
+            onClick={() => {
+              setErrMsg('');
+              setSuccess('');
+            }}
+            onKeyDown={(e) => {
+              // Prevent typing invalid characters like '.', '-', 'e' (common in number inputs)
+              if (['-', '+', 'e', '.'].includes(e.key)) {
+                e.preventDefault();
+              }
+            }}
           />
           <div>
             <input type="submit" className="newUser_submit_button" />
           </div>
         </form>
+
+        <div>
+          <label>Create multiple bays</label>
+        </div>
 
         <form className="form-group" onSubmit={handleSubmitMultiple}>
           <label htmlFor="lowBay">From:</label>
@@ -48,8 +76,34 @@ export const CreateBays = () => {
             className="newUser_container_input"
             id="lowBay"
             type="number" 
-            value={low} 
-            onChange={(e) => setLow(e.target.value)} 
+            value={low}
+            min = "1" 
+            onChange={(e) => {
+              const value = e.target.value;
+
+              // Allow empty value so user can delete/backspace
+              if (value === '') {
+                setLow('');
+                return;
+              }
+
+              const num = parseInt(value, 10);
+
+              // Only allow numbers 1 and above
+              if (num >= 1) {
+                setLow(value);
+              }
+            }}
+            onClick={() => {
+              setErrMsg('');
+              setSuccess('');
+            }}
+            onKeyDown={(e) => {
+              // Prevent typing invalid characters like '.', '-', 'e' (common in number inputs)
+              if (['-', '+', 'e', '.'].includes(e.key)) {
+                e.preventDefault();
+              }
+            }}
           />
 
           <label htmlFor="highBay">To:</label>
@@ -58,7 +112,32 @@ export const CreateBays = () => {
             id="highBay"
             type="number" 
             value={high} 
-            onChange={(e) => setHigh(e.target.value)} 
+            onChange={(e) => {
+              const value = e.target.value;
+
+              // Allow empty value so user can delete/backspace
+              if (value === '') {
+                setHigh('');
+                return;
+              }
+
+              const num = parseInt(value, 10);
+
+              // Only allow numbers 1 and above
+              if (num >= 1) {
+                setHigh(value);
+              }
+            }}
+            onClick={() => {
+              setErrMsg('');
+              setSuccess('');
+            }}
+            onKeyDown={(e) => {
+              // Prevent typing invalid characters like '.', '-', 'e' (common in number inputs)
+              if (['-', '+', 'e', '.'].includes(e.key)) {
+                e.preventDefault();
+              }
+            }}
           />
 
           <div>
