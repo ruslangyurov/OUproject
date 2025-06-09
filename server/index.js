@@ -47,8 +47,7 @@ const __dirname = dirname(__filename);
 //app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.json({extended:true}))
 app.use(express.urlencoded({extended:true}))
-app.use(cors({origin: "http://localhost:3000", credentials:true}));
-app.options('*', cors());
+app.use(cors({origin: ["http://localhost:3000", "https://trailer-tracker.onrender.com"], credentials:true}));
 app.use(cookieParser())
 const mongoDb = "mongodb+srv://ruslangyurov:UPhkK4FkI2nVFUii@oucluster.dqizjw9.mongodb.net/?retryWrites=true&w=majority"
 
