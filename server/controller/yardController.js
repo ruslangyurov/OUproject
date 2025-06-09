@@ -89,7 +89,7 @@ const getAllBays = asyncHandler(async() => {
     const outbound = await Bay.find({bayNumber:{$gte:41}}).sort({ bayNumber: 1 }).exec();
     const parking = await Bay.find({bayNumber:{$gte:101}}).sort({ bayNumber: 1 }).exec();
     const bays = {inbound: inbound, outbound: outbound, parking:parking}
-    return {status: "200", bays: bays}
+    return  bays
 })
 
 const getEmptyTrailers = asyncHandler(async(req, res) => {
