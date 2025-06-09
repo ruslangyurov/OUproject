@@ -7,7 +7,7 @@ import { useSocketContext } from '../Config/SocketContext';
 export const Inbound = () => {
   
   const [filter, setFilter] = useState(false)
-  const {inbound} = useSocketContext()
+  const {inbound, outbound,parking} = useSocketContext()
   console.log("Bays found:", inbound.length, outbound.length, parking.length);
 
   
