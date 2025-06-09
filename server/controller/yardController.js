@@ -4,7 +4,7 @@ const asyncHandler = pkg;
 // import io from '../index.js';
 import Bay from '../models/bay.js';
 
-const createBays = asyncHandler(async(req,res) => {
+export const createBays = asyncHandler(async(req,res) => {
     const {low, high} = req.body
     for (i=low; i<=high; i++) {
         duplicate = await Bay.findOne({bayNumber:i}).lean().exec()
