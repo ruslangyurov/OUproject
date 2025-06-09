@@ -24,7 +24,7 @@ export const SocketContextProvider = ({children}) => {
     
     useEffect(() => {
       if (!socketRef.current) {
-        socketRef.current = io("http://localhost:10000", {autoConnect: false, transports:["websocket"]});
+        socketRef.current = io(process.env.REACT_APP_SOCKET_URL, {autoConnect: false, transports:["websocket"]});
       }
 
       const socket = socketRef.current;
