@@ -4,14 +4,14 @@ const asyncHandler = pkg;
 // import io from '../index.js';
 import Bay from '../models/bay.js';
 
-export const createBays = asyncHandler(async(req,res) => {
-    const {low, high} = req.body
-    for (i=low; i<=high; i++) {
-        duplicate = await Bay.findOne({bayNumber:i}).lean().exec()
-        if (duplicate) {
-            continue
-        }
-      const bayObj = {
+export const createBays = asyncHandler(async (req, res) => {
+  const { low, high } = req.body;
+  if (high > 300) {return res.json({message:"Value is too large"})}  
+  for (let i = low; i <= high; i++) {
+    const duplicate = await Bay.findOne({ bayNumber: i }).lean().exec();
+    if (duplicate) continue;
+
+    const bayObj = {
       bayNumber: i,
       trailerNumber: "",
       stockDelivered: "",
@@ -19,12 +19,17 @@ export const createBays = asyncHandler(async(req,res) => {
       comment: "",
       trestleOn: false,
     };
-    
-    await Bay.create(bayObj)
-    .then(() => res.status(201).json({message:"Bay Succesfully created"}))
-    .catch(err => res.status(400).json("Error: " + err))
-    } 
-})
+
+    try {
+      await Bay.create(bayObj);
+    } catch (err) {
+      return res.status(400).json({ message: "Unknown Error. Please try again later!" });
+    }
+  }
+
+  return res.status(201).json({ message: "Bays successfully created" });
+});
+
 
 const createBay = asyncHandler(async(req,res) => {
     const {bayNumber, trailerNumber, stockDelivered, fullTrailer,comment, trestleOn} = req.body

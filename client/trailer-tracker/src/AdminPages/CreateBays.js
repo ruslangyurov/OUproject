@@ -1,12 +1,13 @@
 import * as React from 'react'
 import { useState } from 'react';
+import axiosInstance from "../apiAxios/axios"; 
 
 export const CreateBays = () => {
   const [number, setNumber] = useState('');
   const [low, setLow] = useState(1);
   const [high, setHigh] = useState(1);
-  const [errMsg, setErrMsg] = useState('');
-  const [success, setSuccess] = useState('');
+  const [resMsg,setResMsg] = useState('');
+  
    
   const SINGLE_URL = 'yard'
   const MULTIPLE_URL = 'yard/create-bays'
@@ -14,10 +15,14 @@ export const CreateBays = () => {
   const handleSubmitSingle = async(e) => {
     e.preventDefault();
     
-  };
+    await axiosInstance.post(SINGLE_URL, { bayNumber: number }).then(() => setResMsg("Bay successfully created"))
+    .catch((err) => setResMsg(err.response?.data?.message || "An error occurred"));
+  }
 
   const handleSubmitMultiple = async(e) => {
     e.preventDefault();
+    await axiosInstance.post(MULTIPLE_URL, {low:low,high:high}).then(()=> setResMsg("Successfully created."))
+    .catch((error) => setResMsg(error.response?.data?.message) || "Unknown error occured")
    
   };
 
