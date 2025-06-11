@@ -32,7 +32,7 @@ export const createBays = asyncHandler(async (req, res) => {
 
 
 const createBay = asyncHandler(async(req,res) => {
-    const {bayNumber, trailerNumber, stockDelivered, fullTrailer,comment, trestleOn} = req.body
+    const {bayNumber} = req.body
    
     const duplicate = await Bay.findOne({bayNumber}).lean().exec()
     if (duplicate) {
@@ -42,10 +42,10 @@ const createBay = asyncHandler(async(req,res) => {
     const bayObj = {
         bayNumber,
         trailerNumber:"Trailer number",
-        stockDelivered,
-        fullTrailer,
-        comment,
-        trestleOn
+        stockDelivered:"Stock delivered",
+        fullTrailer:false,
+        comment:"",
+        trestleOn:false
     }
 
 
