@@ -15,7 +15,7 @@ export const CreateBays = () => {
   const handleSubmitSingle = async(e) => {
     e.preventDefault();
     
-    await axiosInstance.post(SINGLE_URL, { bayNumber: number }).then(() => setResMsg("Bay successfully created"))
+    await axiosInstance.post(SINGLE_URL, { bayNumber: Number(number) }).then(() => setResMsg("Bay successfully created"))
     .catch((err) => setResMsg(err.response?.data?.message || "An error occurred"));
   }
 
@@ -28,6 +28,9 @@ export const CreateBays = () => {
 
   return (
     <> 
+      <div>
+        {resMsg}
+      </div>
       <div className="newUser_container">
 
         <form className='form-group' onSubmit={handleSubmitSingle}>
