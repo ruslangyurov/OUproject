@@ -22,7 +22,7 @@ export const Inbound = () => {
     return baysToReturn.map((bay) => (
     <Bay
       key={bay.bayNumber}
-      number={bay.bayNumber.toString()}
+      number={bay.bayNumber}
       trailerNumber={bay.trailerNumber}
       stockDelivered={bay.stockDelivered}
       comment={bay.comment}

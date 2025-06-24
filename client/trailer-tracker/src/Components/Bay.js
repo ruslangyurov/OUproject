@@ -58,7 +58,7 @@ export default function Bay(props) {
               fontWeight: 'bold',
             }}
           >
-            {props.number}
+            {props.number.toString()}
           </Typography>
 
           <BayForm
