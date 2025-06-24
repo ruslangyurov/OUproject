@@ -56,7 +56,7 @@ const mongoDb = "mongodb+srv://ruslangyurov:UPhkK4FkI2nVFUii@oucluster.dqizjw9.m
 
 
 const PORT = process.env.PORT || 5000;
-const HOST = process.env.HOST || "localhost";
+const HOST = '0.0.0.0'
 httpServer.listen(PORT, HOST);
 
 
