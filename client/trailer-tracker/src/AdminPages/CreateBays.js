@@ -28,7 +28,7 @@ export const CreateBays = () => {
 
   return (
     <> 
-      <div>
+      <div className="resMsg">
         {resMsg}
       </div>
       <div className="newUser_container">

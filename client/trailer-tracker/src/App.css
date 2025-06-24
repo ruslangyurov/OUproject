@@ -187,6 +187,12 @@ form {
   border-radius: 50%;
 }
 
+.resMsg {
+  margin-top: 1rem;
+  font-size: 0.95rem;
+  color: black; /* or red for errors */
+}
+
 
 @keyframes App-logo-spin {
   from {
