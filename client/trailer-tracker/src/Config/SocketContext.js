@@ -52,7 +52,9 @@ export const SocketContextProvider = ({children}) => {
                 setUpdater(data.username)
             }
       })
-
+          socket.on("tresleUpdated", (data) => {
+            setBayData((prevData) => prevData.map((bay)=> bay.bayNumber === data.bayNumber ? {...bay, trestleOn:data.trestleOn}:bay))
+          })
           
         } else {
           if (socket) {

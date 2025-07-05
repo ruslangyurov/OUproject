@@ -29,7 +29,7 @@ export default function BayForm(props) {
   const [msg, setErrMsg] = useState("");
   const [updated, setUpdated] = useState("");
   const [emptyBay, setEmptyBay] = useState(true);
-  const [trestleSwitch, setTrestleSwitch] = useState(props.trestleOn)
+  
  
   
   
@@ -98,9 +98,11 @@ export default function BayForm(props) {
   
   const handleTrestle = (e) => {
     e.preventDefault()
-    setTrestleSwitch(e.target.trestleSwitch)
+    newStatus = !trestleSwitch
+    
+    
     if (socket) {
-      socket.emit("updateTrestle", ({bayNumber:props.number, trestleOn:trestleSwitch}))
+      socket.emit("updateTrestle", ({bayNumber:props.number, trestleOn:newStatus}))
     }
   }
     
