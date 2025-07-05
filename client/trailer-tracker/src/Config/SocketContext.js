@@ -3,6 +3,7 @@ import {io} from 'socket.io-client';
 import {useState,createContext, useRef, useContext} from 'react'
 import { useEffect } from 'react';
 import { useAuth } from './AuthContext';
+import { buttonBaseClasses } from '@mui/material';
 
 
 
@@ -52,16 +53,7 @@ export const SocketContextProvider = ({children}) => {
             }
       })
 
-          socket.on("inboundTrestleUpdated", (data) => {
-            setInbound(prev => prev.map((bay) => bay.bayNumber === data.bayNumber 
-            ? {...bay, trestleOn: data.trestleOn} : bay))
-          })
-
-           socket.on("outboundTrestleUpdated", (data) => {
-            setOutbound(prev => prev.map((bay) => bay.bayNumber === data.bayNumber 
-            ? {...bay, trestleOn: data.trestleOn} : bay))
-          })
-
+          
         } else {
           if (socket) {
             socket.disconnect()

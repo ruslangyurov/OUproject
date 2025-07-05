@@ -24,7 +24,7 @@ export default function BayForm(props) {
   const {socket, bayData, updatedAt, updater} = useSocketContext()
 
  
-
+  
   const {username} = useAuth();
   const [msg, setErrMsg] = useState("");
   const [updated, setUpdated] = useState("");
@@ -32,7 +32,7 @@ export default function BayForm(props) {
   const [trestleSwitch, setTrestleSwitch] = useState(props.trestleOn)
  
   
-
+  
   
   
  useEffect(() => {
@@ -42,9 +42,10 @@ export default function BayForm(props) {
       trailerNumber: bayData.trailerNumber || "Trailer Number",
       stockDelivered: bayData.stockDelivered || "Stock Delivered",
       fullTrailer: bayData.fullTrailer || "",
-      comment: bayData.comment || "Comment"
+      comment: bayData.comment || "Comment",
+      trestle: bayData.trestleOn
     });
-
+    
 
     if (updatedAt) {
       setUpdated(updatedAt);
@@ -95,12 +96,11 @@ export default function BayForm(props) {
     }
   }
   
-  const handleTrestle = () => {
-    const status = !trestleSwitch
-    setTrestleSwitch(status)
-   
+  const handleTrestle = (e) => {
+    e.preventDefault()
+    setTrestleSwitch(e.target.trestleSwitch)
     if (socket) {
-      socket.emit("updateTrestle", ({bayNumber:props.number, trestleOn:status}))
+      socket.emit("updateTrestle", ({bayNumber:props.number, trestleOn:trestleSwitch}))
     }
   }
     
@@ -259,7 +259,7 @@ return (
       />
 
        <FormControlLabel
-        control={<Switch checked={trestleSwitch} onChange={handleTrestle} />}
+        control={<Switch checked={props.trestleOn} onChange={handleTrestle} />}
         label="Trestle on"
       />
 

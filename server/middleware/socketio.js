@@ -20,13 +20,9 @@ const InitialiseSocketio = ({ server }) => {
 
         socket.on("updateTrestle", async(data) => {
             const trestleUpdated = await updateTrestle(data)
-            if (trestleUpdated.bayNumber <= 40) {
-                io.emit("inboundTrestleUpdated", trestleUpdated)
-            } else {
-                io.emit("outboundTrestleUpdated", trestleUpdated)
-            }
+            socket.emit("trestleUpdated", trestleUpdated)
             
-        })
+        });
 
 
         socket.on("bayUpdate", async (data, callback) => {
