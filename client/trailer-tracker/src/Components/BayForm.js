@@ -98,7 +98,7 @@ export default function BayForm(props) {
   
   const handleTrestle = (e) => {
     e.preventDefault()
-    newStatus = !trestleSwitch
+    const newStatus = !props.trestle
     
     
     if (socket) {
@@ -261,7 +261,7 @@ return (
       />
 
        <FormControlLabel
-        control={<Switch checked={props.trestleOn} onChange={handleTrestle} />}
+        control={<Switch checked={props.trestleOn} onClick={handleTrestle} />}
         label="Trestle on"
       />
 
