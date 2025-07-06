@@ -55,7 +55,7 @@ export const SocketContextProvider = ({children}) => {
       })
           socket.on("trestleUpdated", (bay) => {
             if (bay) {
-              setTresleStatus(bay)
+              setTrestleStatus(bay)
             }
           }
         )
