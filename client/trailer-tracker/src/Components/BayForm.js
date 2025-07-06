@@ -21,7 +21,7 @@ import { Typography } from '@mui/material';
 
 export default function BayForm(props) {
 
-  const {socket, bayData, updatedAt, updater} = useSocketContext()
+  const {socket, bayData, updatedAt, updater, trestleOn} = useSocketContext()
 
  
   
@@ -29,7 +29,7 @@ export default function BayForm(props) {
   const [msg, setErrMsg] = useState("");
   const [updated, setUpdated] = useState("");
   const [emptyBay, setEmptyBay] = useState(true);
-  
+  const[trestle, setTrestle]  = useState(trestleOn || false);
  
   
   
@@ -52,6 +52,9 @@ export default function BayForm(props) {
       
     }
   }
+  if (trestleOn !== undefined && trestleOn !== null) {
+    setTrestle(trestleOn);
+  } 
 }, [bayData, updatedAt, props.number]);
 
 
@@ -98,7 +101,7 @@ export default function BayForm(props) {
   
   const handleTrestle = (e) => {
     e.preventDefault()
-    const newStatus = e.target.checked
+    setTrestle(e.target.checked)
     
     
     if (socket) {
@@ -261,7 +264,7 @@ return (
       />
 
        <FormControlLabel
-        control={<Switch checked={props.trestleOn} onChange={handleTrestle} />}
+        control={<Switch checked={trestle} onChange={handleTrestle} />}
         label="Trestle on"
       />
 
