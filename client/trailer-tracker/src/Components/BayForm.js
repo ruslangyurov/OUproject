@@ -29,7 +29,7 @@ export default function BayForm(props) {
   const [msg, setErrMsg] = useState("");
   const [updated, setUpdated] = useState("");
   const [emptyBay, setEmptyBay] = useState(true);
-  const[trestle, setTrestle]  = useState(trestleOn || false);
+  const[trestle, setTrestle]  = useState(false);
  
   
   
@@ -55,7 +55,7 @@ export default function BayForm(props) {
   if (trestleOn !== undefined && trestleOn !== null) {
     setTrestle(trestleOn);
   } 
-}, [bayData, updatedAt, props.number]);
+}, [bayData, updatedAt, props.number,trestleOn]);
 
 
 
