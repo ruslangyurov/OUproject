@@ -21,7 +21,7 @@ import { Typography } from '@mui/material';
 
 export default function BayForm(props) {
 
-  const {socket, bayData, updatedAt, updater, trestleOn} = useSocketContext()
+  const {socket, bayData, updatedAt, updater, trestleStatus} = useSocketContext()
 
  
   
@@ -30,7 +30,7 @@ export default function BayForm(props) {
   const [updated, setUpdated] = useState("");
   const [emptyBay, setEmptyBay] = useState(true);
   const[trestle, setTrestle]  = useState(false);
- 
+  const trestleOn = trestleStatus && trestleStatus.trestleOn;
   
   
   
@@ -52,7 +52,7 @@ export default function BayForm(props) {
       
     }
   }
-  if (trestleOn !== undefined && trestleOn !== null) {
+  if (trestleOn !== undefined && trestleOn !== null && trestleStatus.bayNumber === props.number) {
     setTrestle(trestleOn);
   } 
 }, [bayData, updatedAt, props.number,trestleOn]);
