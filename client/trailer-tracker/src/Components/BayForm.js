@@ -101,7 +101,8 @@ export default function BayForm(props) {
   
   const handleTrestle = (e) => {
     e.preventDefault()
-    setTrestle(e.target.checked)
+    const newStatus = e.target.checked;
+    setTrestle(newStatus)
     
     
     if (socket) {
