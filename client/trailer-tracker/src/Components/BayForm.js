@@ -32,7 +32,9 @@ export default function BayForm(props) {
   const[trestle, setTrestle]  = useState(props.trestleOn);
   
   
-  
+useEffect(() => {
+    setTrestle(props.trestleOn); // ✅ sync props into state when they change
+  }, [props.trestleOn]);  
   
   
  useEffect(() => {
