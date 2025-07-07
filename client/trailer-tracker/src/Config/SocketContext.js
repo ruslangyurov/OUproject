@@ -89,9 +89,3 @@ export const useSocketContext = () => {
   return useContext(socketContext)
 }
 
-// socket.on("connect", () => {
-//   setIsConnected(true)
-// })
-// socket.on("disconnect", () => {
-//   setIsConnected(false)
-// })

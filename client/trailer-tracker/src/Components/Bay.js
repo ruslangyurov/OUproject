@@ -20,7 +20,7 @@ export default function Bay(props) {
       stockDelivered: props.stockDelivered,
       fullTrailer: props.fullTrailer,
       comment: props.comment,
-      trestle:props.trestleOn
+  
     });
 
   

@@ -29,8 +29,8 @@ export default function BayForm(props) {
   const [msg, setErrMsg] = useState("");
   const [updated, setUpdated] = useState("");
   const [emptyBay, setEmptyBay] = useState(true);
-  const[trestle, setTrestle]  = useState(false);
-  const trestleOn = trestleStatus && trestleStatus.trestleOn;
+  const[trestle, setTrestle]  = useState(props.trestleOn);
+  
   
   
   
@@ -51,11 +51,12 @@ export default function BayForm(props) {
       setUpdated(updatedAt);
       
     }
-  }
-  if (trestleOn !== undefined && trestleOn !== null && trestleStatus.bayNumber === props.number) {
-    setTrestle(trestleOn);
+  if (trestleStatus && trestleStatus.bayNumber === props.number) {
+      setTrestle(trestleStatus.trestleOn);
+    }
+  
   } 
-}, [bayData, updatedAt, props.number,trestleOn]);
+}, [bayData, updatedAt, props.number, trestleStatus]);
 
 
 
