@@ -21,7 +21,7 @@ import { Typography } from '@mui/material';
 
 export default function BayForm(props) {
 
-  const {socket, bayData, updatedAt, updater, trestleStatus} = useSocketContext()
+  const {socket, bayData, updatedAt, updater} = useSocketContext()
 
  
   
@@ -43,7 +43,7 @@ export default function BayForm(props) {
       stockDelivered: bayData.stockDelivered || "Stock Delivered",
       fullTrailer: bayData.fullTrailer || "",
       comment: bayData.comment || "Comment",
-      trestle: bayData.trestleOn
+      
     });
     
 
@@ -51,12 +51,10 @@ export default function BayForm(props) {
       setUpdated(updatedAt);
       
     }
-  if (trestleStatus && trestleStatus.bayNumber === props.number) {
-      setTrestle(trestleStatus.trestleOn);
-    }
+ 
   
   } 
-}, [bayData, updatedAt, props.number, trestleStatus]);
+}, [bayData, updatedAt, props.number]);
 
 
 
@@ -101,11 +99,8 @@ export default function BayForm(props) {
   }
   
   const handleTrestle = (e) => {
-    e.preventDefault()
     const newStatus = e.target.checked;
     setTrestle(newStatus)
-    
-    
     if (socket) {
       socket.emit("updateTrestle", ({bayNumber:props.number, trestleOn:newStatus}))
     }
