@@ -78,12 +78,12 @@ const updateBay = asyncHandler(async(data) => {
     return {status: "200", bayInfo: newBay, updateTime:newBay.updatedAt}
 })
 
-const updateTrestle = asyncHandler(async(data) => {
+const updateTrestle = async(data) => {
     const {bayNumber, trestleOn} = data
 
     const updatedTrestle = await Bay.findOneAndUpdate({bayNumber:bayNumber}, {trestleOn:trestleOn}, {new:true, runValidators:true}).exec()
     return updatedTrestle
-})
+}
 
     
 
