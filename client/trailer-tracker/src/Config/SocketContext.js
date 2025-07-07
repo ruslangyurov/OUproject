@@ -56,9 +56,7 @@ export const SocketContextProvider = ({children}) => {
           socket.on("trestleUpdated", (bay) => {
             if (bay) {
               setTrestleStatus(bay)
-            }
-          }
-        )
+              setInbound(prev => prev.map(b => b.bayNumber === bay.bayNumber ? {...b, trestleOn: bay.trestleOn} : b))}})
         } else {
           if (socket) {
             socket.disconnect()
