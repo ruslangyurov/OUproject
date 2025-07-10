@@ -43,7 +43,7 @@ useEffect(() => {
       comment: bayData.comment || "Comment",
     })
   }
-}[bayDeleted])  
+},[bayDeleted])  
 
 useEffect(() => {
     setTrestle(props.trestleOn); // ✅ sync props into state when they change
