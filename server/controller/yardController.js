@@ -85,7 +85,26 @@ const updateTrestle = async(data) => {
     return updatedTrestle
 }
 
-    
+const deleteBay = async(data) => {
+    const {trailerNumber, bayNumber} = data
+
+    if (!trailerNumber || !bayNumber) {
+        return {status:400}
+    }
+    try {
+      const bayDeleted = await Bay.findOneAndUpdate({bayNumber:bayNumber},{...data}, {new:true, runValidators:true}).exec()
+      return {status:200, baynumber:bayDeleted.bayNumber}        
+    } catch(err) {
+        if (err.name === "ValidationError") {
+            return {status:400};
+        } else if (err.code === 11000) {
+            return {status:409};
+        } else {
+            return {status:500}
+        }
+    }
+   
+}    
 
 
 const getAllBays = async() => {

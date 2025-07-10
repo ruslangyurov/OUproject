@@ -21,7 +21,7 @@ import { Typography } from '@mui/material';
 
 export default function BayForm(props) {
 
-  const {socket, bayData, updatedAt, updater} = useSocketContext()
+  const {socket, bayData, updatedAt, updater, bayDeleted} = useSocketContext()
 
  
   
@@ -31,7 +31,20 @@ export default function BayForm(props) {
   const [emptyBay, setEmptyBay] = useState(true);
   const[trestle, setTrestle]  = useState(props.trestleOn);
   
-  
+
+useEffect(() => {
+  if (bayDeleted && bayDeleted.status && bayDeleted.bayNumber === props.number) {
+    setEmptyBay(true)
+    props.setFormData({
+      bayNumber: props.number,
+      trailerNumber: "Trailer Number",
+      stockDelivered: "Stock Delivered",
+      fullTrailer: "",
+      comment: bayData.comment || "Comment",
+    })
+  }
+}[bayDeleted])  
+
 useEffect(() => {
     setTrestle(props.trestleOn); // ✅ sync props into state when they change
   }, [props.trestleOn]);  
@@ -47,7 +60,7 @@ useEffect(() => {
       comment: bayData.comment || "Comment",
       
     });
-    
+    setEmptyBay(false)
 
     if (updatedAt) {
       setUpdated(updatedAt);
@@ -87,16 +100,17 @@ useEffect(() => {
   // Bay is empty. Data is reset
    
   const handleDelete = (e) => {
-    e.preventDefault();
+    setEmptyBay(true)
+
     const bayDelete = {
       bayNumber: props.number,
-      trailerNumber: "Trailer Number", 
-      stockDelivered: "Stock Delivered",
-      fullTrailer: "Empty",
+      trailerNumber: "", 
+      stockDelivered: "",
+      fullTrailer: "",
       comment: ""
     }
     if (socket) {
-      socket.emit("bayDelete", {data:bayDelete})
+      socket.emit("bayDelete", {bayDelete})
     }
   }
   

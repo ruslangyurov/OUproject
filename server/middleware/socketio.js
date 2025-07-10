@@ -20,9 +20,23 @@ const InitialiseSocketio = ({ server }) => {
 
         socket.on("updateTrestle", async(data) => {
             const trestleUpdated = await updateTrestle(data)
-            io.emit("trestleUpdated", trestleUpdated)
+            socket.emit("trestleUpdated", trestleUpdated)
             
         });
+
+        socket.on("baydelete", async(data, callback) => {
+            const bayDeleted = await deleteBay(data)
+            if (bayDeleted.status === 200) {
+                socket.emit("bayDeleted", bayDeleted.bayNumber)
+            } else if (bayDeleted.status === 400) {
+                return callback({status:400, message:"Validation failed! Is bay already empty? "})
+            } else if (bayDeleted.status === 409) {
+                return callback({status:409, message:"Duplicate key error"})
+            } else {
+                return callback({status:500, message:"Server error. Please try again later!"})
+            }
+            
+        })
 
 
         socket.on("bayUpdate", async (data, callback) => {

@@ -18,6 +18,7 @@ export const SocketContextProvider = ({children}) => {
     const [inbound, setInbound] = useState([])
     const [outbound, setOutbound] = useState([])
     const [updater, setUpdater] = useState("")
+    const [bayDeleted, setBayDeleted] = useState(null)
     const socketRef = useRef(null)
     const {isAuth} = useAuth(); 
 
@@ -52,6 +53,11 @@ export const SocketContextProvider = ({children}) => {
                 setUpdater(data.username)
             }
       })
+          
+          socket.on("bayDeleted", (data) => {
+            setBayDeleted({status:true, bayNumber:data})
+          })
+
           socket.on("trestleUpdated", (bay) => {
             if (bay) {
               setInbound(prev => prev.map(b => b.bayNumber === bay.bayNumber ? {...b, trestleOn: bay.trestleOn} : b))}})
