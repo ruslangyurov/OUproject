@@ -93,7 +93,7 @@ const deleteBay = async(data) => {
     }
     try {
       const bayDeleted = await Bay.findOneAndUpdate({bayNumber:bayNumber},{...data}, {new:true, runValidators:true}).exec()
-      return {status:200, baynumber:bayDeleted.bayNumber}        
+      return {status:200, bayNumber:bayDeleted.bayNumber}        
     } catch(err) {
         if (err.name === "ValidationError") {
             return {status:400};
