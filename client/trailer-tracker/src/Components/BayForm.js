@@ -51,6 +51,8 @@ useEffect(() => {
   // Detect if bay is filled
   if (props.formData.bayNumber === props.number && props.formData.trailerNumber?.trim()) {
     setEmptyBay(false);
+  } else {
+    setEmptyBay(true)
   }
 }, [props.formData, props.number]);
 
@@ -110,6 +112,7 @@ useEffect(() => {
   // Bay is empty. Data is reset
    
   const handleDelete = (e) => {
+
     setEmptyBay(true)
 
     const bayDelete = {
