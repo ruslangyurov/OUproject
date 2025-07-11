@@ -123,7 +123,7 @@ useEffect(() => {
       comment: ""
     }
     if (socket) {
-      socket.emit("bayDelete", {bayDelete})
+      socket.emit("bayDelete", bayDelete)
     }
   }
   
