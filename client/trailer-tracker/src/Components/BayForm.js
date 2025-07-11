@@ -28,14 +28,14 @@ export default function BayForm(props) {
   const {username} = useAuth();
   const [msg, setErrMsg] = useState("");
   const [updated, setUpdated] = useState("");
-  const [emptyBay, setEmptyBay] = useState(true);
+  const [emptyBay, setEmptyBay] = useState(false);
   const[trestle, setTrestle]  = useState(props.trestleOn);
   
 
 useEffect(() => {
   if (bayDeleted && bayDeleted.status && bayDeleted.bayNumber === props.number) {
-    setEmptyBay(false)
-    
+    setEmptyBay(true)
+
     props.setFormData({
       bayNumber: props.number,
       trailerNumber: "Trailer Number",
