@@ -20,7 +20,7 @@ const InitialiseSocketio = ({ server }) => {
 
         socket.on("updateTrestle", async(data) => {
             const trestleUpdated = await updateTrestle(data)
-            socket.emit("trestleUpdated", trestleUpdated)
+            io.emit("trestleUpdated", trestleUpdated)
             
         });
 
