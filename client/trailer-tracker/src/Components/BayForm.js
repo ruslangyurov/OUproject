@@ -33,21 +33,27 @@ export default function BayForm(props) {
   
 
 useEffect(() => {
-  if (props.formData.bayNumber === props.number && props.formData.trailerNumber) {
-    setEmptyBay(false)
-  }
-  if (bayDeleted && bayDeleted.status && bayDeleted.bayNumber === props.number) {
-    setEmptyBay(true)
+  // Reset form if bay was deleted
+  if (bayDeleted?.status && bayDeleted.bayNumber === props.number) {
+    setEmptyBay(true);
 
     props.setFormData({
       bayNumber: props.number,
       trailerNumber: "Trailer Number",
       stockDelivered: "Stock Delivered",
       fullTrailer: "",
-      comment: bayData.comment || "Comment",
-    })
+      comment: "Comment",
+    });
   }
-},[bayDeleted])  
+}, [bayDeleted, props.number, props.setFormData]);
+
+useEffect(() => {
+  // Detect if bay is filled
+  if (props.formData.bayNumber === props.number && props.formData.trailerNumber?.trim()) {
+    setEmptyBay(false);
+  }
+}, [props.formData, props.number]);
+
 
 useEffect(() => {
     setTrestle(props.trestleOn); // ✅ sync props into state when they change
