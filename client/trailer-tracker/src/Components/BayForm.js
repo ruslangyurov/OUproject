@@ -28,11 +28,12 @@ export default function BayForm(props) {
   const {username} = useAuth();
   const [msg, setErrMsg] = useState("");
   const [updated, setUpdated] = useState("");
-  const [emptyBay, setEmptyBay] = useState(false);
+  const [emptyBay, setEmptyBay] = useState(true);
   const[trestle, setTrestle]  = useState(props.trestleOn);
   
 
 useEffect(() => {
+  if (props.number)
   if (bayDeleted && bayDeleted.status && bayDeleted.bayNumber === props.number) {
     setEmptyBay(true)
 
