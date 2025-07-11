@@ -34,7 +34,8 @@ export default function BayForm(props) {
 
 useEffect(() => {
   if (bayDeleted && bayDeleted.status && bayDeleted.bayNumber === props.number) {
-    setEmptyBay(true)
+    setEmptyBay(false)
+    
     props.setFormData({
       bayNumber: props.number,
       trailerNumber: "Trailer Number",
