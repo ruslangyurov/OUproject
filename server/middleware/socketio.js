@@ -29,7 +29,7 @@ const InitialiseSocketio = ({ server }) => {
             if (bayDeleted.status === 200) {
                 io.emit("bayDeleted", bayDeleted.bayNumber)
             } else if (bayDeleted.status === 400) {
-                return callback({status:400, message:"Validation failed! Is bay already empty? "})
+                return callback({status:400, message:bayDeleted.message})
             } else if (bayDeleted.status === 409) {
                 return callback({status:409, message:"Duplicate key error"})
             } else {

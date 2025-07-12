@@ -85,7 +85,7 @@ const updateTrestle = async(data) => {
     return updatedTrestle
 }
 
-const deleteBay = async (data) => {
+const deleteBay = async(data) => {
   const {bayNumber, trailerNumber} = data;
 
   if (!trailerNumber || !bayNumber) {
@@ -102,7 +102,7 @@ const deleteBay = async (data) => {
     return { status: 200, bayNumber: bayDeleted.bayNumber };
   } catch (err) {
     if (err.name === "ValidationError") {
-      return { status: 400 };
+      return { status: 400, message:err.message };
     } else if (err.code === 11000) {
       return { status: 409 };
     } else {
