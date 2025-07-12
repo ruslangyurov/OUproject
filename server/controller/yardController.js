@@ -78,9 +78,16 @@ const updateBay = asyncHandler(async(data) => {
     return {status: "200", bayInfo: newBay, updateTime:newBay.updatedAt}
 })
 
+const updateTrestle = async(data) => {
+    const {bayNumber, trestleOn} = data
+
+    const updatedTrestle = await Bay.findOneAndUpdate({bayNumber:bayNumber}, {trestleOn:trestleOn}, {new:true, runValidators:true}).exec()
+    return updatedTrestle
+}
+
 const deleteBay = async (data) => {
   const { bayNumber, trailerNumber, stockDelivered, fullTrailer, comment } = data;
-  console.log(data)  
+
   if (!trailerNumber || !bayNumber) {
     return { status: 400 };
   }
