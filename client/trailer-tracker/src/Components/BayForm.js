@@ -32,24 +32,26 @@ export default function BayForm(props) {
   const[trestle, setTrestle]  = useState(props.trestleOn);
   
 
+  const bayDelete = {
+      bayNumber: props.number,
+      trailerNumber: "", 
+      stockDelivered: "",
+      fullTrailer: "",
+      comment: ""
+    }
+  
 useEffect(() => {
   // Reset form if bay was deleted
   if (bayDeleted?.status && bayDeleted.bayNumber === props.number) {
     setEmptyBay(true);
 
-    props.setFormData({
-      bayNumber: props.number,
-      trailerNumber: "Trailer Number",
-      stockDelivered: "Stock Delivered",
-      fullTrailer: "",
-      comment: "Comment",
-    });
+    props.setFormData(bayDelete);
   }
 }, [bayDeleted, props.number, props.setFormData]);
 
 useEffect(() => {
   // Detect if bay is filled
-  if (props.formData.bayNumber === props.number && props.formData.trailerNumber?.trim()) {
+  if (props.formData.bayNumber === props.number && props.formData.trailerNumber?.trim() && props.formData.trailerNumber != "Trailer Number") {
     setEmptyBay(false);
   } else {
     setEmptyBay(true)
@@ -85,12 +87,6 @@ useEffect(() => {
 
 
 
-  // const handleClick = () => {
-  //   props.onClick(props.index)
-  // }
-
-
-
   const updateStorage = (field, value) => {
     props.setFormData(prevState => ({...prevState, [field]:value}))
 
@@ -115,17 +111,14 @@ useEffect(() => {
 
     setEmptyBay(true)
 
-    const bayDelete = {
-      bayNumber: props.number,
-      trailerNumber: "Trailer Number", 
-      stockDelivered: "",
-      fullTrailer: "",
-      comment: ""
-    }
-
     props.setFormData(bayDelete)
+
+    const resetBay = {
+      bayNumber: props.number,
+      trailerNumber: props.trailerNumber
+    }
     if (socket) {
-      socket.emit("bayDelete", bayDelete)
+      socket.emit("bayDelete", resetBay)
     }
   }
   

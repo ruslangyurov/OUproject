@@ -86,14 +86,14 @@ const updateTrestle = async(data) => {
 }
 
 const deleteBay = async (data) => {
-  const { bayNumber, trailerNumber, stockDelivered, fullTrailer, comment } = data;
+  const { bayNumber, trailerNumber} = data;
 
   if (!trailerNumber || !bayNumber) {
     return { status: 400 };
   }
 
   try {
-    const bayDeleted = await Bay.findOneAndUpdate({ bayNumber },{ trailerNumber, stockDelivered, fullTrailer, comment },{ new: true, runValidators: true }).exec();
+    const bayDeleted = await Bay.findOneAndUpdate({ bayNumber },{ trailerNumber:"Trailer Number", stockDelivered:"", fullTrailer:"", comment:"" },{ new: true, runValidators: true }).exec();
 
     if (!bayDeleted) {
       return { status: 404 }; // Not found
