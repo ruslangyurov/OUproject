@@ -64,7 +64,7 @@ useEffect(() => {
   }, [props.trestleOn]);  
   
   
- useEffect(() => {
+useEffect(() => {
   if (bayData && bayData.bayNumber === props.number) {
     props.setFormData({
       bayNumber: props.number,
@@ -85,6 +85,16 @@ useEffect(() => {
   } 
 }, [bayData, updatedAt, props.number]);
 
+useEffect(() => {
+  if (msg) {
+    setErrMsg("");  /
+  }
+}, [
+  props.formData.trailerNumber,
+  props.formData.stockDelivered,
+  props.formData.fullTrailer,
+  props.formData.comment
+]);
 
 
   const updateStorage = (field, value) => {

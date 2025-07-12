@@ -42,7 +42,7 @@ export const EmptyTrailers = () => {
 
 
     if (loading) {
-        return ""
+        return "Loading empty trailers..."
 
      } else if (emptyTrailers.length > 0) {
         return (
