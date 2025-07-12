@@ -110,9 +110,7 @@ useEffect(() => {
   const handleDelete = (e) => {
 
     setEmptyBay(true)
-
-    props.setFormData(bayDelete)
-
+   
     const resetBay = {
       bayNumber: props.number,
       trailerNumber: props.trailerNumber
