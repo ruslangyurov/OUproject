@@ -78,33 +78,33 @@ const updateBay = asyncHandler(async(data) => {
     return {status: "200", bayInfo: newBay, updateTime:newBay.updatedAt}
 })
 
-const updateTrestle = async(data) => {
-    const {bayNumber, trestleOn} = data
+const deleteBay = async (data) => {
+  const { bayNumber, trailerNumber, stockDelivered, fullTrailer, comment } = data;
 
-    const updatedTrestle = await Bay.findOneAndUpdate({bayNumber:bayNumber}, {trestleOn:trestleOn}, {new:true, runValidators:true}).exec()
-    return updatedTrestle
-}
+  if (!trailerNumber || !bayNumber) {
+    return { status: 400 };
+  }
 
-const deleteBay = async(data) => {
-    const {trailerNumber, bayNumber} = data
+  try {
+    const bayDeleted = await Bay.findOneAndUpdate({ bayNumber },{ trailerNumber, stockDelivered, fullTrailer, comment },{ new: true, runValidators: true }).exec();
 
-    if (!trailerNumber || !bayNumber) {
-        return {status:400}
+    if (!bayDeleted) {
+      return { status: 404 }; // Not found
     }
-    try {
-      const bayDeleted = await Bay.findOneAndUpdate({bayNumber:bayNumber},{...data}, {new:true, runValidators:true}).exec()
-      return {status:200, bayNumber:bayDeleted.bayNumber}        
-    } catch(err) {
-        if (err.name === "ValidationError") {
-            return {status:400};
-        } else if (err.code === 11000) {
-            return {status:409};
-        } else {
-            return {status:500}
-        }
+
+    return { status: 200, bayNumber: bayDeleted.bayNumber };
+  } catch (err) {
+    if (err.name === "ValidationError") {
+      return { status: 400 };
+    } else if (err.code === 11000) {
+      return { status: 409 };
+    } else {
+      console.error("Delete error:", err);
+      return { status: 500 };
     }
-   
-}    
+  }
+};
+
 
 
 const getAllBays = async() => {
