@@ -1,5 +1,5 @@
 import { Server } from 'socket.io';
-import { updateBay, updateTrestle } from '../controller/yardController.js';
+import { updateBay, updateTrestle, deleteBay } from '../controller/yardController.js';
 import {getAllBays} from '../controller/yardController.js'
 
 let io;

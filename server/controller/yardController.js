@@ -161,4 +161,4 @@ const getBay = asyncHandler(async(req,res) => {
 
 
 
-export{createBay, getEmptyTrailers,getBay, updateBay, updateTrestle, getFullTrailers, getAllBays}
+export{createBay, getEmptyTrailers,getBay, updateBay, updateTrestle, getFullTrailers, getAllBays, deleteBay}
