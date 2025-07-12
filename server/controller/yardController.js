@@ -89,7 +89,7 @@ const deleteBay = async(data) => {
   const {bayNumber, trailerNumber} = data;
 
   if (!trailerNumber || !bayNumber) {
-    return { status: 400 };
+    return { status: 400. message:"Validation error"};
   }
 
   try {
