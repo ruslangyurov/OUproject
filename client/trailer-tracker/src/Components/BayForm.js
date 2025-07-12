@@ -87,7 +87,7 @@ useEffect(() => {
 
 useEffect(() => {
   if (msg) {
-    setErrMsg("");  /
+    setErrMsg("");
   }
 }, [
   props.formData.trailerNumber,
