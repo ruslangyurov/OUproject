@@ -24,7 +24,7 @@ const InitialiseSocketio = ({ server }) => {
             
         });
 
-        socket.on("baydelete", async(data, callback) => {
+        socket.on("bayDelete", async(data, callback) => {
             const bayDeleted = await deleteBay(data)
             if (bayDeleted.status === 200) {
                 io.emit("bayDeleted", bayDeleted.bayNumber)
