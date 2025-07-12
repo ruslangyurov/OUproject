@@ -118,7 +118,9 @@ useEffect(() => {
       trailerNumber: props.trailerNumber
     }
     if (socket) {
-      socket.emit("bayDelete", resetBay)
+      socket.emit("bayDelete", resetBay, (response) => {
+        setErrMsg(response.message)
+      })
     }
   }
   
