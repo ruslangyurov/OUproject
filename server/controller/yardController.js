@@ -80,7 +80,7 @@ const updateBay = asyncHandler(async(data) => {
 
 const deleteBay = async (data) => {
   const { bayNumber, trailerNumber, stockDelivered, fullTrailer, comment } = data;
-
+  console.log(data)  
   if (!trailerNumber || !bayNumber) {
     return { status: 400 };
   }
