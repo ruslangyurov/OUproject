@@ -113,7 +113,7 @@ useEffect(() => {
    
     const resetBay = {
       bayNumber: props.number,
-      trailerNumber: props.trailerNumber
+      trailerNumber: props.formData.trailerNumber
     }
     if (socket) {
       socket.emit("bayDelete", resetBay, (response) => {
