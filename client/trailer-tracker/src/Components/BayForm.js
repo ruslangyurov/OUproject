@@ -122,6 +122,8 @@ useEffect(() => {
       fullTrailer: "",
       comment: ""
     }
+
+    props.setFormData(bayDelete)
     if (socket) {
       socket.emit("bayDelete", bayDelete)
     }
