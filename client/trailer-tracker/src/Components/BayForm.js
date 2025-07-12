@@ -99,7 +99,8 @@ useEffect(() => {
   const handleSubmit = (e) => {
       e.preventDefault()
       if (socket) {
-      socket.emit("bayUpdate", {formData:props.formData,username}, (response) => {
+       socket.emit("bayUpdate", {formData:props.formData,username}, (response) => {
+       console.log("SERVER RESPONSE:", response)
        setErrMsg(response.message)
       })
         }
