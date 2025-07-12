@@ -73,6 +73,8 @@ export const SocketContextProvider = ({children}) => {
      return () => {
       socket.off('allBays');
       socket.off('bayUpdated');
+      socket.off("bayDeleted")
+      socket.off("trestleUpdated")
       socket.disconnect();
     };
 
@@ -81,7 +83,7 @@ export const SocketContextProvider = ({children}) => {
   
 
   return (
-    <socketContext.Provider value = {{socket:socketRef.current, isConnected, bayData, updatedAt, updater, inbound,outbound}}>
+    <socketContext.Provider value = {{socket:socketRef.current, isConnected, bayData, updatedAt, updater, inbound,outbound, bayDeleted}}>
       {children}
     </socketContext.Provider>
   )

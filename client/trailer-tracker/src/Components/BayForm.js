@@ -34,7 +34,7 @@ export default function BayForm(props) {
 
   const bayDelete = {
       bayNumber: props.number,
-      trailerNumber: "", 
+      trailerNumber: "Trailer Number", 
       stockDelivered: "",
       fullTrailer: "",
       comment: ""
