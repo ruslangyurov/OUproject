@@ -297,7 +297,7 @@ return (
 
      
     </Box>
-    <Box sx={{ mt: 1, alignSelf: "flex-end", color: 'gray' }}>
+    <Box sx={{ mt: 1, alignSelf: "flex-end", flexDirection:"column", color: 'gray' }}>
       <Typography
         variant="caption"
         sx={{ mt: 1, alignSelf: "flex-end", color: 'gray' }}
