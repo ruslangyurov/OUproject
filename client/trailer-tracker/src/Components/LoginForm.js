@@ -7,6 +7,7 @@ import { useContext } from 'react';
 import { AuthContext } from '../Config/AuthContext';
 import axiosInstanse from '../apiAxios/axios';
 import { Box } from '@mui/material';
+import Typography from '@mui/material/Typography';
 
 
 
@@ -59,6 +60,7 @@ export const BasicLogin = () => {
   
 
   return (
+ <>   
   <Typography color="error" sx={{ mb: 2 }}>
         {errMsg}
   </Typography>
@@ -89,6 +91,7 @@ export const BasicLogin = () => {
 
 
     </Box>
+  </>
   )
 
   }
