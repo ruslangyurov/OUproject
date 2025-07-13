@@ -21,7 +21,7 @@ import { Typography } from '@mui/material';
 
 export default function BayForm(props) {
 
-  const {socket, bayData, updatedAt, updater, bayDeleted} = useSocketContext()
+  const {socket, bayData, updatedAt, bayDeleted} = useSocketContext()
 
  
   
@@ -108,7 +108,7 @@ useEffect(() => {
   const handleSubmit = (e) => {
       e.preventDefault()
       if (socket) {
-       socket.emit("bayUpdate", {formData:props.formData,username}, (response) => {
+       socket.emit("bayUpdate", {formData:props.formData}, (response) => {
        console.log("SERVER RESPONSE:", response)
        setErrMsg(response.message)
       })
@@ -300,6 +300,15 @@ return (
       />
 
      
+  </Box>
+
+    <Typography
+      variant="caption"
+      sx={{ mt: 1, alignSelf: "flex-end", color: 'gray' }}
+    >
+       {updated && `Updated at ${format(new Date(updated), 'PPpp')} by ${updater}`}
+    </Typography>
+  </Box>
   </Box>
 
     <Typography

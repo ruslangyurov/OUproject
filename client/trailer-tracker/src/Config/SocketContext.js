@@ -17,7 +17,6 @@ export const SocketContextProvider = ({children}) => {
     const [updatedAt, setUpdatedAt] = useState(null)
     const [inbound, setInbound] = useState([])
     const [outbound, setOutbound] = useState([])
-    const [updater, setUpdater] = useState("")
     const [bayDeleted, setBayDeleted] = useState(null)
     const socketRef = useRef(null)
     const {isAuth} = useAuth(); 
@@ -50,7 +49,6 @@ export const SocketContextProvider = ({children}) => {
             if (data.status === "200") {
                 setBayData(data.bayInfo) 
                 setUpdatedAt(data.updateTime)
-                setUpdater(data.username)
             }
       })
           
