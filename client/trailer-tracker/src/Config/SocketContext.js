@@ -56,6 +56,7 @@ export const SocketContextProvider = ({children}) => {
           
           socket.on("bayDeleted", (data) => {
             setBayDeleted({status:true, bayNumber:data})
+            setInbound(prev => prev.map(b => b.bayNumber === data ? {...b, trestleOn:false}:b))
           })
 
           socket.on("trestleUpdated", (bay) => {
