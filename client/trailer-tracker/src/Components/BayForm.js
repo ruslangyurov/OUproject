@@ -21,13 +21,12 @@ import { Typography } from '@mui/material';
 
 export default function BayForm(props) {
 
-  const {socket, bayData, updatedAt, bayDeleted} = useSocketContext()
+  const {socket, bayData, updatedAt, bayDeleted, trestleUpdated} = useSocketContext()
 
  
   
   const {username} = useAuth();
   const [msg, setErrMsg] = useState("");
-  const [updated, setUpdated] = useState("");
   const [emptyBay, setEmptyBay] = useState(true);
   const[trestle, setTrestle]  = useState(props.trestleOn);
   
@@ -75,10 +74,7 @@ useEffect(() => {
     });
     setEmptyBay(false)
 
-    if (updatedAt) {
-      setUpdated(updatedAt);
-      
-    }
+    
  
   
   } 
@@ -300,24 +296,23 @@ return (
       />
 
      
+    </Box>
+    <Box sx={{ mt: 1, alignSelf: "flex-end", color: 'gray' }}>
+      <Typography
+        variant="caption"
+        sx={{ mt: 1, alignSelf: "flex-end", color: 'gray' }}
+      >
+        {updatedAt && `Updated at ${format(new Date(updatedAt), 'PPpp')} by ${username}`}
+      </Typography>
+      <Typography
+        variant="caption"
+        sx={{ mt: 1, alignSelf: "flex-end", color: 'gray' }}
+      >
+        {trestleUpdated && `Trestle status updated at ${format(new Date(trestleUpdated), 'PPpp')} by ${username}`}
+      </Typography>
+    </Box>
   </Box>
-
-    <Typography
-      variant="caption"
-      sx={{ mt: 1, alignSelf: "flex-end", color: 'gray' }}
-    >
-       {updated && `Updated at ${format(new Date(updated), 'PPpp')} by ${updater}`}
-    </Typography>
-  </Box>
-  </Box>
-
-    <Typography
-      variant="caption"
-      sx={{ mt: 1, alignSelf: "flex-end", color: 'gray' }}
-    >
-       {updated && `Updated at ${format(new Date(updated), 'PPpp')} by ${updater}`}
-    </Typography>
-  </Box>
+ 
 );
 
 } 

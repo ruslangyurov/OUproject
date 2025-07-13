@@ -82,7 +82,7 @@ const updateTrestle = async(data) => {
     const {bayNumber, trestleOn} = data
 
     const updatedTrestle = await Bay.findOneAndUpdate({bayNumber:bayNumber}, {trestleOn:trestleOn}, {new:true, runValidators:true}).exec()
-    return updatedTrestle
+    return {trestleOn:updatedTrestle.trestleOn, bayNumber:updatedTrestle.bayNumber, trestleUpdated:updatedTrestle.updatedAt}
 }
 
 const deleteBay = async(data) => {
