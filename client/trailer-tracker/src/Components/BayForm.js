@@ -62,11 +62,11 @@ useEffect(() => {
 
 
 useEffect(() => {
-  if (trestleUpdater) {
+  if (trestleUpdated && trestleUpdated.bayNumber === props.number) {
     setTrestleUpdaterLocal(trestleUpdater);
     setTrestle(props.trestleOn); // ✅ sync props into state when they change
   }
- }, [props.trestleOn, trestleUpdater]);  
+ }, [props.trestleOn, trestleUpdater, trestleUpdated, props.number]);  
     
   
 useEffect(() => {
