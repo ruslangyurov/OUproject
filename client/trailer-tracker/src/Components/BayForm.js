@@ -62,6 +62,7 @@ useEffect(() => {
 }, [props.formData, props.number]);
 
 useEffect(() => {
+  console.log("BayForm: props.trestleOn changed for bay", props.number, "to", props.trestleOn);
   setTrestle(props.trestleOn)
 },[props.trestleOn])
 
