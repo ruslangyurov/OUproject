@@ -19,6 +19,7 @@ const InitialiseSocketio = ({ server }) => {
                 });
 
         socket.on("updateTrestle", async(data) => {
+            console.log("update trestle recieved")
             const trestleUpdated = await updateTrestle(data)
             io.emit("trestleUpdated", {...trestleUpdated, user:data.user});
             

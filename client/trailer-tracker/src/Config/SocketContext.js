@@ -63,7 +63,9 @@ export const SocketContextProvider = ({children}) => {
           })
 
           socket.on("trestleUpdated", (bay) => {
+            
             if (bay) {
+              console.log(bay)
               setInbound(prev => prev.map(b => b.bayNumber === bay.bayNumber ? {...b, trestleOn: bay.trestleOn} : b))}
               setTrestleUpdated({time:bay.trestleUpdated, bayNumber:bay.bayNumber})
               setTrestleUpdater(bay.user)
