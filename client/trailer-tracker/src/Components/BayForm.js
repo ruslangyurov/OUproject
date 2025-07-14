@@ -48,6 +48,8 @@ useEffect(() => {
   // Reset form if bay was deleted
   if (bayDeleted?.status && bayDeleted.bayNumber === props.number) {
     setEmptyBay(true);
+    props.setFormData(bayDelete)
+    setBayUpdatedAt(bayDeleted.time)
     setBayUpdaterLocal(bayDeleted.user)
   }
 }, [bayDeleted, props.number]);

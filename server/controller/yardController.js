@@ -99,7 +99,7 @@ const deleteBay = async(data) => {
       return { status: 404 }; // Not found
     }
 
-    return { status: 200, bayNumber: bayDeleted.bayNumber };
+    return { status: 200, bayNumber: bayDeleted.bayNumber, bayDeletedAt:bayDeleted.updatedAt };
   } catch (err) {
     if (err.name === "ValidationError") {
       return { status: 400, message:err.message };

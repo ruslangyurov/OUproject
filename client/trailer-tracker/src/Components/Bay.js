@@ -14,6 +14,8 @@ import { useEffect, useState } from 'react';
 
 export default function Bay(props) {
 
+  
+
   const [formData, setFormData] = useState({
       bayNumber: props.number,
       trailerNumber: props.trailerNumber,
@@ -22,13 +24,6 @@ export default function Bay(props) {
       comment: props.comment,
   
     });
-
-  
- 
-
-  const onClick = () => {
-    props.onClick(props.index);
-  };
 
   if (props.state === true && props.filter === true) {
     return "";
