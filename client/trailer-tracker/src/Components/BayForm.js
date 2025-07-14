@@ -62,9 +62,12 @@ useEffect(() => {
 
 
 useEffect(() => {
+  if (trestleUpdater) {
+    setTrestleUpdaterLocal(trestleUpdater);
     setTrestle(props.trestleOn); // ✅ sync props into state when they change
-  }, [props.trestleOn]);  
-  
+  }
+ }, [props.trestleOn, trestleUpdater]);  
+    
   
 useEffect(() => {
   if (bayData && bayData.bayNumber === props.number) {
@@ -78,6 +81,7 @@ useEffect(() => {
     });
     setEmptyBay(false)
     setBayUpdatedAt(updatedAt)
+    setBayUpdaterLocal(bayUpdater);
     
  
   
