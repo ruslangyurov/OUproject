@@ -49,6 +49,7 @@ useEffect(() => {
   if (bayDeleted?.status && bayDeleted.bayNumber === props.number) {
     setEmptyBay(true);
     props.setFormData(bayDelete);
+    setBayUpdater(bayDeleted.user)
   }
 }, [bayDeleted, props.number, props.setFormData]);
 
