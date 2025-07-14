@@ -28,6 +28,8 @@ export default function BayForm(props) {
   const {username} = useAuth();
   const [msg, setErrMsg] = useState("");
   const [emptyBay, setEmptyBay] = useState(true);
+  const [bayUpdatedAt, setBayUpdatedAt] = useState(null)
+  const [trestleUpdatedAt, setTrestleUpdatedAt] = useState(null)
   const[trestle, setTrestle]  = useState(props.trestleOn);
   
 
@@ -73,7 +75,7 @@ useEffect(() => {
       
     });
     setEmptyBay(false)
-
+    setBayUpdatedAt(updatedAt)
     
  
   
@@ -130,7 +132,7 @@ useEffect(() => {
   
   const handleTrestle = (e) => {
     const newStatus = e.target.checked;
-    setTrestle(newStatus)
+    setTrestleUpdatedAt(trestleUpdated)
     if (socket) {
       socket.emit("updateTrestle", ({bayNumber:props.number, trestleOn:newStatus}))
     }
@@ -297,18 +299,18 @@ return (
 
      
     </Box>
-    <Box sx={{ mt: 1, alignSelf: "flex-end", flexDirection:"column", color: 'gray' }}>
+    <Box sx={{ mt: 1, display:"flex", flexDirection:"column", alignSelf: "flex-end", color: 'gray' }}>
       <Typography
         variant="caption"
         sx={{ mt: 1, alignSelf: "flex-end", color: 'gray' }}
       >
-        {updatedAt && `Updated at ${format(new Date(updatedAt), 'PPpp')} by ${username}`}
+        {bayUpdatedAt && `Updated at ${format(new Date(bayUpdatedAt), 'PPpp')} by ${username}`}
       </Typography>
       <Typography
         variant="caption"
         sx={{ mt: 1, alignSelf: "flex-end", color: 'gray' }}
       >
-        {trestleUpdated && `Trestle status updated at ${format(new Date(trestleUpdated), 'PPpp')} by ${username}`}
+        {trestleUpdatedAt && `Trestle status updated at ${format(new Date(trestleUpdatedAt), 'PPpp')} by ${username}`}
       </Typography>
     </Box>
   </Box>
