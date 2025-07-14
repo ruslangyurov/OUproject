@@ -57,9 +57,15 @@ export const SocketContextProvider = ({children}) => {
             }
       })
           
-          socket.on("bayDeleted", (data) => {
+           socket.on("bayDeleted", (data) => {
             setBayDeleted({status:true, bayNumber:data.bayDeleted, user:data.user})
-            setInbound(prev => prev.map(b => b.bayNumber === data ? {...b, trestleOn:false}:b))
+            setInbound(prev => prev.map(b => b.bayNumber === data ? {...b, 
+              trailerNumber: "Trailer Number",
+              stockDelivered: "",
+              fullTrailer: "",
+              comment: "",
+              trestleOn: false
+            }:b))
           })
 
           socket.on("trestleUpdated", (bay) => {
