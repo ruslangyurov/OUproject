@@ -9,6 +9,7 @@ import { buttonBaseClasses } from '@mui/material';
 
 
 
+
 const socketContext = createContext()
 
 export const SocketContextProvider = ({children}) => {
@@ -18,6 +19,8 @@ export const SocketContextProvider = ({children}) => {
     const [inbound, setInbound] = useState([])
     const [outbound, setOutbound] = useState([])
     const [bayDeleted, setBayDeleted] = useState(null)
+    const [bayUpdater, setBayUpdater] = useState(null)
+    const [trestleUpdater, setTrestleUpdater] = useState(null)
     const [trestleUpdated, setTrestleUpdated] = useState(null)
     const socketRef = useRef(null)
     const {isAuth} = useAuth(); 
@@ -50,6 +53,7 @@ export const SocketContextProvider = ({children}) => {
             if (data.status === "200") {
                 setBayData(data.bayInfo) 
                 setUpdatedAt(data.updateTime)
+                setBayUpdater(data.user)
             }
       })
           
@@ -62,6 +66,7 @@ export const SocketContextProvider = ({children}) => {
             if (bay) {
               setInbound(prev => prev.map(b => b.bayNumber === bay.bayNumber ? {...b, trestleOn: bay.trestleOn} : b))}
               setTrestleUpdated(bay.trestleUpdated)
+              setTrestleUpdater(bay.user)
             })
         } else {
           if (socket) {
@@ -85,7 +90,7 @@ export const SocketContextProvider = ({children}) => {
   
 
   return (
-    <socketContext.Provider value = {{socket:socketRef.current, isConnected, bayData, updatedAt, inbound,outbound, bayDeleted, trestleUpdated}}>
+    <socketContext.Provider value = {{socket:socketRef.current, isConnected, bayData, updatedAt, inbound,outbound, bayDeleted, trestleUpdated, bayUpdater, trestleUpdater}}>
       {children}
     </socketContext.Provider>
   )

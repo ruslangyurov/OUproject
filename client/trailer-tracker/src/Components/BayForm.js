@@ -21,13 +21,15 @@ import { Typography } from '@mui/material';
 
 export default function BayForm(props) {
 
-  const {socket, bayData, updatedAt, bayDeleted, trestleUpdated} = useSocketContext()
+  const {socket, bayData, updatedAt, bayDeleted, trestleUpdated, bayUpdater, trestleUpdater} = useSocketContext()
 
  
   
   const {username} = useAuth();
   const [msg, setErrMsg] = useState("");
   const [emptyBay, setEmptyBay] = useState(true);
+  const [bayUpdaterLocal, setBayUpdaterLocal] = useState(null)
+  const [trestleUpdaterLocal,  setTrestleUpdaterLocal] = useState(null)
   const [bayUpdatedAt, setBayUpdatedAt] = useState(null)
   const [trestleUpdatedAt, setTrestleUpdatedAt] = useState(null)
   const[trestle, setTrestle]  = useState(props.trestleOn);
@@ -106,7 +108,7 @@ useEffect(() => {
   const handleSubmit = (e) => {
       e.preventDefault()
       if (socket) {
-       socket.emit("bayUpdate", {formData:props.formData}, (response) => {
+       socket.emit("bayUpdate", {formData:props.formData, user:username}, (response) => {
        console.log("SERVER RESPONSE:", response)
        setErrMsg(response.message)
       })
@@ -124,7 +126,7 @@ useEffect(() => {
       trailerNumber: props.formData.trailerNumber
     }
     if (socket) {
-      socket.emit("bayDelete", resetBay, (response) => {
+      socket.emit("bayDelete", {...resetBay, user:username}, (response) => {
         setErrMsg(response.message)
       })
     }
@@ -134,7 +136,7 @@ useEffect(() => {
     const newStatus = e.target.checked;
     setTrestleUpdatedAt(trestleUpdated)
     if (socket) {
-      socket.emit("updateTrestle", ({bayNumber:props.number, trestleOn:newStatus}))
+      socket.emit("updateTrestle", ({bayNumber:props.number, trestleOn:newStatus, user:username}))
     }
   }
     
@@ -304,13 +306,13 @@ return (
         variant="caption"
         sx={{ mt: 1, alignSelf: "flex-end", color: 'gray' }}
       >
-        {bayUpdatedAt && `Updated at ${format(new Date(bayUpdatedAt), 'PPpp')} by ${username}`}
+        {bayUpdatedAt && `Updated at ${format(new Date(bayUpdatedAt), 'PPpp')} by ${bayUpdaterLocal}`}
       </Typography>
       <Typography
         variant="caption"
         sx={{ mt: 1, alignSelf: "flex-end", color: 'gray' }}
       >
-        {trestleUpdatedAt && `Trestle status updated at ${format(new Date(trestleUpdatedAt), 'PPpp')} by ${username}`}
+        {trestleUpdatedAt && `Trestle status updated at ${format(new Date(trestleUpdatedAt), 'PPpp')} by ${trestleUpdaterLocal}`}
       </Typography>
     </Box>
   </Box>
