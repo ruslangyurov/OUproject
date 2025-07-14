@@ -138,7 +138,7 @@ useEffect(() => {
   
   const handleTrestle = (e) => {
     const newStatus = e.target.checked;
-    setTrestleUpdatedAt(trestleUpdated)
+    setTrestleUpdatedAt(trestleUpdated.time)
     if (socket) {
       socket.emit("updateTrestle", ({bayNumber:props.number, trestleOn:newStatus, user:username}))
     }
