@@ -31,6 +31,7 @@ export default function BayForm(props) {
   const [bayUpdaterLocal, setBayUpdaterLocal] = useState(null)
   const [trestleUpdaterLocal,  setTrestleUpdaterLocal] = useState(null)
   const [bayUpdatedAt, setBayUpdatedAt] = useState(null)
+  const [trestle, setTrestle] = useState(null)
   const [trestleUpdatedAt, setTrestleUpdatedAt] = useState(null)
   
   
@@ -60,6 +61,9 @@ useEffect(() => {
   }
 }, [props.formData, props.number]);
 
+useEffect(() => {
+  setTrestle(props.trestleOn)
+},[props.trestleOn])
 
 useEffect(() => {
   if (trestleUpdated?.bayNumber === props.number) {
@@ -300,7 +304,7 @@ return (
       />
 
        <FormControlLabel
-        control={<Switch checked={props.trestleOn} onChange={handleTrestle} />}
+        control={<Switch checked={trestle} onChange={handleTrestle} />}
         label="Trestle on"
       />
 
