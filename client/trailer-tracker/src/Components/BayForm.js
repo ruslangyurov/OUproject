@@ -134,7 +134,7 @@ useEffect(() => {
   // Bay is empty. Data is reset
    
   const handleDelete = (e) => {
-
+    props.userEdited.current = false;
     setEmptyBay(true)
    
     const resetBay = {
