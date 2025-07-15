@@ -49,18 +49,11 @@ useEffect(() => {
   if (bayDeleted?.status && bayDeleted.bayNumber === props.number) {
     console.log(bayDeleted)
     setEmptyBay(true);
-    props.setFormData({
-      bayNumber: props.number,
-      trailerNumber: "Trailer Number",
-      stockDelivered: "",
-      fullTrailer: "",
-      comment: "",
-      
-    });
+   
     setBayUpdatedAt(bayDeleted.time)
     setBayUpdaterLocal(bayDeleted.user)
   }
-}, [bayDeleted, props.number, props.formData]);
+}, [bayDeleted, props.number]);
 
 useEffect(() => {
   // Detect if bay is filled
@@ -87,14 +80,14 @@ useEffect(() => {
   
 useEffect(() => {
   if (bayData && bayData.bayNumber === props.number) {
-    props.setFormData({
-      bayNumber: props.number,
-      trailerNumber: bayData.trailerNumber || "Trailer Number",
-      stockDelivered: bayData.stockDelivered || "Stock Delivered",
-      fullTrailer: bayData.fullTrailer || "",
-      comment: bayData.comment || "Comment",
+    // props.setFormData({
+    //   bayNumber: props.number,
+    //   trailerNumber: bayData.trailerNumber || "Trailer Number",
+    //   stockDelivered: bayData.stockDelivered || "Stock Delivered",
+    //   fullTrailer: bayData.fullTrailer || "",
+    //   comment: bayData.comment || "Comment",
       
-    });
+    // });
     setEmptyBay(false)
     setBayUpdatedAt(updatedAt)
     setBayUpdaterLocal(bayUpdater);

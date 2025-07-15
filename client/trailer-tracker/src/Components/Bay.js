@@ -25,6 +25,17 @@ export default function Bay(props) {
   
     });
 
+  useEffect(() => {
+    setFormData({
+      bayNumber: props.number,
+      trailerNumber: props.trailerNumber,
+      stockDelivered: props.stockDelivered,
+      fullTrailer: props.fullTrailer,
+      comment: props.comment,
+    }
+    )
+  },[props.trailerNumber,props.number])
+
   if (props.state === true && props.filter === true) {
     return "";
   }
