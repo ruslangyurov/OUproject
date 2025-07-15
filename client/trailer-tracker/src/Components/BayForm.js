@@ -110,7 +110,7 @@ useEffect(() => {
 
 
   const updateStorage = (field, value) => {
-    props.setUserEdited(true)
+    props.userEdited.current = true;
     props.setFormData(prevState => ({...prevState, [field]:value}))
 
     
@@ -124,7 +124,7 @@ useEffect(() => {
       if (socket) {
        socket.emit("bayUpdate", {formData:props.formData, user:username}, (response) => {
        if (response.status === "200") {
-        props.setUserEdited(false)
+        props.userEdited.current = false;
        }
        setErrMsg(response.message)
       })

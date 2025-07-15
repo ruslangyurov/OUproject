@@ -9,12 +9,12 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import BayForm from '../Components/BayForm';
 import { Typography } from '@mui/material';
 import { useSocketContext } from '../Config/SocketContext';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 
 
 export default function Bay(props) {
 
-  const [userEdited, setUserEdited] = useState(false)
+  const userEdited = useRef(false)
 
   const [formData, setFormData] = useState({
       bayNumber: props.number,
@@ -78,7 +78,7 @@ export default function Bay(props) {
             formData = {formData}
             setFormData = {setFormData}
             trestleOn = {props.trestleOn}
-            setUserEdited = {setUserEdited}
+            userEdited = {userEdited}
 
           />
         </AccordionSummary>
