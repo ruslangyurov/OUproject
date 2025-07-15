@@ -52,7 +52,7 @@ useEffect(() => {
     setBayUpdatedAt(bayDeleted.time)
     setBayUpdaterLocal(bayDeleted.user)
   }
-}, [bayDeleted, props.number]);
+}, [bayDeleted, props.number, props.formData]);
 
 useEffect(() => {
   // Detect if bay is filled
