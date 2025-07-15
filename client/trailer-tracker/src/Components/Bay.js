@@ -14,7 +14,7 @@ import { useEffect, useState } from 'react';
 
 export default function Bay(props) {
 
-  const [useEdited, setUserEdited] = useState(false)
+  const [userEdited, setUserEdited] = useState(false)
 
   const [formData, setFormData] = useState({
       bayNumber: props.number,
