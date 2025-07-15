@@ -47,13 +47,10 @@ export default function BayForm(props) {
 useEffect(() => {
   // Reset form if bay was deleted
   if (bayDeleted?.status && bayDeleted.bayNumber === props.number) {
-    console.log(bayDeleted)
     setEmptyBay(true);
-   
-    setBayUpdatedAt(bayDeleted.time)
-    setBayUpdaterLocal(bayDeleted.user)
+    props.setFormData(bayDelete);
   }
-}, [bayDeleted, props.number]);
+}, [bayDeleted, props.number, props.setFormData]);
 
 useEffect(() => {
   // Detect if bay is filled
@@ -110,7 +107,6 @@ useEffect(() => {
 
 
   const updateStorage = (field, value) => {
-    props.userEdited.current = true;
     props.setFormData(prevState => ({...prevState, [field]:value}))
 
     
@@ -123,9 +119,7 @@ useEffect(() => {
       e.preventDefault()
       if (socket) {
        socket.emit("bayUpdate", {formData:props.formData, user:username}, (response) => {
-       if (response.status === "200") {
-        props.userEdited.current = false;
-       }
+       console.log("SERVER RESPONSE:", response)
        setErrMsg(response.message)
       })
         }
@@ -134,7 +128,7 @@ useEffect(() => {
   // Bay is empty. Data is reset
    
   const handleDelete = (e) => {
-    props.userEdited.current = false;
+
     setEmptyBay(true)
    
     const resetBay = {
