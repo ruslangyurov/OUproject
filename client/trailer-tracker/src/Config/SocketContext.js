@@ -58,6 +58,7 @@ export const SocketContextProvider = ({children}) => {
       })
           
            socket.on("bayDeleted", (data) => {
+            console.log(data)
             setBayDeleted({status:true, bayNumber:data.bayDeleted, user:data.user, time:data.time})
             setInbound(prev => prev.map(b => b.bayNumber === data.bayDeleted ? {...b, 
               trailerNumber: "Trailer Number",

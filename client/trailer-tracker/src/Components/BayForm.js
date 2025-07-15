@@ -47,6 +47,7 @@ export default function BayForm(props) {
 useEffect(() => {
   // Reset form if bay was deleted
   if (bayDeleted?.status && bayDeleted.bayNumber === props.number) {
+    console.log(bayDeleted)
     setEmptyBay(true);
     props.setFormData({
       bayNumber: props.number,
