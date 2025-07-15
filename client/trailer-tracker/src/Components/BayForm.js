@@ -80,14 +80,14 @@ useEffect(() => {
   
 useEffect(() => {
   if (bayData && bayData.bayNumber === props.number) {
-    // props.setFormData({
-    //   bayNumber: props.number,
-    //   trailerNumber: bayData.trailerNumber || "Trailer Number",
-    //   stockDelivered: bayData.stockDelivered || "Stock Delivered",
-    //   fullTrailer: bayData.fullTrailer || "",
-    //   comment: bayData.comment || "Comment",
+    props.setFormData({
+      bayNumber: props.number,
+      trailerNumber: bayData.trailerNumber || "Trailer Number",
+      stockDelivered: bayData.stockDelivered || "Stock Delivered",
+      fullTrailer: bayData.fullTrailer || "",
+      comment: bayData.comment || "Comment",
       
-    // });
+    });
     setEmptyBay(false)
     setBayUpdatedAt(updatedAt)
     setBayUpdaterLocal(bayUpdater);
