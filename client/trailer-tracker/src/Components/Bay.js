@@ -14,7 +14,7 @@ import { useEffect, useState } from 'react';
 
 export default function Bay(props) {
 
-  
+  const [useEdited, setUserEdited] = useState(false)
 
   const [formData, setFormData] = useState({
       bayNumber: props.number,
@@ -26,15 +26,18 @@ export default function Bay(props) {
     });
 
   useEffect(() => {
+  const isBayNowEmpty = props.trailerNumber === "Trailer Number";
+
+  if (isBayNowEmpty && !userEdited) {
     setFormData({
       bayNumber: props.number,
-      trailerNumber: props.trailerNumber,
-      stockDelivered: props.stockDelivered,
-      fullTrailer: props.fullTrailer,
-      comment: props.comment,
-    }
-    )
-  },[props.trailerNumber,props.number])
+      trailerNumber: "Trailer Number",
+      stockDelivered: "",
+      fullTrailer: "",
+      comment: "",
+    });
+  }
+}, [props.trailerNumber, props.number, userEdited]);
 
   if (props.state === true && props.filter === true) {
     return "";
@@ -75,6 +78,7 @@ export default function Bay(props) {
             formData = {formData}
             setFormData = {setFormData}
             trestleOn = {props.trestleOn}
+            setUserEdited = {setUserEdited}
 
           />
         </AccordionSummary>

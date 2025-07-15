@@ -51,6 +51,7 @@ const InitialiseSocketio = ({ server }) => {
                 } else if (!bayUpdated.status) {
                     return callback({ status: "500", message: "Something went wrong. Please try again later!" });
                 } else if (bayUpdated.status === "200") {
+                    return callback({status:"200"})
                     io.emit("bayUpdated", {...bayUpdated, user:data.user});
 
                 }
