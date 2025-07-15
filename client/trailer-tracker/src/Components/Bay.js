@@ -28,15 +28,14 @@ export default function Bay(props) {
   useEffect(() => {
   const isBayNowEmpty = props.trailerNumber === "Trailer Number";
 
-  if (!userEdited) {
-    setFormData({
+  setFormData({
       bayNumber: props.number,
       trailerNumber: "Trailer Number",
       stockDelivered: "",
       fullTrailer: "",
       comment: "",
-    });
-  }
+  });
+  
 }, [props.trailerNumber, props.number, userEdited]);
 
   if (props.state === true && props.filter === true) {
