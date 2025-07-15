@@ -26,17 +26,16 @@ export default function Bay(props) {
     });
 
   useEffect(() => {
-  const isBayNowEmpty = props.trailerNumber === "Trailer Number";
 
-  setFormData({
+    setFormData({
       bayNumber: props.number,
-      trailerNumber: "Trailer Number",
-      stockDelivered: "",
-      fullTrailer: "",
-      comment: "",
-  });
+      trailerNumber: props.trailerNumber,
+      stockDelivered: props.stockDelivered,
+      fullTrailer: props.fullTrailer,
+      comment: props.comment,
   
-}, [props.trailerNumber, props.number, userEdited]);
+    })
+  }, [props.trailerNumber, props.number])
 
   if (props.state === true && props.filter === true) {
     return "";
