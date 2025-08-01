@@ -64,7 +64,7 @@ export const BasicLogin = () => {
    
    {errMsg && (
    <Box sx = {{mt:"80px"}}>
-      <Typography color="error" sx={{ mb: 0.5 }}>
+      <Typography color="error" sx={{ mb: 2 }}>
         {errMsg}
       </Typography>
    </Box>
