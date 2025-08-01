@@ -61,8 +61,8 @@ export const BasicLogin = () => {
  return (
 
   <>
-    <Box>  
-      <Typography color="error" sx={{ mb: 2 }}>
+    <Box sx={{mt:"80px"}}>  
+      <Typography color="error" sx={{ mb: 1 }}>
         {errMsg}
       </Typography>
     </Box>
@@ -75,6 +75,7 @@ export const BasicLogin = () => {
         flexDirection: { xs: "column", sm: "column", md: "row", lg: "row" },
         justifyContent: "flex-start",
         alignContent: "center",
+        width:"fit-content",
       }}
     >
       <TextField
