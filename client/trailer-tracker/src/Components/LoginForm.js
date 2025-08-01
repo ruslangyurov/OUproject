@@ -71,7 +71,6 @@ export const BasicLogin = () => {
   )}
 
    <Box sx={{ display:"flex", flexWrap:"wrap",mt:"130px", flexDirection: {xs:"column", sm:"column", md:"row", lg:"row"},justifyContent:"flex-start", alignContent:"center" }}>
-        <h1>{errMsg}</h1>
         <TextField sx={{ width: { xs: "80%", md: "200px" }}}
           required
           type = "String"
