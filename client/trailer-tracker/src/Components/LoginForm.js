@@ -103,7 +103,7 @@ export const BasicLogin = () => {
         }}
       />
 
-      <Button variant="contained" onClick={handleLogin} sx={{ height: 53, width: { md: "16%", xs: "100px" } }}>
+      <Button variant="contained" onClick={handleLogin} sx={{ height: 53, width: { md: "12%", xs: "100px", lg:"16%" } }}>
         Log in
       </Button>
     </Box>
