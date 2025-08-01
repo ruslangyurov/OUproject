@@ -59,43 +59,51 @@ export const BasicLogin = () => {
      
   
 
-  return (
- <> 
-   
-   {errMsg && (
-   <Typography color="error" sx={{ mt: '80px', mb: 1 }}>
-    {errMsg}
-   </Typography>
-  )}
+ <>
+  <Box>  
+    <Typography color="error" sx={{ mb: 2 }}>
+      {errMsg}
+    </Typography>
+  </Box>
+  
+  <Box
+    sx={{
+      display: "flex",
+      flexWrap: "wrap",
+      mt: "130px",
+      flexDirection: { xs: "column", sm: "column", md: "row", lg: "row" },
+      justifyContent: "flex-start",
+      alignContent: "center",
+    }}
+  >
+    <TextField
+      sx={{ width: { xs: "80%", md: "200px" } }}
+      required
+      type="String"
+      id="Username"
+      label="Username"
+      value={username}
+      helperText="Please enter username"
+      onChange={(e) => {
+        setUsername(e.target.value);
+      }}
+    />
+    <TextField
+      sx={{ width: { xs: "80%", md: "200px" } }}
+      required
+      type="Password"
+      id="Password"
+      label="Password"
+      value={password}
+      helperText="Please enter password"
+      onChange={(e) => {
+        setPassword(e.target.value);
+      }}
+    />
 
+    <Button variant="contained" onClick={handleLogin} sx={{ height: 53, width: { md: "12%", xs: "100px" } }}>
+      Log in
+    </Button>
+  </Box>
+</>
 
-   <Box sx={{ display:"flex", flexWrap:"wrap",mt:"130px", flexDirection: {xs:"column", sm:"column", md:"row", lg:"row"},justifyContent:"flex-start", alignContent:"center" }}>
-        <TextField sx={{ width: { xs: "80%", md: "200px" }}}
-          required
-          type = "String"
-          id="Username"
-          label="Username"
-          value= {username}
-          helperText="Please enter username"
-          onChange={(e) => {setUsername(e.target.value)}}
-          
-        />
-        <TextField sx={{ width: { xs: "80%", md: "200px" }}}
-          required
-          type = "Password"
-          id="Password"
-          label="Password"
-          value= {password}
-          helperText="Please enter password"
-          onChange={(e) => {setPassword(e.target.value)}}
-        />
-
-        <Button variant="contained" onClick={handleLogin} sx={{height:53, width: {md:"12%", xs:"100px"}}}>Log in</Button>
-        
-
-
-    </Box>
-  </>
-  )
-
-  }
