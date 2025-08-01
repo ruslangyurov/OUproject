@@ -3,21 +3,18 @@ const Schema = mongoose.Schema;
 
 const BaySchema = new Schema ({
     bayNumber: {
-        type: String,
+        type: Number,
         required:true
     },
-    broken: Boolean,
     trailerNumber: {
         type:String,
         required:true
     },
     stockDelivered: String,
-    fullTrailer: Boolean,
+    fullTrailer: String,
     comment: String,
-    trestleOn: {
-        type:Boolean,
-        required:true
-    }
+    trestleOn:Boolean,
+    
 },{timestamps:true})
 
 const Bay = mongoose.model("Bay",BaySchema)

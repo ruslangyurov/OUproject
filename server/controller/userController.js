@@ -1,13 +1,15 @@
 import mongoose from 'mongoose';
-import User from '../models/user';
-import {asyncHandler} from 'express';
+import User from '../models/user.js';
+import pkg from 'express-async-handler';
+const asyncHandler = pkg;
 import bcrypt from 'bcrypt';
+
 
 // @desc get all users
 // @route GET /users
 // @access private
 
-const getAllUsers = asyncHandler(async (req,res) => {
+export const getAllUsers = asyncHandler(async (req,res) => {
     const users = await User.find().select('-password').lean();
     if (!users) {
         return res.status(400).json({message: "No users found"})
@@ -19,32 +21,89 @@ const getAllUsers = asyncHandler(async (req,res) => {
 // @route POST /users
 // @access private
 
-const createNewUser = asyncHandler(async (req,res) => {
+export const createNewUser = asyncHandler(async (req,res) => {
    
    //confirm data
-   const {username, password} = req.body;
+   const {username, password, role} = req.body;
    if (!username || !password) {
     res.status(400).json({message: "All fields are required"})
    }
-   hashedPwd = await bcrypt.hash(password,10) //salt rounds
-   userObj = {username, 'password':hashedPwd}
+
+   const duplicate = await User.findOne({username:username}).collation({locale:'en', strength:2}).lean().exec()
+   if (duplicate) {
+    return res.status(409).json({message:"Username already exists."})
+   }
+
+   const hashedPwd = await bcrypt.hash(password,10) //salt rounds
+   const userObj = {username, 'password':hashedPwd, role}
    // Create and store new user
-   user = await User.create(userObj)
-   .then(() => res.statu(201).json({message:"New user added"}))
-   .catch(err => res.status(400).json("Error: " + err))
+   const user = await User.create(userObj)
+   
+   if (user) {
+    return res.status(201).json({message:"Username succesfully created."})
+   } else {
+    return res.status(400).json({message:"Invalid data."})
+   }
 })
 
 // @desc update user
 // @route PATCH /users
 // @access private
 
-const updateUser = asyncHandler(async (req,res) => {
+export const getUserInfo = asyncHandler(async (req,res) => {
+    const {username} = req.query
+    const user = await User.findOne({username:username}).select('-password').lean()
+    if (!user) {
+        res.status(400).json({message: "User does not exist"})
+    }
+    res.status(200).json(user)
+})
+
+export const updateUser = asyncHandler(async (req,res) => {
+   const {username, role, newUsername, newPassword, newRole, position, department, startDate, endDate} = req.body
+
+   const newInformation = {
+    username:newUsername,
+    password:newPassword,
+    role:newRole,
+    
+   }
+
+   const employmentHistory = {
+    position:position,
+    department:department,
+    startDate:startDate,
+    endDate:endDate
+   }
+
+   const user = await User.findOneAndUpdate({username:username, role:role}, {$set:newInformation, $push:{employmentHistory:employmentHistory}},  {new:true, runvalidators:tr}).exec()
+   if (!user) {
+    res.status(400).json({message: "User does not exist"})
+   }
+
+   res.status(200).json({message: "User succesfully updated.", user})
+
    
 })
 // @desc delete user
 // @route DELETE /users
 // @access private
 
-const delelteUser = asyncHandler(async (req,res) => {
+export const deleteUser = asyncHandler(async (req,res) => {
+   const {username, role} = req.body
+
+   const user =  await User.findOne({username:username, role:role})
+
+   if (!user) {
+    res.status(400).json({messsage:"User does not exist!"})
+   }
+   const deleted = await User.deleteOne({username:username, role:role})
+
+   if  (deleted.deletedCount === 1) {
+    res.status(200).json({message: "User succesfully deleted."})
+   } else {
+    res.status(400).json({message:"Sth went wrong. Please try again later."})
+   }
+
    
 })

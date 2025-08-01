@@ -1,0 +1,68 @@
+import { Server } from 'socket.io';
+import { updateBay, updateTrestle, deleteBay } from '../controller/yardController.js';
+import {getAllBays} from '../controller/yardController.js'
+
+let io;
+
+const InitialiseSocketio = ({ server }) => {
+    io = new Server(server, { cors: { origin: "*", credentials: true }, transports: ['websocket'] });
+
+    io.on("connection", (socket) => {
+        console.log("New user connected:", socket.id);
+
+        socket.on("disconnect", () => {
+            console.log("User disconnected:", socket.id);
+        });
+        socket.on("requestBays", async () => {
+                const data = await getAllBays()
+                socket.emit("allBays", data);
+                });
+
+        socket.on("updateTrestle", async(data) => {
+            console.log("update trestle recieved")
+            const trestleUpdated = await updateTrestle(data)
+            io.emit("trestleUpdated", {...trestleUpdated, user:data.user});
+            
+        });
+
+        socket.on("bayDelete", async(data, callback) => {
+            const bayDeleted = await deleteBay(data)
+            if (bayDeleted.status === 200) {
+                io.emit("bayDeleted", {bayDeleted:bayDeleted.bayNumber, user:data.user, time:bayDeleted.bayDeletedAt})
+            } else if (bayDeleted.status === 400) {
+                return callback({status:400, message:bayDeleted.message})
+            } else if (bayDeleted.status === 409) {
+                return callback({status:409, message:"Duplicate key error"})
+            } else {
+                return callback({status:500, message:"Server error. Please try again later!"})
+            }
+            
+        })
+
+
+        socket.on("bayUpdate", async (data, callback) => {
+          
+                const bayUpdated = await updateBay(data.formData);
+
+                if (bayUpdated.status === "400") {
+                    return callback({ status: "400", message: "Please fill in all the required fields." });
+                } else if (bayUpdated.status === "401") {
+                    return callback({ status: "401", message: "Bay not found. Please try again." });
+                } else if (!bayUpdated.status) {
+                    return callback({ status: "500", message: "Something went wrong. Please try again later!" });
+                } else if (bayUpdated.status === "200") {
+                   
+                    io.emit("bayUpdated", {...bayUpdated, user:data.user});
+                    return callback({status:"200"})
+
+                }
+        });
+    });
+};
+
+const getIO = () => {
+    if (!io) throw new Error("Socket doesn't exist.");
+    return io;
+};
+
+export { InitialiseSocketio, getIO };
