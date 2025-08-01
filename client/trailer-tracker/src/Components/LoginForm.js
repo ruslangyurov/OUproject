@@ -60,10 +60,16 @@ export const BasicLogin = () => {
   
 
   return (
- <>   
-  <Typography color="error" sx={{ mb: 2 }}>
+ <> 
+   
+   {errMsg && (
+   <Box>
+      <Typography color="error" sx={{ mb: 2 }}>
         {errMsg}
-  </Typography>
+      </Typography>
+   </Box>
+  )}
+
    <Box sx={{ display:"flex", flexWrap:"wrap",mt:"130px", flexDirection: {xs:"column", sm:"column", md:"row", lg:"row"},justifyContent:"flex-start", alignContent:"center" }}>
         <h1>{errMsg}</h1>
         <TextField sx={{ width: { xs: "80%", md: "200px" }}}
