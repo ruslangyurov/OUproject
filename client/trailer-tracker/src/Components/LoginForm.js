@@ -63,14 +63,13 @@ export const BasicLogin = () => {
  <> 
    
    {errMsg && (
-   <Box sx = {{mt:"80px"}}>
-      <Typography color="error" sx={{ mb: 2 }}>
-        {errMsg}
-      </Typography>
-   </Box>
+   <Typography color="error" sx={{ mt: '80px', mb: 1 }}>
+    {errMsg}
+   </Typography>
   )}
 
-   <Box sx={{ display:"flex", flexWrap:"wrap",mt:"2", flexDirection: {xs:"column", sm:"column", md:"row", lg:"row"},justifyContent:"flex-start", alignContent:"center" }}>
+
+   <Box sx={{ display:"flex", flexWrap:"wrap",mt:"130px", flexDirection: {xs:"column", sm:"column", md:"row", lg:"row"},justifyContent:"flex-start", alignContent:"center" }}>
         <TextField sx={{ width: { xs: "80%", md: "200px" }}}
           required
           type = "String"
