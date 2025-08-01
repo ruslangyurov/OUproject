@@ -75,7 +75,7 @@ export const BasicLogin = () => {
         flexDirection: { xs: "column", sm: "column", md: "row", lg: "row" },
         justifyContent: "flex-start",
         alignContent: "center",
-        width:"fit-content",
+        
       }}
     >
       <TextField
