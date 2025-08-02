@@ -27,7 +27,7 @@ export const EmptyTrailers = () => {
 
   const getResults = async () => {
     try {
-        const res = await axios.get(YARD_URL);
+        const res = await axiosInstanse.get(YARD_URL);
         if (res.data) {
             setEmptyTrailers(res.data);
             setLoading(false);
@@ -54,7 +54,7 @@ export const EmptyTrailers = () => {
     if (isSmallScreen) {
         return (
         <Box sx = {{mt:"80px", px:2}}>
-            {fullTrailers.map((bay) => (
+            {emptyTrailers.map((bay) => (
             <Paper key = {bay.bayNumber} sx = {{mb:2, p:2}}>
                 <Typography variant = "subtitle2"><strong>Bay number</strong>{bay.bayNumber}</Typography>
                 <Typography variant="subtitle2"><strong>Trailer Number:</strong> {bay.trailerNumber}</Typography>
