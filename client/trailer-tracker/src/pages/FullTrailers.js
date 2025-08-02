@@ -7,12 +7,16 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import { useTheme } from '@mui/material/styles';
 
 export const FullTrailers = () => {
   const [fullTrailers, setFullTrailers] = useState([]);
   const [errMsg, setErrMsg] = useState("");
   const [loading, setLoading] = useState(true);
   const YARD_URL = "/yard/FullTrailers";
+
+  const theme = useTheme()
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
 
   useEffect(() => {
     getResults();
@@ -47,7 +51,20 @@ export const FullTrailers = () => {
   if (fullTrailers.length === 0) {
     return <h2>No full trailers at the moment.</h2>;
   }
-
+  if (isSmallScreen) {
+    return (
+      <Box sx = {{mt:"80px", px:2}}>
+        {fulltrailers.map((bay) => (
+          <Paper key = {bay.bayNumber} sx = {{mb:2, p:2}}>
+            <Typography variant = "subtitle2"><strong>Bay number</strong>{bay.bayNumber}</Typography>
+            <Typography variant="subtitle2"><strong>Trailer Number:</strong> {bay.trailerNumber}</Typography>
+            <Typography variant="subtitle2"><strong>Stock:</strong> {bay.stockDelivered}</Typography>
+            <Typography variant="subtitle2"><strong>Comment:</strong> {bay.comment}</Typography>
+          </Paper>
+        ))}
+      </Box>  
+    )
+  }
   return ( 
     <TableContainer sx = {{mt:"80px"}} component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
