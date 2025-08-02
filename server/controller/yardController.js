@@ -17,7 +17,7 @@ export const createBays = asyncHandler(async (req, res) => {
 
     const bayObj = {
       bayNumber: i,
-      trailerNumber: "",
+      trailerNumber: "Trailer Number",
       stockDelivered: "",
       fullTrailer: "empty",
       comment: "",
