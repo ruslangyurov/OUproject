@@ -7,7 +7,12 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import {
+  Table, TableBody, TableCell, TableContainer, TableHead, TableRow,
+  Paper, Box, Typography, useMediaQuery
+} from '@mui/material';
 import { useTheme } from '@mui/material/styles';
+
 
 export const FullTrailers = () => {
   const [fullTrailers, setFullTrailers] = useState([]);
