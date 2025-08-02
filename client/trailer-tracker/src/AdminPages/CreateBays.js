@@ -59,7 +59,7 @@ export const CreateBays = () => {
               }
             }}
             onClick={() => {
-              setResMsg("")
+              setResMsg(null)
             }}
             onKeyDown={(e) => {
               // Prevent typing invalid characters like '.', '-', 'e' (common in number inputs)
@@ -102,7 +102,7 @@ export const CreateBays = () => {
               }
             }}
             onClick={() => {
-             setResMsg("")
+             setResMsg(null)
             }}
             onKeyDown={(e) => {
               // Prevent typing invalid characters like '.', '-', 'e' (common in number inputs)
@@ -135,7 +135,7 @@ export const CreateBays = () => {
               }
             }}
             onClick={() => {
-              setResMsg("")
+              setResMsg(null)
             }}
             onKeyDown={(e) => {
               // Prevent typing invalid characters like '.', '-', 'e' (common in number inputs)
