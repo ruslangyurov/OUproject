@@ -28,11 +28,13 @@ export const CreateBays = () => {
 
   return (
     <> 
-        {resMsg && (
-          <div className="resMsg">
-            {resMsg}
-          </div>
-        )}
+      {resMsg && (
+      <div className="resMsg">
+        {resMsg}
+      </div>
+      )}
+      <div className="newUser_container">
+
         <form className='form-group' onSubmit={handleSubmitSingle}>
           <label htmlFor="singleBay">Create single bay</label>
           <input
