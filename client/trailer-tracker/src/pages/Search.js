@@ -1,7 +1,7 @@
 import react from 'react'
 import {useState, useEffect} from 'react'
 import {useLocation} from 'react-router-dom'
-import axios from '../apiAxios/axios'
+import axiosInstanse from '../apiAxios/axios'
 import { setRef } from '@mui/material'
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -28,7 +28,7 @@ export const Search = () => {
     
     const URL_SEARCH = '/yard/Search'   
     const findTrailer = async() => {
-        await axios.get(URL_SEARCH, {params: {trailerNumber:state.toLowerCase()}}).
+        await axiosInstanse.get(URL_SEARCH, {params: {trailerNumber:state.toLowerCase()}}).
         then((res) => setResults(res.data)).catch((err) => {
             if (err.request) {
                 setErrMsg(err.request.data)
@@ -74,6 +74,9 @@ export const Search = () => {
                 </Table>
             </TableContainer>
         )
-    } else { return <h2>{errMsg}</h2>}
+    } else if (errMsg) { 
+        return <h2>{errMsg}</h2>
+    } else {return "No trailer found."}
+    
 
 }
