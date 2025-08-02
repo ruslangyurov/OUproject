@@ -19,7 +19,7 @@ export const Search = () => {
 
     const {state} = useLocation()
     useEffect(() => {
-        setResults("")
+        setResults(null)
         // send the request to the server when the page renders
         findTrailer()
 
