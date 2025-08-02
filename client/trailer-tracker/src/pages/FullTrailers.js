@@ -49,7 +49,7 @@ export const FullTrailers = () => {
   }
 
   return ( 
-    <TableContainer component={Paper}>
+    <TableContainer sx = {{mt:"80px"}} component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow>
