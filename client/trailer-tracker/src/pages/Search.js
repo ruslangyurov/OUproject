@@ -55,9 +55,13 @@ export const Search = () => {
 
    
         
-    {errMsg} && <Box sx = {{mt:"64px"}}>
-        <h2 style={{color:"red"}}>{errMsg}</h2>
-    </Box>
+    if (errMsg) {
+        return (
+            <Box sx={{ mt: "64px" }}>
+                <h2 style={{ color: "red" }}>{errMsg}</h2>
+            </Box>
+        );
+        }
 
     if (results) {
         return (
