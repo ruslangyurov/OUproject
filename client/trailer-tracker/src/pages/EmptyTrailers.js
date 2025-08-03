@@ -45,10 +45,19 @@ export const EmptyTrailers = () => {
 
 
     if (loading) {
-        return "Loading empty trailers..."
+        return (
+            <Box sx = {{ mt:"64px"}}>
+                <h4 style {{font: "Aptos black"}}>"Loading empty trailers..."</h4>
+            </Box>
+        )
     }
     if (errMsg) {
-        return <h2 style={{ color: "red" }}>{errMsg}</h2>;
+
+        return (
+        <Box sx = {{mt:"64px"}}>
+            <h2 style={{ color: "red" }}>{errMsg}</h2>;
+        </Box>
+        )
     }
 
     if (isSmallScreen) {

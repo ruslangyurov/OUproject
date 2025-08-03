@@ -53,7 +53,7 @@ export const ResponseInterceptor = () => {
         const originalRequest = error.config;
 
         // If the response status is 403 (token expired)
-        if (error.response.status === 403 && !originalRequest._retry && originalRequest.url !== '/auth/refresh') {
+        if ((error.response.status === 403 || error.response.status === 401) && !originalRequest._retry && originalRequest.url !== '/auth/refresh') {
           originalRequest._retry = true;
 
           // Try to refresh the token
