@@ -47,7 +47,7 @@ export const EmptyTrailers = () => {
     if (loading) {
         return (
             <Box sx = {{ mt:"64px"}}>
-                <h4 style {{font: "Aptos black"}}>"Loading empty trailers..."</h4>
+                <h4 style = {{font: "Aptos black"}}>"Loading empty trailers..."</h4>
             </Box>
         )
     }
