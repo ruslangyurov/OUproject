@@ -31,6 +31,8 @@ export const EmptyTrailers = () => {
         if (res.data) {
             setEmptyTrailers(res.data);
             setLoading(false);
+        } else {
+            setErrMsg("No empty trailers at the moment.")
         }
     } catch (err) {
         if (!err.response) {
