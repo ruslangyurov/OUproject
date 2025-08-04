@@ -53,6 +53,7 @@ export const CreateBays = () => {
                 return;
               }
 
+
               const num = parseInt(value, 10);
 
               // Only allow numbers 1 and above

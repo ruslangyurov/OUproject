@@ -31,9 +31,7 @@ export const EmptyTrailers = () => {
         if (res.data) {
             setEmptyTrailers(res.data);
             setLoading(false);
-        } else {
-            setErrMsg("No empty trailers at the moment.")
-        }
+        } 
     } catch (err) {
         if (!err.response) {
             setErrMsg("No Server Response");
@@ -41,25 +39,28 @@ export const EmptyTrailers = () => {
             setErrMsg(err.response.data.message);
         } else {
             setErrMsg(err.response.data?.message || "An error occurred");
+        } 
+    } finally {
+          setLoading(false)
         }
     }
-};
+
 
 
     if (loading) {
         return (
             <Box sx = {{ mt:"64px"}}>
-                <h4 style = {{font: "Aptos black"}}>"Loading empty trailers..."</h4>
+                <h4 style = {{font: "Aptos black"}}>Loading empty trailers...</h4>
             </Box>
         )
     }
     if (errMsg) {
 
         return (
-        <Box sx = {{mt:"64px"}}>
-            <h2 style={{ color: "red" }}>{errMsg}</h2>;
-        </Box>
-        )
+            <Box sx = {{mt:"64px"}}>
+                <h2 style={{ color: "red" }}>{errMsg}</h2>;
+            </Box>
+            )
     }
 
     if (isSmallScreen) {
@@ -108,7 +109,11 @@ export const EmptyTrailers = () => {
             </TableContainer>
         )
     } else {
-        return <h2>No Empty Trailers at the moment.</h2>
+        return (
+            <Box sx = {{mt:"64px"}}>
+                <h2 style={{ color: "red" }}>No emtpy trailers at the moment.</h2>;
+            </Box>
+            )
     }
 }
        

@@ -15,17 +15,26 @@ export const UpdateUser = () => {
     
     
   
-    const handleUpdate = async() => {
-  
+    const handleUpdate = async(e) => {
+      e.preventDefault();
+      if (!newUsername && !newRole && !newPassword) {
+        setResMsg("At least one of the new fields is required.")
+        return
+      }
       try {
         await axiosInstance.patch("/user", { username, role, newUsername, newPassword, newRole })
         setResMsg("User updated successfully.")
-  
+        setUsername("");
+        setRole("");
+        setNewUsername("");
+        setNewPassword("");
+        setNewRole("");
       } catch (err) {
           if (!err?.response) {
             setResMsg("No Server Response");
           } else {
-            setResMsg(err.data.message)
+            setResMsg(err.response?.data?.message || "An error occurred");
+
           }
       };
     }
@@ -46,15 +55,19 @@ export const UpdateUser = () => {
                     type = "text" 
                     name = "updateUserUsername"
                     onChange={(e) => setUsername(e.target.value)}
+                    onClick = {() => {setResMsg("")}}
                 />
                 <label>Role</label>
                 <select 
                   className="newUser_container_input"
                   value = {role}
-                  onChange={(e) => setRole(e.target.value)}>
+                  onChange={(e) => setRole(e.target.value)}
+                  onClick = {() => {setResMsg("")}}>
                    <option value="Admin">Admin</option>
                    <option value="Employee">Employee</option>
                    <option value="Manager">Manager</option>
+                   <option value="" disabled hidden>Select role</option>
+
                 </select>
               </div>
                 <label>New Username</label>
@@ -81,6 +94,8 @@ export const UpdateUser = () => {
                    <option value="Admin">Admin</option>
                    <option value="Employee">Employee</option>
                    <option value="Manager">Manager</option>
+                   <option value="" disabled hidden>Select role</option>
+
                    
                 </select>
                 <div>

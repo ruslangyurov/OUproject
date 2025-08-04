@@ -12,13 +12,16 @@ export const DeleteUser = () => {
 
     const handleDelete = async (e) => {
         e.preventDefault();
-
+        if (!username || !role) {
+            setResultMessage("Please provide both username and role.");
+            return;
+}
         try {
             // Axios DELETE requests require payload to be in a 'data' key
             const response = await axiosInstance.delete(DELUSER_URL, {
                 data: { username, role }
             });
-            setResultMessage(response.data.message);
+            setResultMessage(response?.data?.message);
         } catch (err) {
             if (err.request) {
                 setResultMessage("No server response. Please try again later.");
@@ -37,6 +40,7 @@ export const DeleteUser = () => {
                     type="text"
                     name="deleteUserUsername"
                     onChange={(e) => setUsername(e.target.value)}
+                    onClick = {() => {setResultMessage("")}}
                 />
 
                 <label>Role</label>
@@ -44,6 +48,7 @@ export const DeleteUser = () => {
                     className="newUser_container_input"
                     name="deleteUserRole"
                     onChange={(e) => setRole(e.target.value)}
+                    onClick = {() => {setResultMessage("")}}
                     defaultValue=""
                 >
                     <option value="Admin">Admin</option>
