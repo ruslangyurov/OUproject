@@ -21,7 +21,6 @@ import { useState } from 'react';
 import { AuthContextProvider } from './Config/AuthContext';
 import { SocketContextProvider } from './Config/SocketContext';
 import {ProtectedRoute} from './Components/ProtectedRoute';
-import { RequestInterceptor, ResponseInterceptor } from './apiAxios/axios';
 import "./App.css"; 
 import { Profile } from './Components/Profile';
 import { setupInterceptors } from './apiAxios/axios';
