@@ -35,33 +35,35 @@ export function App() {
       <div className='App'>
         <AuthContextProvider>
           <SocketContextProvider>
-            <RequestInterceptor/>
-            <ResponseInterceptor/>
-            <Routes>
-              <Route path = "/" element = {<Layout />}> 
-                <Route index element = {<Home/>}/>
-                <Route path = '/Login' element = {<Login/>} />
-                <Route path = '/Logout' element = {<Logout />} />
-                <Route element = {<ProtectedRoute/>}>
-                  <Route path = '/Inbound' element = {<Inbound />}/>
-                  <Route path = '/Outbound' element = {<Outbound />}/>
-                  <Route path = '/Parking' element = {<Parking />}/>
-                  <Route path = '/Empty-Trailers' element = {<EmptyTrailers />}/>
-                  <Route path = '/Full-Trailers' element = {<FullTrailers />}/>
-                  <Route path = '/Search' element = {<Search />}/>
-                  <Route path = '/Profile' element = {<Profile />}/>
-                </Route>
-              </Route>
-              <Route element = {<ProtectedRoute/>}>  
-                <Route path="/Admin" element={<AdminLayout />}>
-                    <Route path="menu" element={<AdminMenu />} />
-                    <Route path="menu/new-user" element={<NewUser />} />  
-                    <Route path="menu/update-user" element={<UpdateUser />} /> 
-                    <Route path="menu/delete-user" element={<DeleteUser />} /> 
-                    <Route path="menu/create-bays" element={<CreateBays />} /> 
-                </Route>
-              </Route>
-            </Routes>
+            <RequestInterceptor>
+              <ResponseInterceptor>
+                <Routes>
+                  <Route path = "/" element = {<Layout />}> 
+                    <Route index element = {<Home/>}/>
+                    <Route path = '/Login' element = {<Login/>} />
+                    <Route path = '/Logout' element = {<Logout />} />
+                    <Route element = {<ProtectedRoute/>}>
+                      <Route path = '/Inbound' element = {<Inbound />}/>
+                      <Route path = '/Outbound' element = {<Outbound />}/>
+                      <Route path = '/Parking' element = {<Parking />}/>
+                      <Route path = '/Empty-Trailers' element = {<EmptyTrailers />}/>
+                      <Route path = '/Full-Trailers' element = {<FullTrailers />}/>
+                      <Route path = '/Search' element = {<Search />}/>
+                      <Route path = '/Profile' element = {<Profile />}/>
+                    </Route>
+                  </Route>
+                  <Route element = {<ProtectedRoute/>}>  
+                    <Route path="/Admin" element={<AdminLayout />}>
+                        <Route path="menu" element={<AdminMenu />} />
+                        <Route path="menu/new-user" element={<NewUser />} />  
+                        <Route path="menu/update-user" element={<UpdateUser />} /> 
+                        <Route path="menu/delete-user" element={<DeleteUser />} /> 
+                        <Route path="menu/create-bays" element={<CreateBays />} /> 
+                    </Route>
+                  </Route>
+                </Routes>
+              </ResponseInterceptor>    
+            </RequestInterceptor>
           </SocketContextProvider>
         </AuthContextProvider>
         
