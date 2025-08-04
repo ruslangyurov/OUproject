@@ -24,6 +24,8 @@ import {ProtectedRoute} from './Components/ProtectedRoute';
 import "./App.css"; 
 import { Profile } from './Components/Profile';
 import { setupInterceptors } from './apiAxios/axios';
+import { useAuth } from './Config/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 
 export function App() {
