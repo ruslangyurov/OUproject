@@ -20,88 +20,54 @@ import {Search} from './pages/Search'
 import { useState, useEffect } from 'react';
 import { AuthContextProvider } from './Config/AuthContext';
 import { SocketContextProvider } from './Config/SocketContext';
+import {ResponseInterceptor} from '/apiAxios/axios';
+import {RequestInterceptor} from '/apiAxios/axios';
 import {ProtectedRoute} from './Components/ProtectedRoute';
 import "./App.css"; 
 import { Profile } from './Components/Profile';
-import { setupInterceptors } from './apiAxios/axios';
-import { useAuth } from './Config/AuthContext';
-import { useNavigate } from 'react-router-dom';
+
 
 
 export function App() {
- 
-  const { auth, setAuth } = useAuth();
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    setupInterceptors(auth, setAuth, navigate);
-  }, [auth]); // Only once or when auth change
- 
   return (
-    
-      <div className='App'>
-        <AuthContextProvider>
-          <SocketContextProvider>
-            
-            <Routes>
-              <Route path = "/" element = {<Layout />}> 
-                <Route index element = {<Home/>}/>
-                <Route path = '/Login' element = {<Login/>} />
-                <Route path = '/Logout' element = {<Logout />} />
-                <Route element = {<ProtectedRoute/>}>
-                  <Route path = '/Inbound' element = {<Inbound />}/>
-                  <Route path = '/Outbound' element = {<Outbound />}/>
-                  <Route path = '/Parking' element = {<Parking />}/>
-                  <Route path = '/Empty-Trailers' element = {<EmptyTrailers />}/>
-                  <Route path = '/Full-Trailers' element = {<FullTrailers />}/>
-                  <Route path = '/Search' element = {<Search />}/>
-                  <Route path = '/Profile' element = {<Profile />}/>
+    <div className='App'>
+      <AuthContextProvider>
+        <SocketContextProvider>
+          <RequestInterceptor>
+            <ResponseInterceptor>
+              <Routes>
+                <Route path="/" element={<Layout />}> 
+                  <Route index element={<Home />} />
+                  <Route path="/Login" element={<Login />} />
+                  <Route path="/Logout" element={<Logout />} />
+                  <Route element={<ProtectedRoute />}>
+                    <Route path="/Inbound" element={<Inbound />} />
+                    <Route path="/Outbound" element={<Outbound />} />
+                    <Route path="/Parking" element={<Parking />} />
+                    <Route path="/Empty-Trailers" element={<EmptyTrailers />} />
+                    <Route path="/Full-Trailers" element={<FullTrailers />} />
+                    <Route path="/Search" element={<Search />} />
+                    <Route path="/Profile" element={<Profile />} />
+                  </Route>
                 </Route>
-              </Route>
-              <Route element = {<ProtectedRoute/>}>  
-                <Route path="/Admin" element={<AdminLayout />}>
+                <Route element={<ProtectedRoute />}>  
+                  <Route path="/Admin" element={<AdminLayout />}>
                     <Route path="menu" element={<AdminMenu />} />
                     <Route path="menu/new-user" element={<NewUser />} />  
                     <Route path="menu/update-user" element={<UpdateUser />} /> 
                     <Route path="menu/delete-user" element={<DeleteUser />} /> 
                     <Route path="menu/create-bays" element={<CreateBays />} /> 
+                  </Route>
                 </Route>
-              </Route>
-            </Routes>
-          </SocketContextProvider>
-        </AuthContextProvider>
-        
-      </div>
-  )
+              </Routes>
+            </ResponseInterceptor>
+          </RequestInterceptor>
+        </SocketContextProvider>
+      </AuthContextProvider>
+    </div>
+  );
 }
-
-// Log to console
-console.log('Hello console')
 
 export default App;
 
 
-
-{/* <AuthContextProvider>
-<RequestInterceptor/>
-<ResponseInterceptor/>
-<Routes>
-  <Route path = "/" element = {<Layout />}> 
-    <Route index element = {<Home/>}/>
-    <Route path = '/Login' element = {<Login/>} />
-    <Route path = '/Logout' element = {<Logout />} />
-    <Route element = {<ProtectedRoute/>}>
-      <Route path = '/Inbound' element = {<Inbound />}/>
-      <Route path = '/Outbound' element = {<Outbound />}/>
-      <Route path = '/Parking' element = {<Parking />}/>
-      <Route path = '/Empty Trailers' element = {<EmptyTrailers />}/>
-      <Route path = '/Full Trailers' element = {<FullTrailers />}/>
-      <Route path = '/Search' element = {<Search />}/>
-   </Route> 
-    <Route element = {<ProtectedRoute/>}>
-        <Route path = '/Admin' element = {<AdminMenu />}/>
-        <Route path = '/NewUser' element = {<NewUser />}/>
-    </Route>
-  </Route>
-</Routes>
-</AuthContextProvider> */}
