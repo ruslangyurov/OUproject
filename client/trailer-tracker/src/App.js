@@ -40,8 +40,7 @@ export function App() {
       <div className='App'>
         <AuthContextProvider>
           <SocketContextProvider>
-            <RequestInterceptor/>
-            <ResponseInterceptor/>
+            
             <Routes>
               <Route path = "/" element = {<Layout />}> 
                 <Route index element = {<Home/>}/>
