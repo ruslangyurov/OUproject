@@ -20,8 +20,8 @@ import {Search} from './pages/Search'
 import { useState, useEffect } from 'react';
 import { AuthContextProvider } from './Config/AuthContext';
 import { SocketContextProvider } from './Config/SocketContext';
-import {ResponseInterceptor} from '/apiAxios/axios';
-import {RequestInterceptor} from '/apiAxios/axios';
+import {ResponseInterceptor} from './apiAxios/axios';
+import {RequestInterceptor} from './apiAxios/axios';
 import {ProtectedRoute} from './Components/ProtectedRoute';
 import "./App.css"; 
 import { Profile } from './Components/Profile';
