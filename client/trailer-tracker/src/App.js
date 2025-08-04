@@ -24,11 +24,17 @@ import {ProtectedRoute} from './Components/ProtectedRoute';
 import { RequestInterceptor, ResponseInterceptor } from './apiAxios/axios';
 import "./App.css"; 
 import { Profile } from './Components/Profile';
-
+import { setupInterceptors } from './apiAxios/setupInterceptors';
 
 
 export function App() {
  
+  const { auth, setAuth } = useAuth();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    setupInterceptors(auth, setAuth, navigate);
+  }, [auth]); // Only once or when auth change
  
   return (
     
