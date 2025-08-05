@@ -44,7 +44,7 @@ export const DeleteUser = () => {
                         type="text"
                         name="deleteUserUsername"
                         onChange={(e) => setUsername(e.target.value)}
-                        onClick = {() => {setResultMessage("")}}
+                        onClick = {() => {setResMsg("")}}
                     />
 
                     <label>Role</label>
@@ -52,7 +52,7 @@ export const DeleteUser = () => {
                         className="newUser_container_input"
                         name="deleteUserRole"
                         onChange={(e) => setRole(e.target.value)}
-                        onClick = {() => {setResultMessage("")}}
+                        onClick = {() => {setResMsg("")}}
                         defaultValue=""
                     >
                         <option value="Admin">Admin</option>
