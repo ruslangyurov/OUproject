@@ -97,7 +97,7 @@ export const updateUserInfoUser = asyncHandler(async (req, res) => {
         return res.status(400).json({message:"Please fill out at least of the given fields!"})
     }
 
-    cosnt updatedUser = await User.findOneAndUpdate({username:username}, {$set:userInfo}, {new:true, runValidators:true}).exec();
+    const updatedUser = await User.findOneAndUpdate({username:username}, {$set:userInfo}, {new:true, runValidators:true}).exec();
     if (!updatedUser) {
     return res.status(404).json({ message: "User not found." });
   }
