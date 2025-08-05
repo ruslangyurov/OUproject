@@ -21,18 +21,18 @@ export default function EditUserEmployment() {
     const [endDate, setEndDate] = useState("")
     const [errMsg, setErrMsg] = useState("")
 
-    const USER_URL = "/user"
+    const USER_URL = "/user/profile/employment"
 
     const employmentHistory = {
-        position:position,
-        department:department,
-        startDate:new Date(startDate),
-        endDate:new Date(endDate)
+        newPosition:position,
+        newDepartment:department,
+        newStartDate:new Date(startDate),
+        newEndDate:new Date(endDate)
     }
     const handleUserEmploymentUpdate = async (e) => {
         e.preventDefault()
         await axiosInstance.patch(USER_URL, {employmentHistory:employmentHistory}).catch((error) => {
-            setErrMsg(error.response.data.message)
+            setErrMsg(error.response?.data?.message)
         })
     }
    

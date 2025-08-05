@@ -8,11 +8,16 @@ import * as verifyToken from '../middleware/verifyJWT.js';
 router.route('/')
     .get(userController.getAllUsers)
     .post(userController.createNewUser)
-    .patch(userController.updateUser)
+    .patch(userController.updateUserAdmin)
     .delete(userController.deleteUser)
     
 router.route('/profile')
     .get(userController.getUserInfo)
     
+router.route('/profile/employment')
+    .patch(userController.updateUserAdminEmployment)
+
+router.route('profile/user/edit')
+    .patch(userController.updateUserInfoUser)
 
 export default router;

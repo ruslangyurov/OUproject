@@ -22,7 +22,8 @@ export const NewUser = () => {
       if (!err?.response) {
         setErrMsg("No Server Response");
       } else {
-        setErrMsg(err.data.message)
+        setErrMsg(err.response?.data?.message || "Something went wrong");
+
       }
     }
   };

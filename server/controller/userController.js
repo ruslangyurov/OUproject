@@ -59,29 +59,70 @@ export const getUserInfo = asyncHandler(async (req,res) => {
     res.status(200).json(user)
 })
 
-export const updateUser = asyncHandler(async (req,res) => {
-   const {username, role, newUsername, newPassword, newRole, position, department, startDate, endDate} = req.body
 
-   const newInformation = {
-    username:newUsername,
-    password:newPassword,
-    role:newRole,
+export const updateUserAdminEmployment = asyncHandler(async (req,res) => {
+
+    const {username, newPosition, newDepartment, newStartDate, newEndDate} = req.body
+
+    const employmentHistory = {}
     
-   }
+    if (newPosition) employmentHistory.position = newPosition;
+    if (newDepartment) employmentHistory.department = newDepartment;
+    if (newStartDate) employmentHistory.startDate = newStartDate;
+    if (newEndDate) employmentHistory.endDate = newEndDate;
 
-   const employmentHistory = {
-    position:position,
-    department:department,
-    startDate:startDate,
-    endDate:endDate
-   }
+    if (Object.keys(employmentHistory).length === 0) {
+        return res.status(400).json(message:"Please fill in at least one of the possible options!")
+    }
 
-   const user = await User.findOneAndUpdate({username:username, role:role}, {$set:newInformation, $push:{employmentHistory:employmentHistory}},  {new:true, runvalidators:tr}).exec()
+    const updatedUser = await User.findOneAndUpdate({username:username}, {$push:{employmentHistory:employmentHistory}}, {new:true, runValidators:true}).exec()  
+    
+    if (!updatedUser) {
+    return res.status(404).json({ message: "User not found" });
+  }
+
+    res.status(200).json(updatedUser);
+})
+
+export const updateUserInfoUser = asyncHandler(async (req, res) => {
+    
+    const {username, newUsername, newAddress, newPhoneNumber} = req.body
+
+    const userInfo = {}
+    if (newUsername) userInfo.username = newUsername;
+    if (newAddress) userInfo.address = newAddress;
+    if (newPhoneNumber) userInfo.phoneNumber = newPhoneNumber; 
+
+    if (Object.keys(userInfo).length === 0) {
+        return res.status(400).json(message:"Please fill out at least of the given fields!")
+    }
+
+    cosnt updatedUser = await User.findOneAndUpdate({username:username}, {$set:userInfo}, {new:true, runValidators:true}).exec();
+    if (!updatedUser) {
+    return res.status(404).json({ message: "User not found." });
+  }
+    res.status(200).json(updatedUser)
+})
+
+export const updateUserAdmin = asyncHandler(async (req,res) => {
+   const {username, role, newUsername, newPassword, newRole} = req.body
+
+   const newInformation = {}
+   if (newUsername) newInformation.username = newUsername;
+   if (newPassword) newInformation.password = newPassword;
+   if (newRole) newInformation.role = newRole;
+
+  // Check if there's anything to update
+  if (Object.keys(newInformation).length === 0) {
+    return res.status(400).json({ message: "No valid fields provided for update." });
+  } 
+
+   const user = await User.findOneAndUpdate({username:username, role:role}, {$set:newInformation},  {new:true, runvalidators:tr}).exec()
    if (!user) {
     res.status(400).json({message: "User does not exist"})
    }
 
-   res.status(200).json({message: "User succesfully updated.", user})
+   res.status(200).json(user)
 
    
 })

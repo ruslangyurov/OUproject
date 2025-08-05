@@ -22,7 +22,7 @@ export const Profile = () => {
   useEffect(() => {
    
     const getUserInfo = async () => {
-      const user = await axiosInstance.get(USER_URL, {params:{userName:username}}).then((response) => {
+      const user = await axiosInstance.get(USER_URL, {params:{username:username}}).then((response) => {
         setUserInfo(response.data)
       }).catch((error) => {
         setErrMsg("")

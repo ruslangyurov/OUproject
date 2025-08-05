@@ -16,11 +16,11 @@ const userSchema = new Schema( {
         default:"Employee"
     },
 
-    Name:String, 
-    Address:String,
-    PhoneNumber:String,
+    name:String, 
+    address:String,
+    phoneNumber:String,
 
-    EmploymentHistory: [
+    employmentHistory: [
         {
             department:String,
             position:String,
