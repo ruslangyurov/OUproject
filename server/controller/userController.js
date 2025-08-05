@@ -50,14 +50,18 @@ export const createNewUser = asyncHandler(async (req,res) => {
 // @route PATCH /users
 // @access private
 
-export const getUserInfo = asyncHandler(async (req,res) => {
-    const {username} = req.query
-    const user = await User.findOne({username:username}).select('-password').lean()
-    if (!user) {
-        res.status(400).json({message: "User does not exist"})
-    }
-    res.status(200).json(user)
-})
+export const getUserInfo = asyncHandler(async (req, res) => {
+  const { username } = req.user; // <-- Now coming from JWT
+
+  const user = await User.findOne({ username }).select('-password').lean();
+
+  if (!user) {
+    return res.status(400).json({ message: "User does not exist" });
+  }
+
+  res.status(200).json(user);
+});
+
 
 
 export const updateUserAdminEmployment = asyncHandler(async (req,res) => {
@@ -123,7 +127,7 @@ export const updateUserAdmin = asyncHandler(async (req,res) => {
 
    let user;
    try {
-    user = await User.findOneAndUpdate({username:username, role:role}, {$set:newInformation},  {new:true, runvalidators:tr}).exec()
+    user = await User.findOneAndUpdate({username:username, role:role}, {$set:newInformation},  {new:true, runvalidators:true}).exec()
   } catch(err) {
     return res.status(400).json({message:err.message})
   }

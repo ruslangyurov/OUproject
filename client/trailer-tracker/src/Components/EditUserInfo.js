@@ -18,7 +18,7 @@ import {
     const [newPhoneNumber, setNewPhoneNumber] = useState(""); 
     const [errMsg, setErrMsg] = useState("")
 
-    const USER_URL = '/user'
+    const USER_URL = '/user/profile/edit'
     const {username} = useAuth()
 
     const handleUserUpdate = async (e) => {

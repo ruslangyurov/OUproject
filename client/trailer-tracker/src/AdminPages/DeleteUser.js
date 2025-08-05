@@ -32,49 +32,42 @@ export const DeleteUser = () => {
     };
 
     return (
-        <div className="newUser_container">
-            <form className = "form-group"onSubmit={handleDelete}>
-                <label>Username</label>
-                <input
-                    className="newUser_container_input"
-                    type="text"
-                    name="deleteUserUsername"
-                    onChange={(e) => setUsername(e.target.value)}
-                    onClick = {() => {setResultMessage("")}}
-                />
+        <>
+            <div style={{position:"absolute", color:"red", fontSize: "2vw", m: "75px 15px 0 0"}}>
+                {resMsg}
+            </div>
+            <div className="newUser_container">
+                <form className = "form-group"onSubmit={handleDelete}>
+                    <label>Username</label>
+                    <input
+                        className="newUser_container_input"
+                        type="text"
+                        name="deleteUserUsername"
+                        onChange={(e) => setUsername(e.target.value)}
+                        onClick = {() => {setResultMessage("")}}
+                    />
 
-                <label>Role</label>
-                <select
-                    className="newUser_container_input"
-                    name="deleteUserRole"
-                    onChange={(e) => setRole(e.target.value)}
-                    onClick = {() => {setResultMessage("")}}
-                    defaultValue=""
-                >
-                    <option value="Admin">Admin</option>
-                    <option value="Employee">Employee</option>
-                    <option value="Manager">Manager</option>
-                    <option value="" disabled hidden>Select role</option>
-                </select>
+                    <label>Role</label>
+                    <select
+                        className="newUser_container_input"
+                        name="deleteUserRole"
+                        onChange={(e) => setRole(e.target.value)}
+                        onClick = {() => {setResultMessage("")}}
+                        defaultValue=""
+                    >
+                        <option value="Admin">Admin</option>
+                        <option value="Employee">Employee</option>
+                        <option value="Manager">Manager</option>
+                        <option value="" disabled hidden>Select role</option>
+                    </select>
 
-                <div>
-                    <button type="submit" className="newUser_submit_button">Delete User</button>
+                    <div>
+                        <button type="submit" className="newUser_submit_button">Delete User</button>
 
-                </div>
-            </form>
+                    </div>
+                </form>
 
-            <Box
-                sx={{
-                    position: "absolute",
-                    bottom: "30%",
-                    color: "black",
-                    left: "50%",
-                    transform: "translate(-50%, -50%)",
-                    fontSize: "2vw"
-                }}
-            >
-                <p>{resultMessage}</p>
-            </Box>
-        </div>
+            </div>
+        </>    
     );
 };

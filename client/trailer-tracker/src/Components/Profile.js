@@ -22,12 +22,11 @@ export const Profile = () => {
   useEffect(() => {
    
     const getUserInfo = async () => {
-      const user = await axiosInstance.get(USER_URL, {params:{username:username}}).then((response) => {
+      await axiosInstance.get(USER_URL).then((response) => {
         setUserInfo(response.data)
       }).catch((error) => {
-        setErrMsg("")
+        setErrMsg("Sth went wrong!")
       })
-      return user
     }
     getUserInfo();
   },[username])
@@ -86,13 +85,13 @@ export const Profile = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {userInfo?.employmentHistory?.map((user,index) => (
+                {userInfo?.employmentHistory?.map((job,index) => (
                  
                   <TableRow key = {index} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-                    <TableCell align="right">{user.department}</TableCell>
-                    <TableCell align="right">{user.position}</TableCell>
-                    <TableCell align="right">{user.startDate}</TableCell>
-                    <TableCell align="right">{user.endDate}</TableCell>
+                    <TableCell align="right">{job.department}</TableCell>
+                    <TableCell align="right">{job.position}</TableCell>
+                    <TableCell align="right">{job.startDate}</TableCell>
+                    <TableCell align="right">{job.endDate}</TableCell>
                 </TableRow>
                 
                 ))}

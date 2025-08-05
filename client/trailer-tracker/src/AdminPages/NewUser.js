@@ -68,18 +68,9 @@ export const NewUser = () => {
         </form>
       </div>
 
-      <Box
-        sx={{
-          position: "absolute",
-          bottom: "30%",
-          color: "black",
-          left: "50%",
-          transform: "translate(-50%, -50%)",
-          fontSize: "2vw",
-        }}
-      >
-        <p>{success || errMsg}</p>
-      </Box>
+      <div style={{position:"absolute", color:"red", fontSize: "2vw", margin: "75px 15px 0 0"}}>
+            {success} || {errMsg}
+      </div>
     </>
   );
 };
