@@ -4,7 +4,7 @@ import axiosInstance from '../apiAxios/axios';
 import Box from '@mui/material/Box';
 
 export const DeleteUser = () => {
-    const [resultMessage, setResultMessage] = useState("");
+    const [resMsg, setResMsg] = useState("");
     const [username, setUsername] = useState("");
     const [role, setRole] = useState("");
 
@@ -13,7 +13,7 @@ export const DeleteUser = () => {
     const handleDelete = async (e) => {
         e.preventDefault();
         if (!username || !role) {
-            setResultMessage("Please provide both username and role.");
+            setResMsg("Please provide both username and role.");
             return;
 }
         try {
@@ -21,12 +21,12 @@ export const DeleteUser = () => {
             const response = await axiosInstance.delete(DELUSER_URL, {
                 data: { username, role }
             });
-            setResultMessage(response?.data?.message);
+            setResMsg(response?.data?.message);
         } catch (err) {
             if (err.request) {
-                setResultMessage("No server response. Please try again later.");
+                setResMsg("No server response. Please try again later.");
             } else {
-                setResultMessage(err.response?.data?.message || "An error occurred.");
+                setResMsg(err.response?.data?.message || "An error occurred.");
             }
         }
     };
