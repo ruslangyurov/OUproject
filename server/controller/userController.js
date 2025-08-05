@@ -51,18 +51,19 @@ export const createNewUser = asyncHandler(async (req,res) => {
 // @access private
 
 export const getUserInfo = asyncHandler(async (req, res) => {
-  const { username } = req.user; // <-- Now coming from JWT
+  const { username } = req.user; // <-- From JWT
 
-  const user = await User.findOne({ username:username }).select('-password').lean()
-  .catch(err) {
-    return res.status(400).json({message:err.message})
-  };
+  try {
+    const user = await User.findOne({ username }).select('-password').lean();
+    
+    if (!user) {
+      return res.status(404).json({ message: "User not found." });
+    }
 
-  if (!user) {
-    return res.status(400).json({ message: "User does not exist" });
+    res.json(user);
+  } catch (err) {
+    res.status(400).json({ message: err.message });
   }
-
-  res.status(200).json(user);
 });
 
 
