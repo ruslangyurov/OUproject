@@ -106,6 +106,10 @@ export const updateUserInfoUser = asyncHandler(async (req, res) => {
 
 export const updateUserAdmin = asyncHandler(async (req,res) => {
    const {username, role, newUsername, newPassword, newRole} = req.body
+   
+   if (!username || !role) {
+    return res.status(400).json({message:"Username and role are required."})
+   }
 
    const newInformation = {}
    if (newUsername) newInformation.username = newUsername;
@@ -117,7 +121,14 @@ export const updateUserAdmin = asyncHandler(async (req,res) => {
     return res.status(400).json({ message: "No valid fields provided for update." });
   } 
 
-   const user = await User.findOneAndUpdate({username:username, role:role}, {$set:newInformation},  {new:true, runvalidators:tr}).exec()
+   let user;
+   try {
+    user = await User.findOneAndUpdate({username:username, role:role}, {$set:newInformation},  {new:true, runvalidators:tr}).exec()
+  } catch(err) {
+    return res.status(400).json({message:err.message})
+  }
+
+   
    if (!user) {
     res.status(400).json({message: "User does not exist"})
    }
