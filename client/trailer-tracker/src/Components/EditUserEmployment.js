@@ -42,6 +42,9 @@ export default function EditUserEmployment() {
                 
                 <Typography><strong>Edit</strong></Typography>
             </AccordionSummary>
+            <Box sx={{color:"red", fontSize:"1em", m:"2px 2px"}}>
+                {errMsg}
+            </Box>
             <AccordionDetails>
                 
                     <TextField 
