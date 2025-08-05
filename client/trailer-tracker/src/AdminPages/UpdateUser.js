@@ -41,8 +41,9 @@ export const UpdateUser = () => {
 
       return (
         <>
-          
-          
+          <div style={{position:"absolute"; color:"red"; font-size: "2vw"; m: "75px 15px 0 0";}}>
+            {resMsg}
+          </div>
           <div className="newUser_container">
             <Box sx={{display:"flex",color:"black", backgroundColor: "#f5f5dc",justifyContent:"center", mt:"60px"}}>
               {resMsg}
