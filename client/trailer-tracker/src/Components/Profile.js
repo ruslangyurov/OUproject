@@ -25,7 +25,7 @@ export const Profile = () => {
       await axiosInstance.get(USER_URL).then((response) => {
         setUserInfo(response.data)
       }).catch((error) => {
-        setErrMsg("Sth went wrong!")
+        setErrMsg(err?.response?.data?.message || "Sth went wrong.")
       })
     }
     getUserInfo();

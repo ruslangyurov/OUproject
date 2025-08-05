@@ -7,22 +7,20 @@ export const NewUser = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("");
-  const [errMsg, setErrMsg] = useState("");
-  const [success, setSuccess] = useState("");
-
+  const [resMsg, setResMsg] = useState("");
   // Function to create a new user
   const createNewUser = async (e) => {
     e.preventDefault(); 
 
     try {
       await axiosInstance.post("/user", { username, password, role });
-      setSuccess("New user added successfully.");
-      setErrMsg("");
+      setResMsg("New user added successfully.");
+      
     } catch (err) {
       if (!err?.response) {
-        setErrMsg("No Server Response");
+        setResMsg("No Server Response");
       } else {
-        setErrMsg(err.response?.data?.message || "Something went wrong");
+        setResMsg(err.response?.data?.message || "Something went wrong");
 
       }
     }
@@ -30,6 +28,9 @@ export const NewUser = () => {
 
   return (
     <>
+      <div style={{position:"absolute", color:"red", fontSize: "2vw", margin: "75px 15px 0 0"}}>
+            {resMsg}
+      </div>
       <div className="newUser_container">
         <form className="form-group" onSubmit={createNewUser}>
           <label>Username</label>
@@ -38,7 +39,7 @@ export const NewUser = () => {
             className="newUser_container_input"
             name="newUserUsername"
             onChange={(e) => setUsername(e.target.value)}
-            onClick={() => {setErrMsg(""); setSuccess("")}}
+            onClick={() => {setResMsg("")}}
           />
 
           <label>Password</label>
@@ -46,14 +47,14 @@ export const NewUser = () => {
             type="password"
             className="newUser_container_input"
             onChange={(e) => setPassword(e.target.value)} 
-            onClick={() => {setErrMsg(""); setSuccess("")}}
+            onClick={() => {setResMsg("")}}
           />
 
           <label>Role</label>
           <select
             className="newUser_container_input"
             onChange={(e) => setRole(e.target.value)}
-            onClick={() => {setErrMsg(""); setSuccess("")}} 
+            onClick={() => {setResMsg("")}} 
             defaultValue="" 
           >
             <option value="" disabled hidden>Select role</option>
@@ -68,9 +69,7 @@ export const NewUser = () => {
         </form>
       </div>
 
-      <div style={{position:"absolute", color:"red", fontSize: "2vw", margin: "75px 15px 0 0"}}>
-            {success} || {errMsg}
-      </div>
+     
     </>
   );
 };
