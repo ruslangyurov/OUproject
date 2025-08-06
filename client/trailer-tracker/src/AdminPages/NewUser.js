@@ -34,7 +34,7 @@ export const NewUser = () => {
       </div>
       )}
       {success && ( <div style={{ position: "absolute", color: "red", fontSize: "2vw", margin: "75px", left:"50%", transform:"translateX(-50%)" }}>
-        {errMsg}
+        {success}
       </div>
       )}
 
@@ -46,8 +46,8 @@ export const NewUser = () => {
             className="newUser_container_input"
             name="newUserUsername"
             onChange={(e) => setUsername(e.target.value)}
-            onClick={() => {62
-("")}}
+            onClick={() => {setErrMsg(""); setSuccess("")}}
+
           />
 
           <label>Password</label>
