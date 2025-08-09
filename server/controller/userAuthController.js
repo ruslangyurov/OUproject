@@ -80,7 +80,7 @@ const refresh = (req, res) => {
                 {
                     "userInfo": {
                         "username": foundUser.username,
-                        "roles": foundUser.role
+                        "role": foundUser.role
                     }
                 },
                 process.env.TOKEN_SECRET,

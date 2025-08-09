@@ -53,6 +53,7 @@ export const createNewUser = asyncHandler(async (req,res) => {
 export const getUserInfo = asyncHandler(async (req, res) => {
   const { username } = req.user; // <-- From JWT
 
+  console.log(username)
   try {
     const user = await User.findOne({ username }).select('-password').lean();
     
