@@ -51,7 +51,7 @@ export const createNewUser = asyncHandler(async (req,res) => {
 // @access private
 
 export const getUserInfo = asyncHandler(async (req, res) => {
-  const { username } = req.user; // <-- From JWT
+  const  username  = req.user; // <-- From JWT
 
   console.log(username)
   try {
