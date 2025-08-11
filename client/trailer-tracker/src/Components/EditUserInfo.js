@@ -23,7 +23,7 @@ import {
 
     const handleUserUpdate = async (e) => {
      e.preventDefault();
-     await axiosInstance.patch(USER_URL, {username, newUsername, newAddress, newPhoneNumber}).catch((error) => {
+     await axiosInstance.patch(USER_URL, {newUsername, newAddress, newPhoneNumber}).catch((error) => {
       setErrMsg(error.response.data.message)
      })
     };
