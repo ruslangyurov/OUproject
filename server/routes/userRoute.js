@@ -17,7 +17,7 @@ router.route('/profile')
 router.route('/profile/admin/employment')
     .patch(userController.updateUserAdminEmployment)
 
-router.route('profile/edit')
+router.route('/profile/edit')
     .patch(userController.updateUserInfoUser)
 
 export default router;

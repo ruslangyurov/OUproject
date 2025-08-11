@@ -103,7 +103,7 @@ export const updateUserInfoUser = asyncHandler(async (req, res) => {
     if (newPhoneNumber) userInfo.phoneNumber = newPhoneNumber; 
 
     if (Object.keys(userInfo).length === 0) {
-        return res.status(400).json({message:"Please fill out at least of the given fields!"})
+        return res.status(400).json({message:"Please fill out at least one of the given fields!"})
     }
 
     const updatedUser = await User.findOneAndUpdate({username:username}, {$set:userInfo}, {new:true, runValidators:true}).exec();

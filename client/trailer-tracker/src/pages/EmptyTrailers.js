@@ -37,8 +37,6 @@ export const EmptyTrailers = () => {
             setErrMsg("No Server Response");
         } else if (err.response.status === 400) {
             setErrMsg(err.response.data.message);
-        } else {
-            setErrMsg(err.response.data?.message || "An error occurred");
         } 
     } finally {
           setLoading(false)
