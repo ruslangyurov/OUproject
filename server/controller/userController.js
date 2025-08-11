@@ -24,7 +24,7 @@ export const getAllUsers = asyncHandler(async (req,res) => {
 export const createNewUser = asyncHandler(async (req,res) => {
    
    //confirm data
-   const {username, password, role} = req.body;
+   const {username, password, role, name, address, phone} = req.body;
    if (!username || !password || !role)  {
     res.status(400).json({message: "All fields are required"})
    }

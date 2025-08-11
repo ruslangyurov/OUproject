@@ -123,6 +123,23 @@ form {
   margin-top: 40px;
 }
 
+.form-columns {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 50px;
+  width: 100%;
+}
+
+.form-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 40%;
+  min-width: 200px;
+}
+
+
 .newUser_container_input {
   box-sizing: border-box;
   margin: 15px;
