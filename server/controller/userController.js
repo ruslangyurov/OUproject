@@ -26,7 +26,7 @@ export const createNewUser = asyncHandler(async (req,res) => {
    //confirm data
    const {username, password, role, name, address, phone} = req.body;
    if (!username || !password || !role)  {
-    res.status(400).json({message: "All fields are required"})
+    return res.status(400).json({message: "All fields are required"})
    }
 
    const duplicate = await User.findOne({username:username}).collation({locale:'en', strength:2}).lean().exec()
@@ -35,7 +35,7 @@ export const createNewUser = asyncHandler(async (req,res) => {
    }
 
    const hashedPwd = await bcrypt.hash(password,10) //salt rounds
-   const userObj = {username, 'password':hashedPwd, role}
+   const userObj = {username, 'password':hashedPwd, role, name, address, phoneNumber:phone}
    // Create and store new user
    const user = await User.create(userObj)
    
