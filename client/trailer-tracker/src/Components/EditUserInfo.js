@@ -19,11 +19,11 @@ import {
     const [errMsg, setErrMsg] = useState("")
 
     const USER_URL = '/user/profile/edit'
-    const {username} = useAuth()
+    
 
     const handleUserUpdate = async (e) => {
      e.preventDefault();
-     await axiosInstance.patch(USER_URL, {username:username}).catch((error) => {
+     await axiosInstance.patch(USER_URL, {username, newUsername, newAddress, newPhoneNumber}).catch((error) => {
       setErrMsg(error.response.data.message)
      })
     };
