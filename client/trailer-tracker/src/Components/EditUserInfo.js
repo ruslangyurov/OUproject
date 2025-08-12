@@ -23,6 +23,7 @@ import {
     
     useEffect(() => {
       if (updatedUser) {
+        console.log(updatedUser)
         const {name, address, phoneNumber} = updatedUser
         setNewName(name)
         setNewAddress(address)
