@@ -13,7 +13,7 @@ import {
   import { useAuth } from "../Config/AuthContext";
   
   export default function EditUserInfo() {
-    const [newName, setNewUsername] = useState("");
+    const [newName, setNewName] = useState("");
     const [newAddress, setNewAddress] = useState("");
     const [newPhoneNumber, setNewPhoneNumber] = useState(""); 
     const [errMsg, setErrMsg] = useState("")
@@ -54,8 +54,8 @@ import {
           </Box>
           <TextField
             label="Edit name"
-            value={newUsername}
-            onChange={(e) => setName(e.target.value)}
+            value={newName}
+            onChange={(e) => setNewName(e.target.value)}
             fullWidth
           />
           <TextField
