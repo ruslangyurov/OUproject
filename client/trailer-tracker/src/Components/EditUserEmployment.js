@@ -30,9 +30,9 @@ export default function EditUserEmployment() {
         newStartDate:new Date(startDate),
         newEndDate:new Date(endDate)
     }
-    const handleUserEmploymentUpdate = async (e) => {
+    const handleUserEmploymentUpdate = (e) => {
         e.preventDefault()
-        await axiosInstance.patch(USER_URL, {employmentHistory:employmentHistory}).catch((error) => {
+        axiosInstance.patch(USER_URL, {employmentHistory:employmentHistory}).catch((error) => {
             setErrMsg(error.response?.data?.message)
         })
     }

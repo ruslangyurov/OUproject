@@ -95,10 +95,10 @@ export const updateUserAdminEmployment = asyncHandler(async (req,res) => {
 
 export const updateUserInfoUser = asyncHandler(async (req, res) => {
     
-    const {newUsername, newAddress, newPhoneNumber} = req.body
+    const {newName, newAddress, newPhoneNumber} = req.body
     const username = req.user
     const userInfo = {}
-    if (newUsername) userInfo.username = newUsername;
+    if (newName) userInfo.name = newName;
     if (newAddress) userInfo.address = newAddress;
     if (newPhoneNumber) userInfo.phoneNumber = newPhoneNumber; 
 

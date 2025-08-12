@@ -21,10 +21,9 @@ export const Profile = () => {
 
   useEffect(() => {
    
-    const getUserInfo = async () => {
-      await axiosInstance.get(USER_URL).then((response) => {
+    const getUserInfo = () => {
+      axiosInstance.get(USER_URL).then((response) => {
         setUserInfo(response.data)
-        console.log(response.data)
       }).catch((err) => {
         setErrMsg(err?.response?.data?.message || "Sth went wrong.")
       })

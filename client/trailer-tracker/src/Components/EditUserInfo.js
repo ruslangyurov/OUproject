@@ -8,23 +8,36 @@ import {
     Box,
   } from "@mui/material";
   import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-  import { useState } from "react";
+  import { useState, useEffect } from "react";
   import axiosInstance from "../apiAxios/axios";
   import { useAuth } from "../Config/AuthContext";
   
   export default function EditUserInfo() {
-    const [newUsername, setNewUsername] = useState("");
+    const [newName, setNewUsername] = useState("");
     const [newAddress, setNewAddress] = useState("");
     const [newPhoneNumber, setNewPhoneNumber] = useState(""); 
     const [errMsg, setErrMsg] = useState("")
+    const [updatedUser, setUpdatedUser] = useState(null)
 
     const USER_URL = '/user/profile/edit'
     
+    useEffect(() => {
+      if (updatedUser) {
+        const {name, address, phoneNumber} = updatedUser
+        setNewName(name)
+        setNewAddress(address)
+        setNewPhoneNumber(phoneNumber)
+      }
+    }, [updatedUser])
 
-    const handleUserUpdate = async (e) => {
+    const handleUserUpdate = (e) => {
      e.preventDefault();
-     await axiosInstance.patch(USER_URL, {newUsername, newAddress, newPhoneNumber}).catch((error) => {
-      setErrMsg(error.response.data.message)
+     axiosInstance.patch(USER_URL, {newName, newAddress, newPhoneNumber}).
+     then((res) => {setUpdatedUser(res.data)}).catch((error) => {
+      if (error?.response?.data?.message?.trim().toLowerCase() != "jwt expired".toLowerCase()) {
+        setErrMsg(error.response.data.message)
+      }
+      
      })
     };
       
@@ -42,7 +55,7 @@ import {
           <TextField
             label="Edit name"
             value={newUsername}
-            onChange={(e) => setNewUsername(e.target.value)}
+            onChange={(e) => setName(e.target.value)}
             fullWidth
           />
           <TextField
