@@ -17,23 +17,27 @@ import {
     const [newAddress, setNewAddress] = useState("");
     const [newPhoneNumber, setNewPhoneNumber] = useState(""); 
     const [errMsg, setErrMsg] = useState("")
-    const [updatedUser, setUpdatedUser] = useState(null)
+    // const [updatedUser, setUpdatedUser] = useState(null)
 
     const USER_URL = '/user/profile/edit'
     
-    useEffect(() => {
+    /*useEffect(() => {
       if (updatedUser) {
         console.log(updatedUser)
         setNewName(updatedUser.name)
         setNewAddress(updatedUser.address)
         setNewPhoneNumber(updatedUser.phoneNumber)
       }
-    }, [updatedUser])
+    }, [updatedUser])*/
 
     const handleUserUpdate = (e) => {
      e.preventDefault();
      axiosInstance.patch(USER_URL, {newName, newAddress, newPhoneNumber}).
-     then((res) => {setUpdatedUser(res.data)}).catch((error) => {
+     then((res) => {
+      setNewName(res.data.name)
+      setNewAddress(res.data.address)
+      setNewPhoneNumber(res.data.phoneNumber)
+    }).catch((error) => {
       if (error?.response?.data?.message?.trim().toLowerCase() != "jwt expired".toLowerCase()) {
         setErrMsg(error.response.data.message)
       }
