@@ -24,10 +24,9 @@ import {
     useEffect(() => {
       if (updatedUser) {
         console.log(updatedUser)
-        const {name, address, phoneNumber} = updatedUser
-        setNewName(name)
-        setNewAddress(address)
-        setNewPhoneNumber(phoneNumber)
+        setNewName(updatedUser.name)
+        setNewAddress(updatedUser.address)
+        setNewPhoneNumber(updatedUser.phoneNumber)
       }
     }, [updatedUser])
 
