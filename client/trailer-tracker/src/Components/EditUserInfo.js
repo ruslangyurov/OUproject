@@ -8,43 +8,11 @@ import {
     Box,
   } from "@mui/material";
   import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-  import { useState, useEffect } from "react";
-  import axiosInstance from "../apiAxios/axios";
-  import { useAuth } from "../Config/AuthContext";
   
-  export default function EditUserInfo() {
-    const [newName, setNewName] = useState("");
-    const [newAddress, setNewAddress] = useState("");
-    const [newPhoneNumber, setNewPhoneNumber] = useState(""); 
-    const [errMsg, setErrMsg] = useState("")
-    // const [updatedUser, setUpdatedUser] = useState(null)
 
-    const USER_URL = '/user/profile/edit'
-    
-    /*useEffect(() => {
-      if (updatedUser) {
-        console.log(updatedUser)
-        setNewName(updatedUser.name)
-        setNewAddress(updatedUser.address)
-        setNewPhoneNumber(updatedUser.phoneNumber)
-      }
-    }, [updatedUser])*/
-
-    const handleUserUpdate = (e) => {
-     e.preventDefault();
-     axiosInstance.patch(USER_URL, {newName, newAddress, newPhoneNumber}).
-     then((res) => {
-      setNewName(res.data.name)
-      setNewAddress(res.data.address)
-      setNewPhoneNumber(res.data.phoneNumber)
-    }).catch((error) => {
-      if (error?.response?.data?.message?.trim().toLowerCase() != "jwt expired".toLowerCase()) {
-        setErrMsg(error.response.data.message)
-      }
-      
-     })
-    };
-      
+  
+  export default function EditUserInfo({editButton}) { 
+  
 
   
     return (
@@ -75,13 +43,7 @@ import {
             fullWidth
           />
           
-          <Button
-            variant="contained"
-            sx={{ mt: 2 }}
-            onClick={handleUserUpdate}
-          >
-            Save
-          </Button>
+          {editButton}
           
         </AccordionDetails>
       </Accordion>

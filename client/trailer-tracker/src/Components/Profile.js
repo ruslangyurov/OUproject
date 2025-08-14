@@ -16,9 +16,11 @@ export const Profile = () => {
   const [userInfo, setUserInfo] = useState({})
   const {username, role} =  useAuth()
   const [errMsg, setErrMsg] = useState("") 
-
+  const [newName, setNewName] = useState("");
+  const [newAddress, setNewAddress] = useState("");
+  const [newPhoneNumber, setNewPhoneNumber] = useState(""); 
   const USER_URL = '/user/profile'
-
+  const USER_URL_EDIT = '/user/profile/edit'
   useEffect(() => {
    
     const getUserInfo = () => {
@@ -30,6 +32,21 @@ export const Profile = () => {
     }
     getUserInfo();
   },[username])
+
+  const handleUserUpdate = (e) => {
+     e.preventDefault();
+     axiosInstance.patch(USER_URL_EDIT, {newName, newAddress, newPhoneNumber}).
+     then((res) => {
+      setNewName(res.data.name)
+      setNewAddress(res.data.address)
+      setNewPhoneNumber(res.data.phoneNumber)
+    }).catch((error) => {
+      if (error?.response?.data?.message?.trim().toLowerCase() != "jwt expired".toLowerCase()) {
+        setErrMsg(error.response.data.message)
+      }
+      
+     })
+    };
 
    
  
@@ -63,7 +80,10 @@ export const Profile = () => {
               </TableBody>
             </Table>
       </TableContainer>
-      <EditUserInfo/>
+      <EditUserInfo 
+        editButton = {<Button variant="contained" sx={{ mt: 2 }} onClick={handleUserUpdate}>
+            Save
+          </Button>}  />
     </Box>
     <Box sx = {{ width:"40%", p:"40px", height:"40%"}}>
       <Table sx={{minWidth:"40%"}} aria-label="simple table">
