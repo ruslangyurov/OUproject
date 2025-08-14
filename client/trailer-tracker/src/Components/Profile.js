@@ -82,6 +82,12 @@ export const Profile = () => {
             </Table>
       </TableContainer>
       <EditUserInfo 
+        newName = {newName}
+        setNewName = {setNewName}
+        newAddress = {newAddress}
+        setNewAddress = {setNewAddress}
+        newPhoneNumber = {newPhoneNumber}
+        setNewPhoneNumber = {setNewPhoneNumber}
         editButton = {<Button variant="contained" sx={{ mt: 2 }} onClick={handleUserUpdate}>
             Save
           </Button>}  />

@@ -11,7 +11,15 @@ import {
   
 
   
-  export default function EditUserInfo({editButton}) { 
+  export default function EditUserInfo({
+    editButton,
+    newName,
+    setNewName,
+    newAddress,
+    setNewAddress,
+    newPhoneNumber,
+    setNewPhoneNumber
+  }) { 
   
 
   
