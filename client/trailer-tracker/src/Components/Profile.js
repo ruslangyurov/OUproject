@@ -64,7 +64,7 @@ export const Profile = () => {
       <Box sx = {{mt:"80px", px:2}}>
        
           <Paper sx = {{mb:2, p:2}}>
-            <Typography variant = "subtitle1" sx = {{fontSize:"16px" mb:"6px"}}><strong>Personal Info</strong></Typography>
+            <Typography variant = "subtitle1" sx = {{fontSize:"16px", mb:"6px"}}><strong>Personal Info</strong></Typography>
             <Typography variant = "subtitle2"><strong>Name:</strong>{newName}</Typography>
             <Typography variant="subtitle2"><strong>Address:</strong> {newAddress}</Typography>
             <Typography variant="subtitle2"><strong>Phone Number:</strong> {newPhoneNumber}</Typography>
