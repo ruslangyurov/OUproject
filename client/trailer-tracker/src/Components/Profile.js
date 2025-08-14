@@ -12,21 +12,30 @@ import { Box, Tab } from "@mui/material";
 import EditUserInfo from "./EditUserInfo";
 import EditUserEmployment from "./EditUserEmployment";
 import axiosInstance from "../apiAxios/axios";
+import { Typography, useMediaQuery, useTheme } from "@mui/material";
 
 export const Profile = () => {
-  const [userInfo, setUserInfo] = useState({})
+
   const {username, role} =  useAuth()
   const [errMsg, setErrMsg] = useState("") 
   const [newName, setNewName] = useState("");
   const [newAddress, setNewAddress] = useState("");
   const [newPhoneNumber, setNewPhoneNumber] = useState(""); 
+  const [employmentHistory, setEmploymentHistory] = useState(null)
   const USER_URL = '/user/profile'
   const USER_URL_EDIT = '/user/profile/edit'
+
+   const theme = useTheme()
+   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
+
   useEffect(() => {
    
     const getUserInfo = () => {
       axiosInstance.get(USER_URL).then((response) => {
-        setUserInfo(response.data)
+        setNewName(response.data.name)
+        setNewAddress(response.data.address)
+        setNewPhoneNumber(response.data.phoneNumber)
+        setEmploymentHistory(response.data.employmentHistory)
       }).catch((err) => {
         setErrMsg(err?.response?.data?.message || "Sth went wrong.")
       })
@@ -50,7 +59,45 @@ export const Profile = () => {
     };
 
    
- 
+  if (isSmallScreen) {
+    return (
+      <Box sx = {{mt:"80px", px:2}}>
+       
+          <Paper sx = {{mb:2, p:2}}>
+            <Typography variant = "subtitle1" sx = {{fontSize:"16px" mb:"6px"}}><strong>Personal Info</strong></Typography>
+            <Typography variant = "subtitle2"><strong>Name:</strong>{newName}</Typography>
+            <Typography variant="subtitle2"><strong>Address:</strong> {newAddress}</Typography>
+            <Typography variant="subtitle2"><strong>Phone Number:</strong> {newPhoneNumber}</Typography>
+          </Paper>
+          <EditUserInfo 
+            newName = {newName}
+            setNewName = {setNewName}
+            newAddress = {newAddress}
+            setNewAddress = {setNewAddress}
+            newPhoneNumber = {newPhoneNumber}
+            setNewPhoneNumber = {setNewPhoneNumber}
+            editButton = {
+              <Button variant="contained" sx={{ mt: 2 }} onClick={handleUserUpdate}>
+                Save
+              </Button>}  />
+      </Box>  
+    
+
+      <Box sx = {{mt:"80px", px:2}}>
+        {employmentHistory.map((job, index) => (
+          <Paper key = {index} sx = {{mb:2, p:2}}>
+            <Typography variant = "subtitle2"><strong>Department:</strong>{job.department}</Typography>
+            <Typography variant="subtitle2"><strong>Position:</strong> {job.position}</Typography>
+            <Typography variant="subtitle2"><strong>Stock:</strong> {job.startDate}</Typography>
+            <Typography variant="subtitle2"><strong>Comment:</strong> {job.endDate}</Typography>
+          </Paper>
+        ))}
+      </Box> 
+    ) 
+    
+  }
+      
+   
   
   return (
   <Box sx={{width:"100vw", display:"flex", p:"100px", boxSizing:"border-box", gap:2, flexDirection:"column", alignItems:"center"}}> 
@@ -67,15 +114,15 @@ export const Profile = () => {
               
                   <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                     <TableCell component="th" scope="row">Name</TableCell>
-                    <TableCell align="right">{userInfo.name}</TableCell>
+                    <TableCell align="right">{newName}</TableCell>
                   </TableRow>
                   <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                     <TableCell component="th" scope="row">Address</TableCell>
-                    <TableCell align="right">{userInfo.address}</TableCell>
+                    <TableCell align="right">{newAddress}</TableCell>
                   </TableRow>
                    <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                     <TableCell component="th" scope="row">Tel. Number</TableCell>
-                    <TableCell align="right">{userInfo.phoneNumber}</TableCell>
+                    <TableCell align="right">{newPhoneNumber}</TableCell>
                   </TableRow>
                   
               </TableBody>
@@ -112,7 +159,7 @@ export const Profile = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {userInfo?.employmentHistory?.map((job,index) => (
+                {employmentHistory?.map((job,index) => (
                  
                   <TableRow key = {index} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                     <TableCell align="right">{job.department}</TableCell>
