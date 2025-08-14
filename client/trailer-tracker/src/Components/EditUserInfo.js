@@ -29,9 +29,7 @@ import {
           <Typography><strong>Edit</strong> </Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <Box sx={{mb:"20px"}}>
-            <Typography variant="body2" color="error" sx={{ mt: 1 }}>{errMsg}</Typography>
-          </Box>
+          
           <TextField
             label="Edit name"
             value={newName}
