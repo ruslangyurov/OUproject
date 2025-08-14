@@ -61,38 +61,40 @@ export const Profile = () => {
    
   if (isSmallScreen) {
     return (
-      <Box sx = {{mt:"80px", px:2}}>
-       
-          <Paper sx = {{mb:2, p:2}}>
-            <Typography variant = "subtitle1" sx = {{fontSize:"16px", mb:"6px"}}><strong>Personal Info</strong></Typography>
-            <Typography variant = "subtitle2"><strong>Name:</strong>{newName}</Typography>
-            <Typography variant="subtitle2"><strong>Address:</strong> {newAddress}</Typography>
-            <Typography variant="subtitle2"><strong>Phone Number:</strong> {newPhoneNumber}</Typography>
-          </Paper>
-          <EditUserInfo 
-            newName = {newName}
-            setNewName = {setNewName}
-            newAddress = {newAddress}
-            setNewAddress = {setNewAddress}
-            newPhoneNumber = {newPhoneNumber}
-            setNewPhoneNumber = {setNewPhoneNumber}
-            editButton = {
-              <Button variant="contained" sx={{ mt: 2 }} onClick={handleUserUpdate}>
-                Save
-              </Button>}  />
-      </Box>  
-    
+      <>
+        <Box sx = {{mt:"80px", px:2}}>
+        
+            <Paper sx = {{mb:2, p:2}}>
+              <Typography variant = "subtitle1" sx = {{fontSize:"16px", mb:"6px"}}><strong>Personal Info</strong></Typography>
+              <Typography variant = "subtitle2"><strong>Name:</strong>{newName}</Typography>
+              <Typography variant="subtitle2"><strong>Address:</strong> {newAddress}</Typography>
+              <Typography variant="subtitle2"><strong>Phone Number:</strong> {newPhoneNumber}</Typography>
+            </Paper>
+            <EditUserInfo 
+              newName = {newName}
+              setNewName = {setNewName}
+              newAddress = {newAddress}
+              setNewAddress = {setNewAddress}
+              newPhoneNumber = {newPhoneNumber}
+              setNewPhoneNumber = {setNewPhoneNumber}
+              editButton = {
+                <Button variant="contained" sx={{ mt: 2 }} onClick={handleUserUpdate}>
+                  Save
+                </Button>}  />
+        </Box>  
+      
 
-      <Box sx = {{mt:"80px", px:2}}>
-        {employmentHistory.map((job, index) => (
-          <Paper key = {index} sx = {{mb:2, p:2}}>
-            <Typography variant = "subtitle2"><strong>Department:</strong>{job.department}</Typography>
-            <Typography variant="subtitle2"><strong>Position:</strong> {job.position}</Typography>
-            <Typography variant="subtitle2"><strong>Stock:</strong> {job.startDate}</Typography>
-            <Typography variant="subtitle2"><strong>Comment:</strong> {job.endDate}</Typography>
-          </Paper>
-        ))}
-      </Box> 
+        <Box sx = {{mt:"80px", px:2}}>
+          {employmentHistory.map((job, index) => (
+            <Paper key = {index} sx = {{mb:2, p:2}}>
+              <Typography variant = "subtitle2"><strong>Department:</strong>{job.department}</Typography>
+              <Typography variant="subtitle2"><strong>Position:</strong> {job.position}</Typography>
+              <Typography variant="subtitle2"><strong>Stock:</strong> {job.startDate}</Typography>
+              <Typography variant="subtitle2"><strong>Comment:</strong> {job.endDate}</Typography>
+            </Paper>
+          ))}
+        </Box> 
+      </>
     ) 
     
   }
