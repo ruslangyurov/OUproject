@@ -88,15 +88,17 @@ export const Profile = () => {
 
         <Box sx = {{mt:"80px", px:2}}>
           {employmentHistory?.map((job, index) => (
-            <Paper key = {index} sx = {{mb:2, p:2}}>
-              <Typography variant = "subtitle2"><strong>Department:</strong>{job.department}</Typography>
-              <Typography variant="subtitle2"><strong>Position:</strong> {job.position}</Typography>
-              <Typography variant="subtitle2"><strong>Star tDate:</strong> {job.startDate}</Typography>
-              <Typography variant="subtitle2"><strong>End Date:</strong> {job.endDate}</Typography>
-            </Paper>
-            <EditUserEmployment 
-              handleUserEmploymentUpdate = {handleUserEmploymentUpdate}
-              />
+            <React.Fragment key = {index}>
+              <Paper sx = {{mb:2, p:2}}>
+                <Typography variant = "subtitle2"><strong>Department:</strong>{job.department}</Typography>
+                <Typography variant="subtitle2"><strong>Position:</strong> {job.position}</Typography>
+                <Typography variant="subtitle2"><strong>Star tDate:</strong> {job.startDate}</Typography>
+                <Typography variant="subtitle2"><strong>End Date:</strong> {job.endDate}</Typography>
+              </Paper>
+              <EditUserEmployment 
+                handleUserEmploymentUpdate = {handleUserEmploymentUpdate}
+                />
+            </React.Fragment>
           ))}
         </Box> 
       </>
