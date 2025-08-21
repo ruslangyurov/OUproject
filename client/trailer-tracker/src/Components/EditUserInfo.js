@@ -8,20 +8,15 @@ import {
     Box,
   } from "@mui/material";
   import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+  import {useState} from 'react';
   
 
   
-  export default function EditUserInfo({
-    editButton,
-    newName,
-    setNewName,
-    newAddress,
-    setNewAddress,
-    newPhoneNumber,
-    setNewPhoneNumber
-  }) { 
+  export default function EditUserInfo({handleUserUpdate}) { 
   
-
+    const [name, setName] = useState("")
+    const [address, setAddress] = useState("")
+    const [number, setNumber] = useState("")
   
     return (
       <Accordion>
@@ -32,24 +27,29 @@ import {
           
           <TextField
             label="Edit name"
-            value={newName}
-            onChange={(e) => setNewName(e.target.value)}
+            value={name}
+            onChange={(e) => setName(e.target.value)}
             fullWidth
           />
           <TextField
             label="Edit address"
-            value={newAddress}
-            onChange={(e) => setNewAddress(e.target.value)}
+            value={address}
+            onChange={(e) => setAddress(e.target.value)}
             fullWidth
           />
           <TextField
             label="Edit phone number"
-            value={newPhoneNumber}
-            onChange={(e) => setNewPhoneNumber(e.target.value)}
+            value={number}
+            onChange={(e) => setNumber(e.target.value)}
             fullWidth
           />
           
-          {editButton}
+          <Button
+              variant="contained"
+              sx={{ mt: 2 }}
+              onClick={(e) => handleUserUpdate(e, name, address, number)}>
+              Save
+          </Button>
           
         </AccordionDetails>
       </Accordion>

@@ -6,11 +6,22 @@ export const CreateBays = () => {
   const [number, setNumber] = useState('');
   const [low, setLow] = useState(1);
   const [high, setHigh] = useState(1);
-  const [resMsg,setResMsg] = useState('');
+  const [errMsg,seterrMsg] = useState('');
+  const [successMsg, setSuccessMsg] = useState("")
   
    
   const SINGLE_URL = 'yard'
   const MULTIPLE_URL = 'yard/create-bays'
+
+   useEffect(() => {
+    let timer;
+    if (successMsg) {
+      timer = setTimeout(() => {
+        setSuccessMsg("");
+      }, 3000); // 3s
+    }
+    return () => clearTimeout(timer);
+  }, [successMsg, errMsg]);
 
   const handleSubmitSingle = async(e) => {
     e.preventDefault();
@@ -28,10 +39,15 @@ export const CreateBays = () => {
 
   return (
     <> 
-      {resMsg && (
-      <div className="resMsg">
-        {resMsg}
+      {errMsg && (
+      <div className="resMsg" style = {{color:"red"}}>
+        {errMsg}
       </div>
+      )}
+      {successMsg && (
+        <div className = "resMsg" style = {{color:"green"}}>
+          {{successMsg}}
+          </div>
       )}
       <div className="newUser_container">
 

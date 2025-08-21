@@ -1,6 +1,7 @@
 import * as React from "react";
 import { useState } from "react";
 import axiosInstance from "../apiAxios/axios";
+import {useTimer} from '../components/Timer';
 
 export const NewUser = () => {
   const [username, setUsername] = useState("");
@@ -12,6 +13,9 @@ export const NewUser = () => {
 
   const [success, setSuccess] = useState(null);
   const [errMsg, setErrMsg] = useState(null);
+
+  useTimer(success, setSuccess)
+ 
 
   const clearMessages = () => {
     setErrMsg("");
@@ -46,7 +50,7 @@ export const NewUser = () => {
         <div
           style={{
             position: "absolute",
-            top: "20px",
+            top: "80px",
             left: "50%",
             transform: "translateX(-50%)",
             color: errMsg ? "red" : "green",

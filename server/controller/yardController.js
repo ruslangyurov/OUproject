@@ -38,7 +38,11 @@ export const createBays = asyncHandler(async (req, res) => {
 
 const createBay = asyncHandler(async(req,res) => {
     const {bayNumber} = req.body
-   
+
+    if (!bayNumber) {
+      return res.status(400).json({message:"Please enter a number!"})
+    }
+
     const duplicate = await Bay.findOne({bayNumber}).lean().exec()
     if (duplicate) {
        return res.status(409).json({message: "Bay already exists."})

@@ -14,7 +14,7 @@ import { useState } from "react"
 import axiosInstance from "../apiAxios/axios"
 
 
-export default function EditUserEmployment() {
+export default function EditUserEmployment({handleUserEmploymentUpdate}) {
 
     const [position, setPosition] = useState("")
     const [department, setDepartment] = useState("")
@@ -30,12 +30,7 @@ export default function EditUserEmployment() {
         newStartDate:new Date(startDate),
         newEndDate:new Date(endDate)
     }
-    const handleUserEmploymentUpdate = (e) => {
-        e.preventDefault()
-        axiosInstance.patch(USER_URL, {employmentHistory:employmentHistory}).catch((error) => {
-            setErrMsg(error.response?.data?.message)
-        })
-    }
+    
    
     return (
         <Accordion>
@@ -72,7 +67,12 @@ export default function EditUserEmployment() {
                        onChange={(e) => setEndDate(e.target.value)}
                        fullWidth
                     />
-                    <Button type="submit" variant="contained" onClick={handleUserEmploymentUpdate} sx={{mt:2}}>Save</Button>
+                    <Button
+              variant="contained"
+              sx={{ mt: 2 }}
+              onClick={(e) => handleUserEmploymentUpdate(e, employmentHistory)}>
+              Save
+          </Button>
                
             </AccordionDetails>
         </Accordion>

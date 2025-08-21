@@ -2,6 +2,7 @@ import * as React from 'react';
 import {useState} from 'react';
 import axiosInstance from '../apiAxios/axios';
 import {Box} from '@mui/material';
+import {useTimer} from '../components/Timer';
 
 
 export const UpdateUser = () => {
@@ -10,9 +11,18 @@ export const UpdateUser = () => {
     const [role, setRole] = useState("")
     const [newRole, setNewRole] = useState("");
     const [newPassword, setNewPassword] = useState("");
-    const [resMsg, setResMsg] = useState("");
+    const [errMsg, setErrsMsg] = useState("");
+    const [successMsg, setSuccessMsg] = useState("")
+
+   
+    useTimer(successMsg)
     
-    
+    const clearMsg = () => {
+      setErrMsg("")
+      setSuccessMsg("")
+    }
+
+
     
   
     const handleUpdate = async(e) => {

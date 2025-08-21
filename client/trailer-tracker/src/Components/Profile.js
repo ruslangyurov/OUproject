@@ -24,9 +24,11 @@ export const Profile = () => {
   const [employmentHistory, setEmploymentHistory] = useState(null)
   const USER_URL = '/user/profile'
   const USER_URL_EDIT = '/user/profile/edit'
+  const USER_PROFILE = '/user/profile/employment'
 
    const theme = useTheme()
    const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
+   
 
   useEffect(() => {
    
@@ -43,9 +45,9 @@ export const Profile = () => {
     getUserInfo();
   },[username])
 
-  const handleUserUpdate = (e) => {
+  const handleUserUpdate = (e, name, address, phoneNumber) => {
      e.preventDefault();
-     axiosInstance.patch(USER_URL_EDIT, {newName, newAddress, newPhoneNumber}).
+     axiosInstance.patch(USER_URL_EDIT, {name, address, phoneNumber}).
      then((res) => {
       setNewName(res.data.name)
       setNewAddress(res.data.address)
@@ -57,6 +59,14 @@ export const Profile = () => {
       
      })
     };
+
+    const handleUserEmploymentUpdate = (e, employmentHistory) => {
+        e.preventDefault()
+        axiosInstance.patch(USER_PROFILE, employmentHistory).then((res) => {
+          setEmploymentHistory(res.data.employmentHistory)}).catch((error) => {
+            setErrMsg(error.response?.data?.message)
+        })
+    }
 
    
   if (isSmallScreen) {
@@ -71,27 +81,22 @@ export const Profile = () => {
               <Typography variant="subtitle2"><strong>Phone Number:</strong> {newPhoneNumber}</Typography>
             </Paper>
             <EditUserInfo 
-              newName = {newName}
-              setNewName = {setNewName}
-              newAddress = {newAddress}
-              setNewAddress = {setNewAddress}
-              newPhoneNumber = {newPhoneNumber}
-              setNewPhoneNumber = {setNewPhoneNumber}
-              editButton = {
-                <Button variant="contained" sx={{ mt: 2 }} onClick={handleUserUpdate}>
-                  Save
-                </Button>}  />
+              handleUserUpdate = {handleUserUpdate}
+                />
         </Box>  
       
 
         <Box sx = {{mt:"80px", px:2}}>
-          {employmentHistory.map((job, index) => (
+          {employmentHistory?.map((job, index) => (
             <Paper key = {index} sx = {{mb:2, p:2}}>
               <Typography variant = "subtitle2"><strong>Department:</strong>{job.department}</Typography>
               <Typography variant="subtitle2"><strong>Position:</strong> {job.position}</Typography>
-              <Typography variant="subtitle2"><strong>Stock:</strong> {job.startDate}</Typography>
-              <Typography variant="subtitle2"><strong>Comment:</strong> {job.endDate}</Typography>
+              <Typography variant="subtitle2"><strong>Star tDate:</strong> {job.startDate}</Typography>
+              <Typography variant="subtitle2"><strong>End Date:</strong> {job.endDate}</Typography>
             </Paper>
+            <EditUserEmployment 
+              handleUserEmploymentUpdate = {handleUserEmploymentUpdate}
+              />
           ))}
         </Box> 
       </>
@@ -130,16 +135,9 @@ export const Profile = () => {
               </TableBody>
             </Table>
       </TableContainer>
-      <EditUserInfo 
-        newName = {newName}
-        setNewName = {setNewName}
-        newAddress = {newAddress}
-        setNewAddress = {setNewAddress}
-        newPhoneNumber = {newPhoneNumber}
-        setNewPhoneNumber = {setNewPhoneNumber}
-        editButton = {<Button variant="contained" sx={{ mt: 2 }} onClick={handleUserUpdate}>
-            Save
-          </Button>}  />
+      <EditUserEmployment
+        handleUserEmploymentUpdate = {handleUserEmploymentUpdate}
+          />
     </Box>
     <Box sx = {{ width:"40%", p:"40px", height:"40%"}}>
       <Table sx={{minWidth:"40%"}} aria-label="simple table">
@@ -174,7 +172,9 @@ export const Profile = () => {
               </TableBody>
             </Table>
       </TableContainer>
-      <EditUserEmployment/>
+      <EditUserEmployment
+        handleUserEmploymentUpdate = {handleUserEmploymentUpdate}
+        />
       
     </Box>
   </Box>   
