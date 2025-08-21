@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useState } from "react";
 import axiosInstance from "../apiAxios/axios";
-import {useTimer} from '../components/Timer';
+import {useTimer} from '../Components/Timer';
 
 export const NewUser = () => {
   const [username, setUsername] = useState("");

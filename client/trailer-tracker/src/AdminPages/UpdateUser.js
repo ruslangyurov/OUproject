@@ -2,7 +2,7 @@ import * as React from 'react';
 import {useState} from 'react';
 import axiosInstance from '../apiAxios/axios';
 import {Box} from '@mui/material';
-import {useTimer} from '../components/Timer';
+import {useTimer} from '../Components/Timer';
 
 
 export const UpdateUser = () => {
