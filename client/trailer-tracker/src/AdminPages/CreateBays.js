@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { useState } from 'react';
 import axiosInstance from "../apiAxios/axios"; 
+import {useTimer} from "../Components/Timer";
 
 export const CreateBays = () => {
   const [number, setNumber] = useState('');
@@ -13,27 +14,24 @@ export const CreateBays = () => {
   const SINGLE_URL = 'yard'
   const MULTIPLE_URL = 'yard/create-bays'
 
-   useEffect(() => {
-    let timer;
-    if (successMsg) {
-      timer = setTimeout(() => {
-        setSuccessMsg("");
-      }, 3000); // 3s
+   useTimer(successMsg)
+    
+    const clearMsg = () => {
+      setErrMsg("")
+      setSuccessMsg("")
     }
-    return () => clearTimeout(timer);
-  }, [successMsg, errMsg]);
 
   const handleSubmitSingle = async(e) => {
     e.preventDefault();
     
-    await axiosInstance.post(SINGLE_URL, { bayNumber: Number(number) }).then(() => setResMsg("Bay successfully created"))
-    .catch((err) => setResMsg(err.response?.data?.message || "An error occurred"));
+    await axiosInstance.post(SINGLE_URL, { bayNumber: Number(number) }).then(() => setSuccessMsg("Bay successfully created"))
+    .catch((err) => setErrMsg(err.response?.data?.message || "An error occurred"));
   }
 
   const handleSubmitMultiple = async(e) => {
     e.preventDefault();
-    await axiosInstance.post(MULTIPLE_URL, {low:low,high:high}).then(()=> setResMsg("Successfully created."))
-    .catch((error) => setResMsg(error.response?.data?.message) || "Unknown error occured")
+    await axiosInstance.post(MULTIPLE_URL, {low:low,high:high}).then(()=> setSuccessMsg("Successfully created."))
+    .catch((error) => setErrMsg(error.response?.data?.message) || "Unknown error occured")
    
   };
 
@@ -78,7 +76,7 @@ export const CreateBays = () => {
               }
             }}
             onClick={() => {
-              setResMsg(null)
+              clearMsg()
             }}
             onKeyDown={(e) => {
               // Prevent typing invalid characters like '.', '-', 'e' (common in number inputs)
@@ -121,7 +119,7 @@ export const CreateBays = () => {
               }
             }}
             onClick={() => {
-             setResMsg(null)
+             clearMsg()
             }}
             onKeyDown={(e) => {
               // Prevent typing invalid characters like '.', '-', 'e' (common in number inputs)
@@ -154,7 +152,7 @@ export const CreateBays = () => {
               }
             }}
             onClick={() => {
-              setResMsg(null)
+              clearMsg()
             }}
             onKeyDown={(e) => {
               // Prevent typing invalid characters like '.', '-', 'e' (common in number inputs)

@@ -28,12 +28,12 @@ export const UpdateUser = () => {
     const handleUpdate = async(e) => {
       e.preventDefault();
       if (!newUsername && !newRole && !newPassword) {
-        setResMsg("At least one of the new fields is required.")
+        setErrMsg("At least one of the new fields is required.")
         return
       }
       try {
         await axiosInstance.patch("/user", { username, role, newUsername, newPassword, newRole })
-        setResMsg("User updated successfully.")
+        setSuccessMsg("User updated successfully.")
         setUsername("");
         setRole("");
         setNewUsername("");
@@ -41,9 +41,9 @@ export const UpdateUser = () => {
         setNewRole("");
       } catch (err) {
           if (!err?.response) {
-            setResMsg("No Server Response");
+            setErrMsg("No Server Response");
           } else {
-            setResMsg(err.response?.data?.message || "An error occurred");
+            setErrMsg(err.response?.data?.message || "An error occurred");
 
           }
       };
@@ -51,13 +51,14 @@ export const UpdateUser = () => {
 
       return (
         <>
-          <div style={{position:"absolute", color:"red", fontSize: "2vw", m: "75px 15px 0 0"}}>
-            {resMsg}
-          </div>
+          {errMsg && <div className = "resMsg" style = {{color:"red"}}>
+            {errMsg}
+          </div>}
+          {successMsg && <div className = "resMsg" style = {{color:"green"}}>
+            {successMsg}
+          </div>}
           <div className="newUser_container">
-            <Box sx={{display:"flex",color:"black", backgroundColor: "#f5f5dc",justifyContent:"center", mt:"60px"}}>
-              {resMsg}
-            </Box>
+           
             <form onSubmit={handleUpdate}>
               <div className="form-group">
                 <label>Username</label> 
@@ -66,14 +67,14 @@ export const UpdateUser = () => {
                     type = "text" 
                     name = "updateUserUsername"
                     onChange={(e) => setUsername(e.target.value)}
-                    onClick = {() => {setResMsg("")}}
+                    onClick = {clearMsg}
                 />
                 <label>Role</label>
                 <select 
                   className="newUser_container_input"
                   value = {role}
                   onChange={(e) => setRole(e.target.value)}
-                  onClick = {() => {setResMsg("")}}>
+                  onClick = {clearMsg}>
                    <option value="Admin">Admin</option>
                    <option value="Employee">Employee</option>
                    <option value="Manager">Manager</option>
