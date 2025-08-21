@@ -11,7 +11,7 @@ export const UpdateUser = () => {
     const [role, setRole] = useState("")
     const [newRole, setNewRole] = useState("");
     const [newPassword, setNewPassword] = useState("");
-    const [errMsg, setErrsMsg] = useState("");
+    const [errMsg, setErrMsg] = useState("");
     const [successMsg, setSuccessMsg] = useState("")
 
    

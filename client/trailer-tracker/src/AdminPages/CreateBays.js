@@ -7,7 +7,7 @@ export const CreateBays = () => {
   const [number, setNumber] = useState('');
   const [low, setLow] = useState(1);
   const [high, setHigh] = useState(1);
-  const [errMsg,seterrMsg] = useState('');
+  const [errMsg,setErrMsg] = useState('');
   const [successMsg, setSuccessMsg] = useState("")
   
    
