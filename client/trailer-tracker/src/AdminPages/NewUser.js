@@ -46,14 +46,14 @@ export const NewUser = () => {
 
   return (
     
-      
+    <>  
       {errMsg && <div className = "resMsg" style = {{color:"red"}}>
             {errMsg}
           </div>}
       {success && <div className = "resMsg" style = {{color:"green"}}>
            {success}
           </div>}
-     <>       
+           
       <div className="newUser_container">
         <form className="form-group" onSubmit={createNewUser}>
           <div className="form-columns">
