@@ -15,7 +15,7 @@ export const UpdateUser = () => {
     const [successMsg, setSuccessMsg] = useState("")
 
    
-    useTimer(successMsg)
+    useTimer(successMsg, setSuccessMsg)
     
     const clearMsg = () => {
       setErrMsg("")

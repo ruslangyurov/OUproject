@@ -45,23 +45,15 @@ export const NewUser = () => {
   };
 
   return (
-    <>
-      {(errMsg || success) && (
-        <div
-          style={{
-            position: "absolute",
-            top: "80px",
-            left: "50%",
-            transform: "translateX(-50%)",
-            color: errMsg ? "red" : "green",
-            fontSize: "1.5vw",
-            textAlign: "center"
-          }}
-        >
-          {errMsg || success}
-        </div>
-      )}
-
+    
+      
+      {errMsg && <div className = "resMsg" style = {{color:"red"}}>
+            {errMsg}
+          </div>}
+      {success && <div className = "resMsg" style = {{color:"green"}}>
+           {success}
+          </div>}
+     <>       
       <div className="newUser_container">
         <form className="form-group" onSubmit={createNewUser}>
           <div className="form-columns">
@@ -70,7 +62,7 @@ export const NewUser = () => {
               <label>Username</label>
               <input
                 type="text"
-                className="newUser_container_input"
+                className="form-columns-input"
                 onChange={(e) => setUsername(e.target.value)}
                 onClick={clearMessages}
               />
@@ -78,14 +70,14 @@ export const NewUser = () => {
               <label>Password</label>
               <input
                 type="password"
-                className="newUser_container_input"
+                className="form-columns-input"
                 onChange={(e) => setPassword(e.target.value)}
                 onClick={clearMessages}
               />
 
               <label>Role</label>
               <select
-                className="newUser_container_input"
+                className="form-columns-input"
                 onChange={(e) => setRole(e.target.value)}
                 onClick={clearMessages}
                 defaultValue=""
@@ -104,7 +96,7 @@ export const NewUser = () => {
               <label>Name</label>
               <input
                 type="text"
-                className="newUser_container_input"
+                className="form-columns-input"
                 onChange={(e) => setName(e.target.value)}
                 onClick={clearMessages}
               />
@@ -112,7 +104,7 @@ export const NewUser = () => {
               <label>Address</label>
               <input
                 type="text"
-                className="newUser_container_input"
+                className="form-columns-input"
                 onChange={(e) => setAddress(e.target.value)}
                 onClick={clearMessages}
               />
@@ -120,7 +112,7 @@ export const NewUser = () => {
               <label>Phone Number</label>
               <input
                 type="tel"
-                className="newUser_container_input"
+                className="form-columns-input"
                 onChange={(e) => setPhone(e.target.value)}
                 onClick={clearMessages}
               />
