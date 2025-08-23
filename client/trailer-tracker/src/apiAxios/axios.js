@@ -57,6 +57,7 @@ export const ResponseInterceptor = () => {
         try {
           const refreshResponse = await axiosInstance.get('/auth/refresh');
           const newAccessToken = refreshResponse.data.accessToken;
+          console.log(newAccessToken)
 
           if (!newAccessToken) {
             navigate('/Login');

@@ -16,6 +16,7 @@ export const UpdateUser = () => {
 
    
     useTimer(successMsg, setSuccessMsg)
+    useTimer(errMsg, setErrMsg)
     
     const clearMsg = () => {
       setErrMsg("")
@@ -81,7 +82,7 @@ export const UpdateUser = () => {
                    <option value="" disabled hidden>Select role</option>
 
                 </select>
-              </div>
+              
                 <label>New Username</label>
                 <input 
                    className="newUser_container_input"
@@ -113,6 +114,7 @@ export const UpdateUser = () => {
                 <div>
                   <input type="submit" className="newUser_submit_button" />
                 </div>
+              </div>
             </form>
           </div>
         
