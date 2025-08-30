@@ -14,9 +14,11 @@ import {
   
   export default function EditUserInfo({handleUserUpdate}) { 
   
-    const [name, setName] = useState("")
-    const [address, setAddress] = useState("")
-    const [number, setNumber] = useState("")
+    const [newName, setNewName] = useState("")
+    const [newAddress, setNewAddress] = useState("")
+    const [newNumber, setNewNumber] = useState("")
+
+   
   
     return (
       <Accordion>
@@ -47,7 +49,7 @@ import {
           <Button
               variant="contained"
               sx={{ mt: 2 }}
-              onClick={(e) => handleUserUpdate(e, name, address, number)}>
+              onClick={(e) => handleUserUpdate(e, newName, newAddress, newNumber)}>
               Save
           </Button>
           
