@@ -138,8 +138,8 @@ export const Profile = () => {
                 </TableBody>
               </Table>
         </TableContainer>
-        <EditUserEmployment
-          handleUserEmploymentUpdate = {handleUserEmploymentUpdate}
+        <EditUserInfo
+          handleUserUpdate= {handleUserUpdate}
             />
       </Box>
       <Box sx = {{ width:"40%", p:"40px", height:"40%"}}>
