@@ -32,10 +32,9 @@ export const CreateBays = () => {
     if (high > low) {
       e.preventDefault();
       await axiosInstance.post(MULTIPLE_URL, {low:low,high:high}).then(()=> setSuccessMsg("Successfully created."))
-      .catch((error) => setErrMsg(error.response?.data?.message) || "Unknown error occured")
-   };
-   else {
-    setErrMsg("Number of bays has to be a positive number.")
+      .catch((error) => setErrMsg(error.response?.data?.message || "Unknown error occured"))
+    } else {
+      setErrMsg("Number of bays has to be a positive number.")
    }
     }
     
@@ -49,7 +48,7 @@ export const CreateBays = () => {
       )}
       {successMsg && (
         <div className = "resMsg" style = {{color:"green"}}>
-          {{successMsg}}
+          {successMsg}
           </div>
       )}
       <div className="newUser_container">
