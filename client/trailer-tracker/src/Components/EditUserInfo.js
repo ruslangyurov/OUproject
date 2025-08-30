@@ -29,20 +29,20 @@ import {
           
           <TextField
             label="Edit name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
+            value={newName}
+            onChange={(e) => setNewName(e.target.value)}
             fullWidth
           />
           <TextField
             label="Edit address"
-            value={address}
-            onChange={(e) => setAddress(e.target.value)}
+            value={newAddress}
+            onChange={(e) => setNewAddress(e.target.value)}
             fullWidth
           />
           <TextField
             label="Edit phone number"
-            value={number}
-            onChange={(e) => setNumber(e.target.value)}
+            value={newNumber}
+            onChange={(e) => setNewNumber(e.target.value)}
             fullWidth
           />
           
