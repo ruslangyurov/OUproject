@@ -98,9 +98,9 @@ export const updateUserInfoUser = asyncHandler(async (req, res) => {
     const {newName, newAddress, newPhoneNumber} = req.body
     const username = req.user
     const userInfo = {}
-    if (newName) userInfo.name = newName;
-    if (newAddress) userInfo.address = newAddress;
-    if (newPhoneNumber) userInfo.phoneNumber = newPhoneNumber; 
+    if (newName) {userInfo.name = newName;}
+    if (newAddress) {userInfo.address = newAddress;}
+    if (newPhoneNumber) {userInfo.phoneNumber = newPhoneNumber;} 
 
     if (Object.keys(userInfo).length === 0) {
         return res.status(400).json({message:"Please fill out at least one of the given fields!"})
