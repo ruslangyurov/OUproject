@@ -14,9 +14,9 @@ import {
   
   export default function EditUserInfo({handleUserUpdate}) { 
   
-    const [newName, setNewName] = useState("")
-    const [newAddress, setNewAddress] = useState("")
-    const [newNumber, setNewNumber] = useState("")
+    const [name, setName] = useState("")
+    const [address, setAddress] = useState("")
+    const [number, setNumber] = useState("")
 
    
   
@@ -29,27 +29,27 @@ import {
           
           <TextField
             label="Edit name"
-            value={newName}
-            onChange={(e) => setNewName(e.target.value)}
+            value={name}
+            onChange={(e) => setName(e.target.value)}
             fullWidth
           />
           <TextField
             label="Edit address"
-            value={newAddress}
-            onChange={(e) => setNewAddress(e.target.value)}
+            value={address}
+            onChange={(e) => setAddress(e.target.value)}
             fullWidth
           />
           <TextField
             label="Edit phone number"
-            value={newNumber}
-            onChange={(e) => setNewNumber(e.target.value)}
+            value={number}
+            onChange={(e) => setNumber(e.target.value)}
             fullWidth
           />
           
           <Button
               variant="contained"
               sx={{ mt: 2 }}
-              onClick={(e) => handleUserUpdate(e, newName, newAddress, newNumber)}>
+              onClick={(e) => handleUserUpdate(e, name, address, number)}>
               Save
           </Button>
           

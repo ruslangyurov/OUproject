@@ -47,8 +47,8 @@ export const Profile = () => {
 
   const handleUserUpdate = (e, name, address, phoneNumber) => {
      e.preventDefault();
-     axiosInstance.patch(USER_URL_EDIT, {name, address, phoneNumber}).
-     then((res) => {
+     axiosInstance.patch(USER_URL_EDIT, {newName:name, newAddress:address, newPhoneNumber:phoneNumber})
+     .then((res) => {
       setNewName(res.data.name)
       setNewAddress(res.data.address)
       setNewPhoneNumber(res.data.phoneNumber)
