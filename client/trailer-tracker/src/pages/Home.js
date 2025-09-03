@@ -19,7 +19,7 @@ export const Home = () => {
         <ListDividers />
       </div>
 
-      {isAdmin && div className='footer'>
+      {isAdmin && <div className='footer'>
         <p className='footer-text-left'>
           <Link to='/Admin/menu' className='link'>
             Admin

@@ -27,7 +27,7 @@ export const Profile = () => {
   const USER_URL_EDIT = '/user/profile/edit'
   const USER_PROFILE = '/user/profile/employment'
 
-  const {role} = useAuth();
+  
   const isAdmin = role === "Admin";
 
    const theme = useTheme()
