@@ -10,6 +10,7 @@ import {
 } from "@mui/material"
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
+
 import { useState } from "react"
 import axiosInstance from "../apiAxios/axios"
 
@@ -23,6 +24,8 @@ export default function EditUserEmployment({handleUserEmploymentUpdate}) {
     const [errMsg, setErrMsg] = useState("")
 
     const USER_URL = "/user/profile/employment"
+
+    
 
     const employmentHistory = {
         newPosition:position,

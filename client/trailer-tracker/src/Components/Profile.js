@@ -13,6 +13,7 @@ import EditUserInfo from "./EditUserInfo";
 import EditUserEmployment from "./EditUserEmployment";
 import axiosInstance from "../apiAxios/axios";
 import { Typography, useMediaQuery, useTheme } from "@mui/material";
+import{useAuth} from '../Config/AuthContext';
 
 export const Profile = () => {
 
@@ -25,6 +26,9 @@ export const Profile = () => {
   const USER_URL = '/user/profile'
   const USER_URL_EDIT = '/user/profile/edit'
   const USER_PROFILE = '/user/profile/employment'
+
+  const {role} = useAuth();
+  const isAdmin = role === "Admin";
 
    const theme = useTheme()
    const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
@@ -95,9 +99,9 @@ export const Profile = () => {
                 <Typography variant="subtitle2"><strong>Star tDate:</strong> {job.startDate}</Typography>
                 <Typography variant="subtitle2"><strong>End Date:</strong> {job.endDate}</Typography>
               </Paper>
-              <EditUserEmployment 
+              {isAdmin && EditUserEmployment 
                 handleUserEmploymentUpdate = {handleUserEmploymentUpdate}
-                />
+                />}
             </React.Fragment>
           ))}
         </Box> 
@@ -175,9 +179,9 @@ export const Profile = () => {
                 </TableBody>
               </Table>
         </TableContainer>
-        <EditUserEmployment
+        {isAdmin && EditUserEmployment
           handleUserEmploymentUpdate = {handleUserEmploymentUpdate}
-          />
+          />}
         
       </Box>
     </Box>  
