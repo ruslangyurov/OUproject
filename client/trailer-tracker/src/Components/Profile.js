@@ -99,9 +99,11 @@ export const Profile = () => {
                 <Typography variant="subtitle2"><strong>Star tDate:</strong> {job.startDate}</Typography>
                 <Typography variant="subtitle2"><strong>End Date:</strong> {job.endDate}</Typography>
               </Paper>
-              {isAdmin && EditUserEmployment 
-                handleUserEmploymentUpdate = {handleUserEmploymentUpdate}
-                />}
+             {isAdmin && (<EditUserEmployment
+               handleUserEmploymentUpdate={handleUserEmploymentUpdate}
+                />
+              )}
+
             </React.Fragment>
           ))}
         </Box> 
