@@ -181,9 +181,9 @@ export const Profile = () => {
                 </TableBody>
               </Table>
         </TableContainer>
-        {isAdmin && EditUserEmployment
+        {isAdmin && ( <EditUserEmployment
           handleUserEmploymentUpdate = {handleUserEmploymentUpdate}
-          />}
+          />)}
         
       </Box>
     </Box>  
