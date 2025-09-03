@@ -13,7 +13,7 @@ import EditUserInfo from "./EditUserInfo";
 import EditUserEmployment from "./EditUserEmployment";
 import axiosInstance from "../apiAxios/axios";
 import { Typography, useMediaQuery, useTheme } from "@mui/material";
-import{useAuth} from '../Config/AuthContext';
+
 
 export const Profile = () => {
 
