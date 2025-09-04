@@ -6,14 +6,18 @@ import Bay from '../models/bay.js';
 
 export const createBays = asyncHandler(async (req, res) => {
   const { low, high } = req.body;
-  if (high > 300) {return res.json({message:"Value is too large"})}  
+
+  if (high > 300) {
+    return res.status(400).json({ message: "Value is too large" });
+  }
+
   for (let i = low; i <= high; i++) {
     const duplicate = await Bay.findOne({ bayNumber: i }).lean().exec();
     if (duplicate) continue;
 
     const bayObj = {
       bayNumber: i,
-      trailerNumber: "",
+      trailerNumber: "Trailer Number",
       stockDelivered: "",
       fullTrailer: "empty",
       comment: "",
@@ -23,7 +27,8 @@ export const createBays = asyncHandler(async (req, res) => {
     try {
       await Bay.create(bayObj);
     } catch (err) {
-      return res.status(400).json({ message: "Unknown Error. Please try again later!" });
+      console.error(`Failed to create bay ${i}:`, err.message);
+      return res.status(400).json({ message: err.message }); // ✅ now correctly logs the error
     }
   }
 
@@ -33,7 +38,11 @@ export const createBays = asyncHandler(async (req, res) => {
 
 const createBay = asyncHandler(async(req,res) => {
     const {bayNumber} = req.body
-   
+
+    if (!bayNumber) {
+      return res.status(400).json({message:"Please enter a number!"})
+    }
+
     const duplicate = await Bay.findOne({bayNumber}).lean().exec()
     if (duplicate) {
        return res.status(409).json({message: "Bay already exists."})
@@ -41,7 +50,7 @@ const createBay = asyncHandler(async(req,res) => {
 
     const bayObj = {
         bayNumber,
-        trailerNumber:"Trailer number",
+        trailerNumber:"Trailer Number",
         stockDelivered:"Stock delivered",
         fullTrailer:false,
         comment:"",

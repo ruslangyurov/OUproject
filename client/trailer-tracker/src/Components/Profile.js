@@ -6,102 +6,187 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
+import Button from '@mui/material/Button'
 import Paper from '@mui/material/Paper';
 import { Box, Tab } from "@mui/material";
 import EditUserInfo from "./EditUserInfo";
 import EditUserEmployment from "./EditUserEmployment";
 import axiosInstance from "../apiAxios/axios";
+import { Typography, useMediaQuery, useTheme } from "@mui/material";
+
 
 export const Profile = () => {
-  const [userInfo, setUserInfo] = useState({})
+
   const {username, role} =  useAuth()
   const [errMsg, setErrMsg] = useState("") 
-
+  const [newName, setNewName] = useState("");
+  const [newAddress, setNewAddress] = useState("");
+  const [newPhoneNumber, setNewPhoneNumber] = useState(""); 
+  const [employmentHistory, setEmploymentHistory] = useState(null)
   const USER_URL = '/user/profile'
+  const USER_URL_EDIT = '/user/profile/edit'
+  const USER_PROFILE = '/user/profile/employment'
+
+  
+  const isAdmin = role === "Admin";
+
+   const theme = useTheme()
+   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
+   
 
   useEffect(() => {
    
-    const getUserInfo = async () => {
-      const user = await axiosInstance.get(USER_URL, {params:{userName:username}}).then((response) => {
-        setUserInfo(response.data)
-      }).catch((error) => {
-        setErrMsg("")
+    const getUserInfo = () => {
+      axiosInstance.get(USER_URL).then((response) => {
+        setNewName(response.data.name)
+        setNewAddress(response.data.address)
+        setNewPhoneNumber(response.data.phoneNumber)
+        setEmploymentHistory(response.data.employmentHistory)
+      }).catch((err) => {
+        setErrMsg(err?.response?.data?.message || "Sth went wrong.")
       })
-      return user
     }
     getUserInfo();
   },[username])
 
+  const handleUserUpdate = (e, name, address, phoneNumber) => {
+     e.preventDefault();
+     axiosInstance.patch(USER_URL_EDIT, {newName:name, newAddress:address, newPhoneNumber:phoneNumber})
+     .then((res) => {
+      setNewName(res.data.name)
+      setNewAddress(res.data.address)
+      setNewPhoneNumber(res.data.phoneNumber)
+    }).catch((error) => {
+      if (error?.response?.data?.message?.trim().toLowerCase() != "jwt expired".toLowerCase()) {
+        setErrMsg(error.response.data.message)
+      }
+      
+     })
+    };
+
+    const handleUserEmploymentUpdate = (e, employmentHistory) => {
+        e.preventDefault()
+        axiosInstance.patch(USER_PROFILE, employmentHistory).then((res) => {
+          setEmploymentHistory(res.data.employmentHistory)}).catch((error) => {
+            setErrMsg(error.response?.data?.message)
+        })
+    }
+
    
- 
+  if (isSmallScreen) {
+    return (
+      <>
+        <Box sx = {{mt:"80px", px:2}}>
+        
+            <Paper sx = {{mb:2, p:2}}>
+              <Typography variant = "subtitle1" sx = {{fontSize:"16px", mb:"6px"}}><strong>Personal Info</strong></Typography>
+              <Typography variant = "subtitle2"><strong>Name:</strong>{newName}</Typography>
+              <Typography variant="subtitle2"><strong>Address:</strong> {newAddress}</Typography>
+              <Typography variant="subtitle2"><strong>Phone Number:</strong> {newPhoneNumber}</Typography>
+            </Paper>
+            <EditUserInfo 
+              handleUserUpdate = {handleUserUpdate}
+                />
+        </Box>  
+      
+
+        <Box sx = {{mt:"80px", px:2}}>
+          {employmentHistory?.map((job, index) => (
+            <React.Fragment key = {index}>
+              <Paper sx = {{mb:2, p:2}}>
+                <Typography variant = "subtitle2"><strong>Department:</strong>{job.department}</Typography>
+                <Typography variant="subtitle2"><strong>Position:</strong> {job.position}</Typography>
+                <Typography variant="subtitle2"><strong>Star tDate:</strong> {job.startDate}</Typography>
+                <Typography variant="subtitle2"><strong>End Date:</strong> {job.endDate}</Typography>
+              </Paper>
+             {isAdmin && (<EditUserEmployment
+               handleUserEmploymentUpdate={handleUserEmploymentUpdate}
+                />
+              )}
+
+            </React.Fragment>
+          ))}
+        </Box> 
+      </>
+    ) 
+    
+  }
+      
+   
   
   return (
-  <Box sx={{width:"100vw", display:"flex", p:"100px", boxSizing:"border-box", gap:2, flexDirection:"column", alignItems:"center"}}> 
-    {errMsg}
-    <Box sx = {{ width:{md:"40%", xs:"90%"}, p:"40px", height:"40%"}}>
-      <TableContainer component={Paper}>
-            <Table sx={{minWidth: "70%"}} aria-label="simple table">
+  <>
+    <Box sx={{width:"100vw", display:"flex", p:"100px", boxSizing:"border-box", gap:2, flexDirection:"column", alignItems:"center"}}> 
+      {errMsg}
+      <Box sx = {{ width:{md:"40%", xs:"90%"}, p:"40px", height:"40%"}}>
+        <TableContainer component={Paper}>
+              <Table sx={{minWidth: "70%"}} aria-label="simple table">
+                <TableHead>
+                  <TableRow>
+                    <TableCell sx={{ fontWeight: "bold", fontSize:"1.3rem", border:"0" }}>Personal Info</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                
+                    <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+                      <TableCell component="th" scope="row">Name</TableCell>
+                      <TableCell align="right">{newName}</TableCell>
+                    </TableRow>
+                    <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+                      <TableCell component="th" scope="row">Address</TableCell>
+                      <TableCell align="right">{newAddress}</TableCell>
+                    </TableRow>
+                    <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+                      <TableCell component="th" scope="row">Tel. Number</TableCell>
+                      <TableCell align="right">{newPhoneNumber}</TableCell>
+                    </TableRow>
+                    
+                </TableBody>
+              </Table>
+        </TableContainer>
+        <EditUserInfo
+          handleUserUpdate= {handleUserUpdate}
+            />
+      </Box>
+      <Box sx = {{ width:"40%", p:"40px", height:"40%"}}>
+        <Table sx={{minWidth:"40%"}} aria-label="simple table">
               <TableHead>
                 <TableRow>
-                  <TableCell sx={{ fontWeight: "bold", fontSize:"1.3rem", border:"0" }}>Personal Info</TableCell>
+                  <TableCell sx={{ fontWeight: "bold", fontSize:"1.3rem", border:"0" }}>Employment history</TableCell>
                 </TableRow>
               </TableHead>
-              <TableBody>
-              
-                  <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-                    <TableCell component="th" scope="row">Name</TableCell>
-                    <TableCell align="right">{userInfo.name}</TableCell>
+        </Table>
+        <TableContainer component={Paper}>
+              <Table sx={{ minWidth: "40%"  }} aria-label="simple table">
+                
+                <TableHead>
+                  <TableRow>
+                    <TableCell  sx={{fontWeight:"bold", fontSize:"0.8rem"}}>Department</TableCell>
+                    <TableCell  sx={{fontWeight:"bold", fontSize:"0.8rem"}}>Position</TableCell>
+                    <TableCell  sx={{fontWeight:"bold", fontSize:"0.8rem"}}>Start Date</TableCell>
+                    <TableCell  sx={{fontWeight:"bold", fontSize:"0.8rem"}}>End Date</TableCell>
                   </TableRow>
-                  <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-                    <TableCell component="th" scope="row">Address</TableCell>
-                    <TableCell align="right">{userInfo.address}</TableCell>
-                  </TableRow>
-                   <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-                    <TableCell component="th" scope="row">Tel. Number</TableCell>
-                    <TableCell align="right">{userInfo.phoneNumber}</TableCell>
+                </TableHead>
+                <TableBody>
+                  {employmentHistory?.map((job,index) => (
+                  
+                    <TableRow key = {index} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+                      <TableCell align="right">{job.department}</TableCell>
+                      <TableCell align="right">{job.position}</TableCell>
+                      <TableCell align="right">{job.startDate}</TableCell>
+                      <TableCell align="right">{job.endDate}</TableCell>
                   </TableRow>
                   
-              </TableBody>
-            </Table>
-      </TableContainer>
-      <EditUserInfo/>
-    </Box>
-    <Box sx = {{ width:"40%", p:"40px", height:"40%"}}>
-      <Table sx={{minWidth:"40%"}} aria-label="simple table">
-            <TableHead>
-              <TableRow>
-                <TableCell sx={{ fontWeight: "bold", fontSize:"1.3rem", border:"0" }}>Employment history</TableCell>
-              </TableRow>
-            </TableHead>
-      </Table>
-      <TableContainer component={Paper}>
-            <Table sx={{ minWidth: "40%"  }} aria-label="simple table">
-              
-              <TableHead>
-                <TableRow>
-                  <TableCell  sx={{fontWeight:"bold", fontSize:"0.8rem"}}>Department</TableCell>
-                  <TableCell  sx={{fontWeight:"bold", fontSize:"0.8rem"}}>Position</TableCell>
-                  <TableCell  sx={{fontWeight:"bold", fontSize:"0.8rem"}}>Start Date</TableCell>
-                  <TableCell  sx={{fontWeight:"bold", fontSize:"0.8rem"}}>End Date</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {userInfo?.employmentHistory?.map((user,index) => (
-                 
-                  <TableRow key = {index} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-                    <TableCell align="right">{user.department}</TableCell>
-                    <TableCell align="right">{user.position}</TableCell>
-                    <TableCell align="right">{user.startDate}</TableCell>
-                    <TableCell align="right">{user.endDate}</TableCell>
-                </TableRow>
-                
-                ))}
-              </TableBody>
-            </Table>
-      </TableContainer>
-      <EditUserEmployment/>
-      
-    </Box>
-  </Box>   
-  )
-  }
+                  ))}
+                </TableBody>
+              </Table>
+        </TableContainer>
+        {isAdmin && ( <EditUserEmployment
+          handleUserEmploymentUpdate = {handleUserEmploymentUpdate}
+          />)}
+        
+      </Box>
+    </Box>  
+  </> 
+    )
+    }

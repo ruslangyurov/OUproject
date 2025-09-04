@@ -35,7 +35,7 @@ const login = asyncHandler(async (req, res) => {
         },
         
         process.env.TOKEN_SECRET,
-        { expiresIn: '1m' }
+        { expiresIn: '10m' }
     )
 
     const refreshToken = jwt.sign(
@@ -65,6 +65,7 @@ const refresh = (req, res) => {
     if (!cookies?.jwt) return res.status(401).json({ message: 'Unauthorized - no cookie' })
 
     const refreshToken = cookies.jwt
+    console.log(refreshToken)
 
     jwt.verify(
         refreshToken,
@@ -80,7 +81,7 @@ const refresh = (req, res) => {
                 {
                     "userInfo": {
                         "username": foundUser.username,
-                        "roles": foundUser.role
+                        "role": foundUser.role
                     }
                 },
                 process.env.TOKEN_SECRET,

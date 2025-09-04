@@ -8,27 +8,17 @@ import {
     Box,
   } from "@mui/material";
   import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-  import { useState } from "react";
-  import axiosInstance from "../apiAxios/axios";
-  import { useAuth } from "../Config/AuthContext";
+  import {useState} from 'react';
   
-  export default function EditUserInfo() {
-    const [newUsername, setNewUsername] = useState("");
-    const [newAddress, setNewAddress] = useState("");
-    const [newPhoneNumber, setNewPhoneNumber] = useState(""); 
-    const [errMsg, setErrMsg] = useState("")
 
-    const USER_URL = '/user'
-    const {username} = useAuth()
+  
+  export default function EditUserInfo({handleUserUpdate}) { 
+  
+    const [name, setName] = useState("")
+    const [address, setAddress] = useState("")
+    const [number, setNumber] = useState("")
 
-    const handleUserUpdate = async (e) => {
-     e.preventDefault();
-     await axiosInstance.patch(USER_URL, {username:username}).catch((error) => {
-      setErrMsg(error.response.data.message)
-     })
-    };
-      
-
+   
   
     return (
       <Accordion>
@@ -36,34 +26,31 @@ import {
           <Typography><strong>Edit</strong> </Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <Box sx={{mb:"20px"}}>
-            <Typography variant="body2" color="error" sx={{ mt: 1 }}>{errMsg}</Typography>
-          </Box>
+          
           <TextField
             label="Edit name"
-            value={newUsername}
-            onChange={(e) => setNewUsername(e.target.value)}
+            value={name}
+            onChange={(e) => setName(e.target.value)}
             fullWidth
           />
           <TextField
             label="Edit address"
-            value={newAddress}
-            onChange={(e) => setNewAddress(e.target.value)}
+            value={address}
+            onChange={(e) => setAddress(e.target.value)}
             fullWidth
           />
           <TextField
             label="Edit phone number"
-            value={newPhoneNumber}
-            onChange={(e) => setNewPhoneNumber(e.target.value)}
+            value={number}
+            onChange={(e) => setNumber(e.target.value)}
             fullWidth
           />
           
           <Button
-            variant="contained"
-            sx={{ mt: 2 }}
-            onClick={handleUserUpdate}
-          >
-            Save
+              variant="contained"
+              sx={{ mt: 2 }}
+              onClick={(e) => handleUserUpdate(e, name, address, number)}>
+              Save
           </Button>
           
         </AccordionDetails>

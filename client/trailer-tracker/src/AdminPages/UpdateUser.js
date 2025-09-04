@@ -2,6 +2,7 @@ import * as React from 'react';
 import {useState} from 'react';
 import axiosInstance from '../apiAxios/axios';
 import {Box} from '@mui/material';
+import {useTimer} from '../Components/Timer';
 
 
 export const UpdateUser = () => {
@@ -10,34 +11,55 @@ export const UpdateUser = () => {
     const [role, setRole] = useState("")
     const [newRole, setNewRole] = useState("");
     const [newPassword, setNewPassword] = useState("");
-    const [resMsg, setResMsg] = useState("");
+    const [errMsg, setErrMsg] = useState("");
+    const [successMsg, setSuccessMsg] = useState("")
+
+   
+    useTimer(successMsg, setSuccessMsg)
+    useTimer(errMsg, setErrMsg)
     
-    
+    const clearMsg = () => {
+      setErrMsg("")
+      setSuccessMsg("")
+    }
+
+
     
   
-    const handleUpdate = async() => {
-  
+    const handleUpdate = async(e) => {
+      e.preventDefault();
+      if (!newUsername && !newRole && !newPassword) {
+        setErrMsg("At least one of the new fields is required.")
+        return
+      }
       try {
         await axiosInstance.patch("/user", { username, role, newUsername, newPassword, newRole })
-        setResMsg("User updated successfully.")
-  
+        setSuccessMsg("User updated successfully.")
+        setUsername("");
+        setRole("");
+        setNewUsername("");
+        setNewPassword("");
+        setNewRole("");
       } catch (err) {
           if (!err?.response) {
-            setResMsg("No Server Response");
+            setErrMsg("No Server Response");
           } else {
-            setResMsg(err.data.message)
+            setErrMsg(err.response?.data?.message || "An error occurred");
+
           }
       };
     }
 
       return (
         <>
-          
-          
+          {errMsg && <div className = "resMsg" style = {{color:"red"}}>
+            {errMsg}
+          </div>}
+          {successMsg && <div className = "resMsg" style = {{color:"green"}}>
+            {successMsg}
+          </div>}
           <div className="newUser_container">
-            <Box sx={{display:"flex",color:"black", backgroundColor: "#f5f5dc",justifyContent:"center", mt:"60px"}}>
-              {resMsg}
-            </Box>
+           
             <form onSubmit={handleUpdate}>
               <div className="form-group">
                 <label>Username</label> 
@@ -46,17 +68,21 @@ export const UpdateUser = () => {
                     type = "text" 
                     name = "updateUserUsername"
                     onChange={(e) => setUsername(e.target.value)}
+                    onClick = {clearMsg}
                 />
                 <label>Role</label>
                 <select 
                   className="newUser_container_input"
                   value = {role}
-                  onChange={(e) => setRole(e.target.value)}>
+                  onChange={(e) => setRole(e.target.value)}
+                  onClick = {clearMsg}>
                    <option value="Admin">Admin</option>
                    <option value="Employee">Employee</option>
                    <option value="Manager">Manager</option>
+                   <option value="" disabled hidden>Select role</option>
+
                 </select>
-              </div>
+              
                 <label>New Username</label>
                 <input 
                    className="newUser_container_input"
@@ -81,11 +107,14 @@ export const UpdateUser = () => {
                    <option value="Admin">Admin</option>
                    <option value="Employee">Employee</option>
                    <option value="Manager">Manager</option>
+                   <option value="" disabled hidden>Select role</option>
+
                    
                 </select>
                 <div>
                   <input type="submit" className="newUser_submit_button" />
                 </div>
+              </div>
             </form>
           </div>
         

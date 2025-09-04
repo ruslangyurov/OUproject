@@ -27,8 +27,41 @@ export const Outbound = () => {
   ));
   }, [filter,outbound]);
 
+  return (
+    <>
+      <div className='footer'> 
+        {!filter && (
+          <Button
+            variant="contained"
+            onClick={() => setFilter(true)}
+            sx={{ ml: 2, height: 53, width: 100, fontSize:"16px" }}
+          >
+            Filter
+          </Button>
+        )}
+      </div> 
+      <div className='baylist'>
+        {bayList}
+      </div>
+        
+      <div className='footer'> 
+        {filter && (
+          <Button
+            variant="contained"
+            onClick={() => setFilter(false)}
+            sx={{ ml: 2, height: 53, width: 100, fontSize:"16px" }}
+          >
+            Unfilter
+          </Button>
+      
+        )}
+      </div>
+     
+    </>
+  );
+};
    
-}
+
 
  
   

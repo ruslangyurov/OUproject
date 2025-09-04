@@ -4,16 +4,18 @@ import {
     AccordionSummary,
     Button,
     TextField,
-    Typography
+    Typography,
+    Box
 
 } from "@mui/material"
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+
 
 import { useState } from "react"
 import axiosInstance from "../apiAxios/axios"
 
 
-export default function EditUserEmployment() {
+export default function EditUserEmployment({handleUserEmploymentUpdate}) {
 
     const [position, setPosition] = useState("")
     const [department, setDepartment] = useState("")
@@ -21,20 +23,17 @@ export default function EditUserEmployment() {
     const [endDate, setEndDate] = useState("")
     const [errMsg, setErrMsg] = useState("")
 
-    const USER_URL = "/user"
+    const USER_URL = "/user/profile/employment"
+
+    
 
     const employmentHistory = {
-        position:position,
-        department:department,
-        startDate:new Date(startDate),
-        endDate:new Date(endDate)
+        newPosition:position,
+        newDepartment:department,
+        newStartDate:new Date(startDate),
+        newEndDate:new Date(endDate)
     }
-    const handleUserEmploymentUpdate = async (e) => {
-        e.preventDefault()
-        await axiosInstance.patch(USER_URL, {employmentHistory:employmentHistory}).catch((error) => {
-            setErrMsg(error.response.data.message)
-        })
-    }
+    
    
     return (
         <Accordion>
@@ -42,6 +41,9 @@ export default function EditUserEmployment() {
                 
                 <Typography><strong>Edit</strong></Typography>
             </AccordionSummary>
+            <Box sx={{color:"red", fontSize:"1em", m:"2px 2px"}}>
+                {errMsg}
+            </Box>
             <AccordionDetails>
                 
                     <TextField 
@@ -68,7 +70,12 @@ export default function EditUserEmployment() {
                        onChange={(e) => setEndDate(e.target.value)}
                        fullWidth
                     />
-                    <Button type="submit" variant="contained" onClick={handleUserEmploymentUpdate} sx={{mt:2}}>Save</Button>
+                    <Button
+              variant="contained"
+              sx={{ mt: 2 }}
+              onClick={(e) => handleUserEmploymentUpdate(e, employmentHistory)}>
+              Save
+          </Button>
                
             </AccordionDetails>
         </Accordion>

@@ -24,9 +24,9 @@ export const getAllUsers = asyncHandler(async (req,res) => {
 export const createNewUser = asyncHandler(async (req,res) => {
    
    //confirm data
-   const {username, password, role} = req.body;
-   if (!username || !password) {
-    res.status(400).json({message: "All fields are required"})
+   const {username, password, role, name, address, phone} = req.body;
+   if (!username || !password || !role)  {
+    return res.status(400).json({message: "All fields are required"})
    }
 
    const duplicate = await User.findOne({username:username}).collation({locale:'en', strength:2}).lean().exec()
@@ -35,7 +35,7 @@ export const createNewUser = asyncHandler(async (req,res) => {
    }
 
    const hashedPwd = await bcrypt.hash(password,10) //salt rounds
-   const userObj = {username, 'password':hashedPwd, role}
+   const userObj = {username, 'password':hashedPwd, role, name, address, phoneNumber:phone}
    // Create and store new user
    const user = await User.create(userObj)
    
@@ -50,38 +50,99 @@ export const createNewUser = asyncHandler(async (req,res) => {
 // @route PATCH /users
 // @access private
 
-export const getUserInfo = asyncHandler(async (req,res) => {
-    const {username} = req.query
-    const user = await User.findOne({username:username}).select('-password').lean()
+export const getUserInfo = asyncHandler(async (req, res) => {
+  const  username  = req.user; // <-- From JWT
+
+  console.log(username)
+  try {
+    const user = await User.findOne({ username }).select('-password').lean();
+    
     if (!user) {
-        res.status(400).json({message: "User does not exist"})
+      return res.status(404).json({ message: "User not found." });
     }
-    res.status(200).json(user)
+
+    res.json(user);
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+});
+
+
+
+export const updateUserAdminEmployment = asyncHandler(async (req,res) => {
+
+    const {username, newPosition, newDepartment, newStartDate, newEndDate} = req.body
+
+    const employmentHistory = {}
+    
+    if (newPosition) employmentHistory.position = newPosition;
+    if (newDepartment) employmentHistory.department = newDepartment;
+    if (newStartDate) employmentHistory.startDate = newStartDate;
+    if (newEndDate) employmentHistory.endDate = newEndDate;
+
+    if (Object.keys(employmentHistory).length === 0) {
+        return res.status(400).json({message:"Please fill in at least one of the possible options!"})
+    }
+
+    const updatedUser = await User.findOneAndUpdate({username:username}, {$push:{employmentHistory:employmentHistory}}, {new:true, runValidators:true}).exec()  
+    
+    if (!updatedUser) {
+    return res.status(404).json({ message: "User not found" });
+  }
+
+    res.status(200).json(updatedUser);
 })
 
-export const updateUser = asyncHandler(async (req,res) => {
-   const {username, role, newUsername, newPassword, newRole, position, department, startDate, endDate} = req.body
-
-   const newInformation = {
-    username:newUsername,
-    password:newPassword,
-    role:newRole,
+export const updateUserInfoUser = asyncHandler(async (req, res) => {
     
+    const {newName, newAddress, newPhoneNumber} = req.body
+    const username = req.user
+    const userInfo = {}
+    if (newName) {userInfo.name = newName;}
+    if (newAddress) {userInfo.address = newAddress;}
+    if (newPhoneNumber) {userInfo.phoneNumber = newPhoneNumber;} 
+
+    if (Object.keys(userInfo).length === 0) {
+        return res.status(400).json({message:"Please fill out at least one of the given fields!"})
+    }
+
+    const updatedUser = await User.findOneAndUpdate({username:username}, {$set:userInfo}, {new:true, runValidators:true}).exec();
+    if (!updatedUser) {
+    return res.status(404).json({ message: "User not found." });
+  }
+    res.status(200).json(updatedUser)
+})
+
+export const updateUserAdmin = asyncHandler(async (req,res) => {
+   const {username, role, newUsername, newPassword, newRole} = req.body
+   
+   if (!username || !role) {
+    return res.status(400).json({message:"Username and role are required."})
    }
 
-   const employmentHistory = {
-    position:position,
-    department:department,
-    startDate:startDate,
-    endDate:endDate
-   }
+   const newInformation = {}
+   if (newUsername) newInformation.username = newUsername;
+   if (newPassword) newInformation.password = newPassword;
+   if (newRole) newInformation.role = newRole;
 
-   const user = await User.findOneAndUpdate({username:username, role:role}, {$set:newInformation, $push:{employmentHistory:employmentHistory}},  {new:true, runvalidators:tr}).exec()
+  // Check if there's anything to update
+  if (Object.keys(newInformation).length === 0) {
+    return res.status(400).json({ message: "No valid fields provided for update." });
+  } 
+
+   let user;
+   try {
+    user = await User.findOneAndUpdate({username:username, role:role}, {$set:newInformation},  {new:true, runvalidators:true}).exec()
+  } catch(err) {
+    return res.status(400).json({message:err.message})
+  }
+
+   
    if (!user) {
     res.status(400).json({message: "User does not exist"})
    }
 
-   res.status(200).json({message: "User succesfully updated.", user})
+   res.status(200).json(user)
 
    
 })

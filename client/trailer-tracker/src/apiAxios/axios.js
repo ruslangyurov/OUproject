@@ -11,9 +11,6 @@ const axiosInstance = axios.create({
   headers: { "Content-Type": "application/json" }
 });
 
-
-
-// Request Interceptor
 export const RequestInterceptor = () => {
   const { auth } = useAuth();
 
@@ -46,50 +43,54 @@ export const ResponseInterceptor = () => {
 
   useEffect(() => {
     const responseInterceptor = axiosInstance.interceptors.response.use(
-      (response) => {
-        return response;
-      },
-      async (error) => {
-        const originalRequest = error.config;
+    (response) => response, async (error) => {
+      const originalRequest = error.config;
 
-        // If the response status is 403 (token expired)
-        if (error.response.status === 403 && !originalRequest._retry && originalRequest.url !== '/auth/refresh') {
-          originalRequest._retry = true;
+      if (!error.response) return Promise.reject(error);
 
-          // Try to refresh the token
-          try {
-            const refreshResponse = await axiosInstance.get("/auth/refresh", {withCredentials:true});
-            const newAccessToken = refreshResponse.data.accessToken;
-            if (!newAccessToken) {
-              navigate("/Login")
-            } else {
-              setAuth(newAccessToken);
-              // Retry the original request with the new token
-              originalRequest.headers['Authorization'] = `Bearer ${newAccessToken}`;
-              return axiosInstance(originalRequest);
+      const isRefreshCall = originalRequest.url.includes('/auth/refresh');
 
-            
-            }
-           
-          } catch (refreshError) {
-            // Handle refresh token failure (e.g., log out the user)
-            console.log("Failed to refresh token:", refreshError);
-            return Promise.reject(refreshError);
+      if ((error.response.status === 401 || error.response.status === 403) 
+          && !originalRequest._retry && !isRefreshCall) {
+        originalRequest._retry = true;
+
+        try {
+          const refreshResponse = await axiosInstance.get('/auth/refresh');
+          const newAccessToken = refreshResponse.data.accessToken;
+          console.log(newAccessToken)
+
+          if (!newAccessToken) {
+            navigate('/Login');
+            return Promise.reject(error);
           }
+
+          setAuth(newAccessToken);
+          localStorage.setItem('accessToken', newAccessToken);
+
+          originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
+          return axiosInstance(originalRequest);
+        } catch (refreshError) {
+          navigate('/Login');
+          return Promise.reject(refreshError);
         }
-
-        // If not a 403 error, reject the promise
-        return Promise.reject(error);
       }
-    );
 
-    // Cleanup the interceptor on component unmount
-    return () => {
-      axiosInstance.interceptors.response.eject(responseInterceptor);
-    };
-  }, [auth, setAuth]); // You might want to update auth context on a refresh
+      return Promise.reject(error);
+    }
+  );
 
-  return null; // No UI rendering needed for this component
+  return () => {
+    axiosInstance.interceptors.response.eject(responseInterceptor);
+  };
+}, [auth, setAuth]);
+
 };
 
+
+
+
+
+
 export default axiosInstance;
+
+

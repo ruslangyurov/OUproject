@@ -89,6 +89,12 @@ export default function SearchAppBar() {
     case "/Inbound":
       pages = ["Logout", "Empty-Trailers", "Full-Trailers"]
       break;
+    case "/Outbound":
+      pages = ["Logout", "Empty-Trailers", "Full-Trailers"]
+      break;
+    case "/Parking":
+      pages = ["Logout", "Empty-Trailers", "Full-Trailers"]
+      break;
     case "/Full-Trailers":
       pages = ["Logout", "Empty-Trailers"]
       break;

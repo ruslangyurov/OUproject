@@ -1,36 +1,56 @@
 import * as React from 'react'
 import { useState } from 'react';
 import axiosInstance from "../apiAxios/axios"; 
+import {useTimer} from "../Components/Timer";
 
 export const CreateBays = () => {
   const [number, setNumber] = useState('');
   const [low, setLow] = useState(1);
   const [high, setHigh] = useState(1);
-  const [resMsg,setResMsg] = useState('');
+  const [errMsg,setErrMsg] = useState('');
+  const [successMsg, setSuccessMsg] = useState("")
   
    
   const SINGLE_URL = 'yard'
   const MULTIPLE_URL = 'yard/create-bays'
 
+   useTimer(successMsg)
+    
+    const clearMsg = () => {
+      setErrMsg("")
+      setSuccessMsg("")
+    }
+
   const handleSubmitSingle = async(e) => {
     e.preventDefault();
     
-    await axiosInstance.post(SINGLE_URL, { bayNumber: Number(number) }).then(() => setResMsg("Bay successfully created"))
-    .catch((err) => setResMsg(err.response?.data?.message || "An error occurred"));
+    await axiosInstance.post(SINGLE_URL, { bayNumber: Number(number) }).then(() => setSuccessMsg("Bay successfully created"))
+    .catch((err) => setErrMsg(err.response?.data?.message || "An error occurred"));
   }
 
   const handleSubmitMultiple = async(e) => {
-    e.preventDefault();
-    await axiosInstance.post(MULTIPLE_URL, {low:low,high:high}).then(()=> setResMsg("Successfully created."))
-    .catch((error) => setResMsg(error.response?.data?.message) || "Unknown error occured")
-   
-  };
+    if (high > low) {
+      e.preventDefault();
+      await axiosInstance.post(MULTIPLE_URL, {low:low,high:high}).then(()=> setSuccessMsg("Successfully created."))
+      .catch((error) => setErrMsg(error.response?.data?.message || "Unknown error occured"))
+    } else {
+      setErrMsg("Number of bays has to be a positive number.")
+   }
+    }
+    
 
   return (
     <> 
-      <div className="resMsg">
-        {resMsg}
+      {errMsg && (
+      <div className="resMsg" style = {{color:"red"}}>
+        {errMsg}
       </div>
+      )}
+      {successMsg && (
+        <div className = "resMsg" style = {{color:"green"}}>
+          {successMsg}
+          </div>
+      )}
       <div className="newUser_container">
 
         <form className='form-group' onSubmit={handleSubmitSingle}>
@@ -51,6 +71,7 @@ export const CreateBays = () => {
                 return;
               }
 
+
               const num = parseInt(value, 10);
 
               // Only allow numbers 1 and above
@@ -59,7 +80,7 @@ export const CreateBays = () => {
               }
             }}
             onClick={() => {
-              setResMsg("")
+              clearMsg()
             }}
             onKeyDown={(e) => {
               // Prevent typing invalid characters like '.', '-', 'e' (common in number inputs)
@@ -102,7 +123,7 @@ export const CreateBays = () => {
               }
             }}
             onClick={() => {
-             setResMsg("")
+             clearMsg()
             }}
             onKeyDown={(e) => {
               // Prevent typing invalid characters like '.', '-', 'e' (common in number inputs)
@@ -135,7 +156,7 @@ export const CreateBays = () => {
               }
             }}
             onClick={() => {
-              setResMsg("")
+              clearMsg()
             }}
             onKeyDown={(e) => {
               // Prevent typing invalid characters like '.', '-', 'e' (common in number inputs)

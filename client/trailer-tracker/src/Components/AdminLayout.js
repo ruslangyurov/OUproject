@@ -23,11 +23,11 @@ export const AdminLayout = () => {
        
         />
          <ArrowBackIcon 
-            sx = {{position:"absolute", left:"30px", color:"white", cursor:"pointer", "&:hover": {color: "black"},}}
+            sx = {{position:"absolute", left:"30px", color:"white", cursor:"pointer", "&:hover": {color: "black"},display:{xs:"none", md:"inline-flex"}}}
             onClick = {() => navigate(-1)}
          />
          <ArrowForwardIcon
-            sx = {{position:"absolute", right:"10px", color:"white", cursor:"pointer", "&:hover": {color: "black"},}}
+            sx = {{position:"absolute", right:"10px", color:"white", cursor:"pointer", "&:hover": {color: "black"}, display:{xs:"none", md:"inline-flex"}}}
             onClick = {() => window.history.forward()}
          />
           <div className="admin_header_text">{location}</div>
