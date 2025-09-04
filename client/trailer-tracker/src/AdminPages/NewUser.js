@@ -55,64 +55,68 @@ export const NewUser = () => {
           </div>}
            
       <div className="newUser_container">
-        <form className="form-columns" onSubmit={createNewUser}>
-          <div className="form-column">
-            <label>Username</label>
-            <input
-              type="text"
-              className="form-columns-input"
-              onChange={(e) => setUsername(e.target.value)}
-              onClick={clearMessages}
-            />
+        <form className="form-group" onSubmit={createNewUser}>
+          <div className = "form-columns">
+            <div className="form-column">
+              <label>Username</label>
+              <input
+                type="text"
+                className="form-columns-input"
+                onChange={(e) => setUsername(e.target.value)}
+                onClick={clearMessages}
+              />
 
-            <label>Password</label>
-            <input
-              type="password"
-              className="form-columns-input"
-              onChange={(e) => setPassword(e.target.value)}
-              onClick={clearMessages}
-            />
+              <label>Password</label>
+              <input
+                type="password"
+                className="form-columns-input"
+                onChange={(e) => setPassword(e.target.value)}
+                onClick={clearMessages}
+              />
 
-            <label>Role</label>
-            <select
-              className="form-columns-input"
-              onChange={(e) => setRole(e.target.value)}
-              onClick={clearMessages}
-              defaultValue=""
-            >
-              <option value="" disabled hidden>
-                Select role
-              </option>
-              <option value="Admin">Admin</option>
-              <option value="Employee">Employee</option>
-              <option value="Manager">Manager</option>
-            </select>
-          </div>
-          <div className="form-column">
-            <label>Name</label>
-            <input
-              type="text"
-              className="form-columns-input"
-              onChange={(e) => setName(e.target.value)}
-              onClick={clearMessages}
-            />
+              <label>Role</label>
+              <select
+                className="form-columns-input"
+                onChange={(e) => setRole(e.target.value)}
+                onClick={clearMessages}
+                defaultValue=""
+              >
+                <option value="" disabled hidden>
+                  Select role
+                </option>
+                <option value="Admin">Admin</option>
+                <option value="Employee">Employee</option>
+                <option value="Manager">Manager</option>
+              </select>
+            </div>
 
-            <label>Address</label>
-            <input
-              type="text"
-              className="form-columns-input"
-              onChange={(e) => setAddress(e.target.value)}
-              onClick={clearMessages}
-            />
 
-            <label>Phone Number</label>
-            <input
-              type="tel"
-              className="form-columns-input"
-              onChange={(e) => setPhone(e.target.value)}
-              onClick={clearMessages}
-            />
-          </div>
+            <div className="form-column">
+              <label>Name</label>
+              <input
+                type="text"
+                className="form-columns-input"
+                onChange={(e) => setName(e.target.value)}
+                onClick={clearMessages}
+              />
+
+              <label>Address</label>
+              <input
+                type="text"
+                className="form-columns-input"
+                onChange={(e) => setAddress(e.target.value)}
+                onClick={clearMessages}
+              />
+
+              <label>Phone Number</label>
+              <input
+                type="tel"
+                className="form-columns-input"
+                onChange={(e) => setPhone(e.target.value)}
+                onClick={clearMessages}
+              />
+            </div>
+          </div>  
 
           <div>
             <input type="submit" className="newUser_submit_button" />
