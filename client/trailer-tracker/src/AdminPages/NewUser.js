@@ -55,8 +55,7 @@ export const NewUser = () => {
           </div>}
            
       <div className="newUser_container">
-        <form className="form-group" onSubmit={createNewUser}>
-          <div className="form-columns">
+          <div className="form-columns" onSubmit={createNewUser}>
             {/* First Column */}
             <div className="form-column">
               <label>Username</label>
