@@ -232,10 +232,8 @@ form {
 
 .resMsg {
   position: absolute;
-  top: 100px;
-  right: 100px;
+  margin: "75px 15px 0 0";
   background-color: #f8d7da;
-  color: #721c24;
   border: 1px solid #f5c6cb;
   padding: 0.75rem 1rem;
   border-radius: 4px;

@@ -2,18 +2,27 @@ import React from 'react';
 import { useState } from 'react';
 import axiosInstance from '../apiAxios/axios';
 import Box from '@mui/material/Box';
+import {useTimer} from '../Components/Timer';
 
 export const DeleteUser = () => {
-    const [resMsg, setResMsg] = useState("");
+    const [errMsg, setErrResMsg] = useState(null);
+    const [success, setSuccess] = useState(null);
     const [username, setUsername] = useState("");
     const [role, setRole] = useState("");
 
     const DELUSER_URL = '/user';
 
+    useTimer(success)
+
+    const clearMsg = () => {
+        setErrMsg("")
+        setSuccess("")
+    }
+
     const handleDelete = async (e) => {
         e.preventDefault();
         if (!username || !role) {
-            setResMsg("Please provide both username and role.");
+            setErrMsg("Please provide both username and role.");
             return;
 }
         try {
@@ -21,21 +30,24 @@ export const DeleteUser = () => {
             const response = await axiosInstance.delete(DELUSER_URL, {
                 data: { username, role }
             });
-            setResMsg(response?.data?.message);
+            setSuccess(response?.data?.message);
         } catch (err) {
             if (err.request) {
-                setResMsg("No server response. Please try again later.");
+                setErrMsg("No server response. Please try again later.");
             } else {
-                setResMsg(err.response?.data?.message || "An error occurred.");
+                setErrMsg(err.response?.data?.message || "An error occurred.");
             }
         }
     };
 
     return (
         <>
-            <div style={{position:"absolute", color:"red", fontSize: "2vw", m: "75px 15px 0 0"}}>
-                {resMsg}
-            </div>
+           {errMsg && <div className = "resMsg" style = {{color:"red"}}>
+            {errMsg}
+          </div>}
+          {success && <div className = "resMsg" style = {{color:"green"}}>
+           {success}
+          </div>}
             <div className="newUser_container">
                 <form className = "form-group"onSubmit={handleDelete}>
                     <label>Username</label>
@@ -44,7 +56,7 @@ export const DeleteUser = () => {
                         type="text"
                         name="deleteUserUsername"
                         onChange={(e) => setUsername(e.target.value)}
-                        onClick = {() => {setResMsg("")}}
+                        onClick = {() => {clearMsg()}}
                     />
 
                     <label>Role</label>
@@ -52,7 +64,7 @@ export const DeleteUser = () => {
                         className="newUser_container_input"
                         name="deleteUserRole"
                         onChange={(e) => setRole(e.target.value)}
-                        onClick = {() => {setResMsg("")}}
+                        onClick = {() => {clearMsg()}}
                         defaultValue=""
                     >
                         <option value="Admin">Admin</option>
