@@ -2,30 +2,35 @@
 
 .footer {
   position: fixed;
-  bottom: 0;
-  left: 0;
   width: 100%;
-  background-color: #f9f9f9;      /* softer neutral */
-  border-top: 1px solid #ddd;     /* subtle separation */
-  font-size: 14px;
-  font-family: 'Roboto', sans-serif; /* match MUI default */
-  font-weight: 500;
-  display: flex;
-  align-items: center;
-  padding: 8px 16px;
-  color: #555;
-  z-index: 1200;                  /* stays above content */
+  bottom: 0;
+  background-color: gainsboro;
+  letter-spacing: 2px;
+  font-size: 25px;
+  font-family: monospace;
+  font-weight: 700;
+  text-align: left;
+  padding-left: 30px;
+  word-spacing: 20px;
 }
 
 .link {
   color: royalblue;
-  text-decoration: none;
-  margin-left: 8px;
-}
-.link:hover {
-  text-decoration: underline;
 }
 
+.admin {
+  position: fixed;
+  display: flex;
+  margin-top: 60px;
+  background-color: beige;
+  width: 100vw;
+  height: 100vh;
+  justify-content: center;
+  flex-direction: column;
+ 
+  
+  
+}
 
 /* .admin-menu  {
   display: flex;
@@ -44,18 +49,19 @@
 } */
 
 
-.admin {
-  margin-top: 64px;               /* match AppBar height */
-  padding: 20px;
-  background-color: #fafafa;
-  width: 100%;
-  min-height: calc(100vh - 64px - 40px); /* full height minus appbar & footer */
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  box-sizing: border-box;
+.admin-link {
+  
+  display:block;
+  text-align: center;
+  text-decoration: none;
+  padding: 0 30px;
+  color: black;
+  box-shadow: 0px 1px 5px rgba(177, 163, 163, 0.5); 
+  border-radius: 5px;
+  font-size: calc(2px + 2vmin);
+  font-family: "Times New Roman", Times, serif;
+  letter-spacing: 0.5px;
 }
-
 
 
 .admin-link:hover {
