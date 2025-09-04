@@ -55,67 +55,63 @@ export const NewUser = () => {
           </div>}
            
       <div className="newUser_container">
-          <div className="form-columns" onSubmit={createNewUser}>
-            {/* First Column */}
-            <div className="form-column">
-              <label>Username</label>
-              <input
-                type="text"
-                className="form-columns-input"
-                onChange={(e) => setUsername(e.target.value)}
-                onClick={clearMessages}
-              />
+        <form className="form-columns" onSubmit={createNewUser}>
+          <div className="form-column">
+            <label>Username</label>
+            <input
+              type="text"
+              className="form-columns-input"
+              onChange={(e) => setUsername(e.target.value)}
+              onClick={clearMessages}
+            />
 
-              <label>Password</label>
-              <input
-                type="password"
-                className="form-columns-input"
-                onChange={(e) => setPassword(e.target.value)}
-                onClick={clearMessages}
-              />
+            <label>Password</label>
+            <input
+              type="password"
+              className="form-columns-input"
+              onChange={(e) => setPassword(e.target.value)}
+              onClick={clearMessages}
+            />
 
-              <label>Role</label>
-              <select
-                className="form-columns-input"
-                onChange={(e) => setRole(e.target.value)}
-                onClick={clearMessages}
-                defaultValue=""
-              >
-                <option value="" disabled hidden>
-                  Select role
-                </option>
-                <option value="Admin">Admin</option>
-                <option value="Employee">Employee</option>
-                <option value="Manager">Manager</option>
-              </select>
-            </div>
+            <label>Role</label>
+            <select
+              className="form-columns-input"
+              onChange={(e) => setRole(e.target.value)}
+              onClick={clearMessages}
+              defaultValue=""
+            >
+              <option value="" disabled hidden>
+                Select role
+              </option>
+              <option value="Admin">Admin</option>
+              <option value="Employee">Employee</option>
+              <option value="Manager">Manager</option>
+            </select>
+          </div>
+          <div className="form-column">
+            <label>Name</label>
+            <input
+              type="text"
+              className="form-columns-input"
+              onChange={(e) => setName(e.target.value)}
+              onClick={clearMessages}
+            />
 
-            {/* Second Column */}
-            <div className="form-column">
-              <label>Name</label>
-              <input
-                type="text"
-                className="form-columns-input"
-                onChange={(e) => setName(e.target.value)}
-                onClick={clearMessages}
-              />
+            <label>Address</label>
+            <input
+              type="text"
+              className="form-columns-input"
+              onChange={(e) => setAddress(e.target.value)}
+              onClick={clearMessages}
+            />
 
-              <label>Address</label>
-              <input
-                type="text"
-                className="form-columns-input"
-                onChange={(e) => setAddress(e.target.value)}
-                onClick={clearMessages}
-              />
-
-              <label>Phone Number</label>
-              <input
-                type="tel"
-                className="form-columns-input"
-                onChange={(e) => setPhone(e.target.value)}
-                onClick={clearMessages}
-              />
-            </div>
+            <label>Phone Number</label>
+            <input
+              type="tel"
+              className="form-columns-input"
+              onChange={(e) => setPhone(e.target.value)}
+              onClick={clearMessages}
+            />
           </div>
 
           <div>
@@ -123,6 +119,7 @@ export const NewUser = () => {
           </div>
         </form>
       </div>
+
     </>
   );
 };
