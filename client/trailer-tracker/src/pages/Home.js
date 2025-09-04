@@ -10,7 +10,7 @@ import {useAuth} from '../Config/AuthContext';
 
 export const Home = () => {
 
-  const role = useAuth()
+  const {role} = useAuth()
   const isAdmin = role === "Admin";
 
   return (

@@ -2,21 +2,31 @@
 
 .footer {
   position: fixed;
-  width: 100%;
   bottom: 0;
-  background-color: gainsboro;
-  letter-spacing: 2px;
-  font-size: 25px;
-  font-family: monospace;
-  font-weight: 700;
-  text-align: left;
-  padding-left: 30px;
-  word-spacing: 20px;
+  left: 0;
+  width: 100%;
+  background-color: #f9f9f9;      /* softer neutral */
+  border-top: 1px solid #ddd;     /* subtle separation */
+  font-size: 14px;
+  font-family: 'Roboto', sans-serif; /* match MUI default */
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  padding: 8px 16px;
+  color: #555;
+  z-index: 1200;                  /* stays above content */
 }
 
 .link {
   color: royalblue;
+  text-decoration: none;
+  margin-left: 8px;
 }
+
+.link:hover {
+  text-decoration: underline;
+}
+
 
 .admin {
   position: fixed;
