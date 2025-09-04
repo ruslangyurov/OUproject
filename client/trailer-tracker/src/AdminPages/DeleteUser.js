@@ -5,7 +5,7 @@ import Box from '@mui/material/Box';
 import {useTimer} from '../Components/Timer';
 
 export const DeleteUser = () => {
-    const [errMsg, setErrResMsg] = useState(null);
+    const [errMsg, setErrMsg] = useState(null);
     const [success, setSuccess] = useState(null);
     const [username, setUsername] = useState("");
     const [role, setRole] = useState("");
