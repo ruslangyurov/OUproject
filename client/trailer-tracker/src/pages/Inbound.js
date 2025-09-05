@@ -36,7 +36,7 @@ export const Inbound = () => {
           <Button
             variant="contained"
             onClick={() => setFilter(true)}
-            sx={{ ml: 2, height: 53, width: 100, fontSize:"16px" }}
+            sx={{ ml: 2, height: 40, width: 100, fontSize:"16px" }}
           >
             Filter
           </Button>
