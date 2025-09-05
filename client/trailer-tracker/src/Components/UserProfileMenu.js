@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Menu, MenuItem, IconButton, Avatar, Tooltip, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
 
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+const settings = ['Profile','Logout'];
 
 export default function UserProfileMenu() {
   const [anchorElUser, setAnchorElUser] = useState(null);

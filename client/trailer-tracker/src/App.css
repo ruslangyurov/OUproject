@@ -5,17 +5,31 @@
   bottom: 0;
   left: 0;
   width: 100%;
-  background-color: #f9f9f9;      /* softer neutral */
-  border-top: 1px solid #ddd;     /* subtle separation */
-  font-size: 14px;
-  font-family: 'Roboto', sans-serif; /* match MUI default */
-  font-weight: 500;
+  background: linear-gradient(90deg, #1976d2, #1565c0);
+  padding: 12px 24px;
   display: flex;
+  justify-content: flex-end;
   align-items: center;
-  padding: 8px 16px;
-  color: #555;
-  z-index: 1200;                  /* stays above content */
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
 }
+
+.filter-button {
+  background-color: #fff;
+  color: #1976d2;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 25px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.filter-button:hover {
+  background-color: #e3f2fd;
+  transform: scale(1.05);
+}
+
 
 .link {
   color: royalblue;
