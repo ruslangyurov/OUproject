@@ -24,7 +24,7 @@ export const DeleteUser = () => {
         if (!username || !role) {
             setErrMsg("Please provide both username and role.");
             return;
-}
+            }
         try {
             // Axios DELETE requests require payload to be in a 'data' key
             const response = await axiosInstance.delete(DELUSER_URL, {
@@ -32,10 +32,7 @@ export const DeleteUser = () => {
             });
             setSuccess(response?.data?.message);
         } catch (err) {
-            if (err.request) {
-                setErrMsg("No server response. Please try again later.");
-            } else {
-                setErrMsg(err.response?.data?.message || "An error occurred.");
+            setErrMsg(err.response?.data?.message || "An error occurred.");
             }
         }
     };

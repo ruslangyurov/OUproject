@@ -14,12 +14,12 @@ export const CreateBays = () => {
   const SINGLE_URL = 'yard'
   const MULTIPLE_URL = 'yard/create-bays'
 
-   useTimer(successMsg)
+  useTimer(successMsg, setSuccessMsg)
     
-    const clearMsg = () => {
+  const clearMsg = () => {
       setErrMsg("")
       setSuccessMsg("")
-    }
+  }
 
   const handleSubmitSingle = async(e) => {
     e.preventDefault();
@@ -31,7 +31,7 @@ export const CreateBays = () => {
   const handleSubmitMultiple = async(e) => {
     if (high > low) {
       e.preventDefault();
-      await axiosInstance.post(MULTIPLE_URL, {low:low,high:high}).then(()=> setSuccessMsg("Successfully created."))
+      await axiosInstance.post(MULTIPLE_URL, {low:low,high:high}).then(()=> setSuccessMsg("Bays Successfully created."))
       .catch((error) => setErrMsg(error.response?.data?.message || "Unknown error occured"))
     } else {
       setErrMsg("Number of bays has to be a positive number.")

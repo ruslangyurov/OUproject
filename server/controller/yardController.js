@@ -7,7 +7,7 @@ import Bay from '../models/bay.js';
 export const createBays = asyncHandler(async (req, res) => {
   const { low, high } = req.body;
 
-  if (high > 300) {
+  if (high > 200) {
     return res.status(400).json({ message: "Value is too large" });
   }
 
@@ -41,6 +41,10 @@ const createBay = asyncHandler(async(req,res) => {
 
     if (!bayNumber) {
       return res.status(400).json({message:"Please enter a number!"})
+    }
+
+    If (bayNumber > 200) {
+      return res.status(400).json({message: "Please enter a valid number between 1 and 200!"})
     }
 
     const duplicate = await Bay.findOne({bayNumber}).lean().exec()
