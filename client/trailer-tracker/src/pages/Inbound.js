@@ -11,7 +11,7 @@ export const Inbound = () => {
   
   const bayList = useMemo(() => {
 
-    const baysToReturn = filter ? inbound.filter((bay) => !bay.trestleOn) : inbound
+    const baysToReturn = filter ? inbound.filter((bay) => !bay.trestleOn && bay.trailerNumber !== "Trailer Number") : inbound
     return baysToReturn.map((bay) => (
     <Bay
       key={bay.bayNumber}
