@@ -31,7 +31,7 @@ export const Inbound = () => {
 
   return (
     <>
-      {baysToReturn}
+      {baysList}
       <div className="footer">
         <Button
           variant="contained"
