@@ -35,7 +35,7 @@ export const DeleteUser = () => {
             setErrMsg(err.response?.data?.message || "An error occurred.");
             }
         }
-    };
+    
 
     return (
         <>
