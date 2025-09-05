@@ -5,16 +5,17 @@
   bottom: 0;
   left: 0;
   width: 100%;
-  background: linear-gradient(90deg, #c3c4c5, #c3c4c6);
-  padding: 6px 12px;
+  background: linear-gradient(90deg, #dce3eb, #f1f3f6); /* softer */
+  padding: 6px 12px; /* thinner bar */
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 -1px 3px rgba(0, 0, 0, 0.1); /* lighter shadow */
   z-index: 1000;
-  font-family: "Times New Roman", Times, serif;
-  letter-spacing: 0.5px;
+  font-family: "Roboto", sans-serif;
 }
+
+
 
 @media (max-width:600px) {
   .footer {

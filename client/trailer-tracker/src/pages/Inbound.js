@@ -31,47 +31,23 @@ export const Inbound = () => {
 
   return (
     <>
-      <div className='footer'> 
-        {!filter && (
+      <div className="footer">
         <Button
           variant="contained"
-          onClick={() => setFilter(true)}
+          size="small"
+          onClick={() => setFilter(!filter)}
           sx={{
-          ml: 2,
-          px: { xs: 2, sm: 3, md: 4 },  // horizontal padding changes with screen size
-          py: { xs: 1, sm: 1.5, md: 2 }, // vertical padding
-          fontSize: { xs: "12px", sm: "14px", md: "16px" },
-          textTransform: "none" // optional: keeps text normal instead of ALL CAPS
-            }}
-          >
-        Filter
-      </Button>
-
-        )}
-      </div> 
-      <div className='baylist'>
-        {bayList}
-      </div>
-        
-      <div className='footer'> 
-        {filter && (
-        <Button
-            variant="contained"
-            onClick={() => setFilter(true)}
-            sx={{
-              ml: 2,
-              px: { xs: 2, sm: 3, md: 4 },  // horizontal padding changes with screen size
-              py: { xs: 1, sm: 1.5, md: 2 }, // vertical padding
-              fontSize: { xs: "12px", sm: "14px", md: "16px" },
-              textTransform: "none" // optional: keeps text normal instead of ALL CAPS
-            }}
-          >
-            Filter
+            ml: 1,
+            fontSize: { xs: "11px", sm: "12px" },
+            minWidth: "80px",
+            height: "28px",
+            textTransform: "none",
+          }}
+        >
+          {filter ? "Unfilter" : "Filter"}
         </Button>
-
-      
-        )}
       </div>
+
      
     </>
   );
