@@ -19,13 +19,13 @@ export const Home = () => {
         <ListDividers />
       </div>
 
-      {isAdmin && <div className='footer'>
+      <div className='footer'>
         <p className='footer-text-left'>
           <Link to='/Admin/menu' className='link'>
             Admin
           </Link>
         </p>
-      </div> }
+      </div> 
     </>
   );
 };
