@@ -2,10 +2,10 @@
 
 .footer {
   position: fixed;
-  bottom: 0;
+  bottom: 15px;
   left: 0;
   width: 100%;
-  background: linear-gradient(90deg, #d2dce6, #a7c7ec);
+  background: linear-gradient(90deg, #a0caf5, #a7c7ec);
   padding: 12px 24px;
   display: flex;
   justify-content: flex-start;
