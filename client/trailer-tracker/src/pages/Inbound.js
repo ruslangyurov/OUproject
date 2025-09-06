@@ -31,7 +31,7 @@ export const Inbound = () => {
 
   return (
     <>
-      <div style = {{marginTop:60px}}>
+      <div style = {{marginTop:"60px"}}>
         {bayList}
       </div>
       <div className="footer">
