@@ -4,7 +4,7 @@ import axiosInstance from "../apiAxios/axios";
 import {useTimer} from "../Components/Timer";
 
 export const CreateBays = () => {
-  const [number, setNumber] = useState('');
+  const [number, setNumber] = useState(1);
   const [low, setLow] = useState(1);
   const [high, setHigh] = useState(1);
   const [errMsg,setErrMsg] = useState('');
@@ -24,7 +24,7 @@ export const CreateBays = () => {
   const handleSubmitSingle = async(e) => {
     e.preventDefault();
     
-    await axiosInstance.post(SINGLE_URL, { bayNumber: Number(number) }).then(() => setSuccessMsg("Bay successfully created"))
+    await axiosInstance.post(SINGLE_URL, { bayNumber: number }).then(() => setSuccessMsg("Bay successfully created"))
     .catch((err) => setErrMsg(err.response?.data?.message || "An error occurred"));
   }
 
