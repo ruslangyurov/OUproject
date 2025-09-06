@@ -43,9 +43,8 @@ const createBay = asyncHandler(async(req,res) => {
       return res.status(400).json({message:"Please enter a number!"})
     }
 
-    const num = Number(bayNumber)
-    print(num)
-    if (num > 200) {
+   
+    if (bayNumber > 200) {
       return res.status(400).json({message: "Please enter a valid number between 1 and 200!"})
     }
 
