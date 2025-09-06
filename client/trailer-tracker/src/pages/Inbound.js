@@ -31,7 +31,9 @@ export const Inbound = () => {
 
   return (
     <>
-      {bayList}
+      <div style = {{margin-top:60px}}>
+        {bayList}
+      </div>
       <div className="footer">
         <Button
           variant="contained"
