@@ -43,8 +43,8 @@ const createBay = asyncHandler(async(req,res) => {
       return res.status(400).json({message:"Please enter a number!"})
     }
 
-   
-   if (!Number.isInteger(bayNumber) || bayNumber < 1 || bayNumber > 200) {
+    console.log("DEBUG bayNumber:", bayNumber, "typeof:", typeof bayNumber);
+    if (!Number.isInteger(bayNumber) || bayNumber < 1 || bayNumber > 200) {
     return res.status(400).json({
       message: "Please enter a valid integer between 1 and 200!",
     });
