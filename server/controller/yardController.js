@@ -44,9 +44,11 @@ const createBay = asyncHandler(async(req,res) => {
     }
 
    
-    if (bayNumber > 200) {
-      return res.status(400).json({message: "Please enter a valid number between 1 and 200!"})
-    }
+   if (!Number.isInteger(bayNumber) || bayNumber < 1 || bayNumber > 200) {
+    return res.status(400).json({
+      message: "Please enter a valid integer between 1 and 200!",
+    });
+  }
 
     const duplicate = await Bay.findOne({bayNumber}).lean().exec()
     if (duplicate) {

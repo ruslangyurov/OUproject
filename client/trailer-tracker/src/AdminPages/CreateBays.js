@@ -76,7 +76,7 @@ export const CreateBays = () => {
 
               // Only allow numbers 1 and above
               if (num >= 1) {
-                setNumber(Number(value));
+                setNumber(value);
               }
             }}
             onClick={() => {
