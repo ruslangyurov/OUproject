@@ -12,7 +12,7 @@ export const DeleteUser = () => {
 
     const DELUSER_URL = '/user';
 
-    useTimer(success)
+    useTimer(success, setSuccess)
 
     const clearMsg = () => {
         setErrMsg("")
