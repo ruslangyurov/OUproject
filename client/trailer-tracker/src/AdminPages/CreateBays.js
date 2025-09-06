@@ -4,7 +4,7 @@ import axiosInstance from "../apiAxios/axios";
 import {useTimer} from "../Components/Timer";
 
 export const CreateBays = () => {
-  const [number, setNumber] = useState(1);
+  const [number, setNumber] = useState("");
   const [low, setLow] = useState(1);
   const [high, setHigh] = useState(1);
   const [errMsg,setErrMsg] = useState('');
