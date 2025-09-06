@@ -23,8 +23,8 @@ export const CreateBays = () => {
 
   const handleSubmitSingle = async(e) => {
     e.preventDefault();
-    const num = Number(number)
-    await axiosInstance.post(SINGLE_URL, { bayNumber: num }).then(() => setSuccessMsg("Bay successfully created"))
+   
+    await axiosInstance.post(SINGLE_URL, { bayNumber: number }).then(() => setSuccessMsg("Bay successfully created"))
     .catch((err) => setErrMsg(err.response?.data?.message || "An error occurred"));
   }
 
@@ -76,7 +76,7 @@ export const CreateBays = () => {
 
               // Only allow numbers 1 and above
               if (num >= 1) {
-                setNumber(value);
+                setNumber(Number(value));
               }
             }}
             onClick={() => {
