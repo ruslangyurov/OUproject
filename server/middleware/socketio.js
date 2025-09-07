@@ -25,6 +25,10 @@ const InitialiseSocketio = ({ server }) => {
             
         });
 
+        socket.on("brokenBay", (data) => {
+            io.emit("brokenBayUpdate", data)
+        })
+
         socket.on("bayDelete", async(data, callback) => {
             const bayDeleted = await deleteBay(data)
             if (bayDeleted.status === 200) {

@@ -22,6 +22,7 @@ export const SocketContextProvider = ({children}) => {
     const [bayUpdater, setBayUpdater] = useState(null)
     const [trestleUpdater, setTrestleUpdater] = useState(null)
     const [trestleUpdated, setTrestleUpdated] = useState(null)
+    const [brokenBayUpdate, setBrokenBayUpdate] = useState(null)
     const socketRef = useRef(null)
     const {isAuth} = useAuth(); 
 
@@ -77,6 +78,13 @@ export const SocketContextProvider = ({children}) => {
               setTrestleUpdated({time:bay.trestleUpdated, bayNumber:bay.bayNumber})
               setTrestleUpdater(bay.user)
             })
+
+          socket.on("brokenBayUpdate", (data) => [
+              setBrokenBayUpdate(data)
+          ])
+
+
+
         } else {
           if (socket) {
             socket.disconnect()
@@ -91,6 +99,7 @@ export const SocketContextProvider = ({children}) => {
       socket.off('bayUpdated');
       socket.off("bayDeleted")
       socket.off("trestleUpdated")
+      socekt.off("brokenBayUpdate")
       socket.disconnect();
     };
 
@@ -99,7 +108,7 @@ export const SocketContextProvider = ({children}) => {
   
 
   return (
-    <socketContext.Provider value = {{socket:socketRef.current, isConnected, bayData, updatedAt, inbound,outbound, bayDeleted, trestleUpdated, bayUpdater, trestleUpdater}}>
+    <socketContext.Provider value = {{socket:socketRef.current, isConnected, bayData, updatedAt, inbound,outbound, bayDeleted, trestleUpdated, bayUpdater, trestleUpdater, brokenBay, setBrokenBay}}>
       {children}
     </socketContext.Provider>
   )

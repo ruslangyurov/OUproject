@@ -21,7 +21,7 @@ import { Typography } from '@mui/material';
 
 export default function BayForm(props) {
 
-  const {socket, bayData, updatedAt, bayDeleted, trestleUpdated, bayUpdater, trestleUpdater} = useSocketContext()
+  const {socket, bayData, updatedAt, bayDeleted, trestleUpdated, bayUpdater, trestleUpdater, brokenBayUpdate} = useSocketContext()
 
  
   
@@ -34,7 +34,7 @@ export default function BayForm(props) {
  
   const [trestleUpdatedAt, setTrestleUpdatedAt] = useState(null)
   
-  
+  const brokenB = brokenBayUpdate.brokenBay
 
   const bayDelete = {
       bayNumber: props.number,
@@ -142,6 +142,14 @@ useEffect(() => {
     }
   }
   
+  const handleBrokenBay = (e) => {
+    const newStatus = e.target.checked;
+
+     if (socket) {
+      socket.emit("brokenBay", ({bayNumber:props.number, user:username, brokenBay:newStatus}))
+    }
+  }
+
   const handleTrestle = (e) => {
     const newStatus = e.target.checked;
     
@@ -301,7 +309,7 @@ return (
       />
 
       <FormControlLabel
-        control={<Switch defaultChecked={false} color="warning" />}
+        control={<Switch checked={brokenB} onChange = {handleBrokenBay} />}
         label="Broken Bay"
       />
 
