@@ -12,7 +12,7 @@ const verifyJWT = (req, res, next) => {
     }
 
     const token = authHeader.split(' ')[1]
-    jwt.verify(
+    verify(
         token,
         process.env.TOKEN_SECRET,
         (err, decoded) => {

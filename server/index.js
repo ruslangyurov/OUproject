@@ -16,6 +16,7 @@ import userRoute from './routes/userRoute.js';
 import cookieParser from 'cookie-parser';
 import * as path from 'path';
 import { updateBay } from './controller/yardController.js';
+import {logger} from './middleware/logger.js';
 
 //app.use(logger)
 
@@ -52,6 +53,8 @@ app.use(cookieParser())
 const mongoDb = "mongodb+srv://ruslangyurov:UPhkK4FkI2nVFUii@oucluster.dqizjw9.mongodb.net/?retryWrites=true&w=majority"
 
 //app.use('/', express.static(path.join(__dirname, 'public')))
+
+app.use(logger)
 
 
 
