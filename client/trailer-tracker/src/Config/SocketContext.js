@@ -22,7 +22,7 @@ export const SocketContextProvider = ({children}) => {
     const [bayUpdater, setBayUpdater] = useState(null)
     const [trestleUpdater, setTrestleUpdater] = useState(null)
     const [trestleUpdated, setTrestleUpdated] = useState(null)
-    const [brokenBayUpdate, setBrokenBayUpdate] = useState(null)
+    const [brokenBayUpdate, setBrokenBayUpdate] = useState(false)
     const socketRef = useRef(null)
     const {isAuth} = useAuth(); 
 
