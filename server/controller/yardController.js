@@ -1,10 +1,7 @@
 import mongoose from 'mongoose';
-import pkg from 'express-async-handler';
-const asyncHandler = pkg;
-// import io from '../index.js';
 import Bay from '../models/bay.js';
 
-export const createBays = asyncHandler(async (req, res) => {
+export const createBays = async (req, res) => {
   const { low, high } = req.body;
 
   if (high > 200) {
@@ -33,18 +30,18 @@ export const createBays = asyncHandler(async (req, res) => {
   }
 
   return res.status(201).json({ message: "Bays successfully created" });
-});
+};
 
 
-const createBay = asyncHandler(async(req,res) => {
+const createBay = async(req,res) => {
     const {bayNumber} = req.body
 
     if (!bayNumber) {
       return res.status(400).json({message:"Please enter a number!"})
     }
 
-    console.log("DEBUG bayNumber:", bayNumber, "typeof:", typeof bayNumber);
-    if (!Number.isInteger(bayNumber) || bayNumber < 1 || bayNumber > 200) {
+    const num = parseInt(bayNumber)
+    if (!Number.isInteger(num) || num > 200) {
     return res.status(400).json({
       message: "Please enter a valid integer between 1 and 200!",
     });
@@ -65,12 +62,16 @@ const createBay = asyncHandler(async(req,res) => {
     }
 
 
-    const newBay = await Bay.create(bayObj)
-   .then(() => res.status(201).json({message:"Bay Succesfully created"}))
-   .catch(err => res.status(400).json("Error: " + err))
-})
+    try {
+      await Bay.create(bayObj);
+      res.status(201).json({ message: "Bay successfully created" });
+    } catch (err) {
+      res.status(400).json({ message: "Error: " + err.message });
+    }
 
-const updateBay = asyncHandler(async(data) => {
+}
+
+const updateBay = async(data) => {
     const {bayNumber, trailerNumber, stockDelivered, fullTrailer, comment} = data
 
     if (!fullTrailer || !trailerNumber) {
@@ -85,14 +86,20 @@ const updateBay = asyncHandler(async(data) => {
         fullTrailer:fullTrailer,
         comment:comment
     }
+    try {
+      const newBay =  await Bay.findOneAndUpdate({bayNumber:bayNumber}, update, {new:true, runValidators:true}).exec()
 
-    const newBay =  await Bay.findOneAndUpdate({bayNumber:bayNumber}, update, {new:true, runValidators:true}).exec()
+      if (!newBay) {
+          return ({status: "401"})
+      } 
+      return {status: "200", bayInfo: newBay, updateTime:newBay.updatedAt}  
+    } catch (err) {
+      return { status: "500", message: "Server error" };
+  }
+}
 
-    if (!newBay) {
-        return ({status: "401"})
-    } 
-    return {status: "200", bayInfo: newBay, updateTime:newBay.updatedAt}
-})
+    
+
 
 const updateTrestle = async(data) => {
     const {bayNumber, trestleOn} = data
@@ -139,7 +146,7 @@ const getAllBays = async() => {
     return  bays
 }
 
-const getEmptyTrailers = asyncHandler(async(req, res) => {
+const getEmptyTrailers = async(req, res) => {
 
     const bays = await Bay.find({fullTrailer:"Empty"}).exec()
     if (!bays) {
@@ -147,9 +154,9 @@ const getEmptyTrailers = asyncHandler(async(req, res) => {
     
     }
     res.json(bays)
-})
+}
 
-const getFullTrailers = asyncHandler(async(req, res) => {
+const getFullTrailers = async(req, res) => {
 
     const bays = await Bay.find({fullTrailer:"Full"}).exec()
     if (!bays) {
@@ -157,9 +164,9 @@ const getFullTrailers = asyncHandler(async(req, res) => {
     
     }
     res.json(bays)
-})
+}
 
-const getBay = asyncHandler(async(req,res) => {
+const getBay = async(req,res) => {
     const trailerNumber = req.query.trailerNumber.toLowerCase()
     
     const bay = await Bay.findOne({trailerNumber:trailerNumber}).exec()
@@ -170,7 +177,7 @@ const getBay = asyncHandler(async(req,res) => {
     }
     res.json(bay)
    
-})
+}
 
 
 

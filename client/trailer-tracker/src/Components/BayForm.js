@@ -266,9 +266,9 @@ return (
         <Select
           labelId="StandTrailer"
           id="Trailer"
-          value={props.formData.fullTrailer}
+          value={props.formData.fullTrailer ? "Full":"Empty"}
           label="Stand Trailer"
-          onChange={(e) => updateStorage("fullTrailer", e.target.value)}
+          onChange={(e) => updateStorage("fullTrailer", e.target.value === "Full")}
            sx={{width: {
            xs: '100%',  // full width on extra-small screens
            sm: '80%',   // 80% on small screens

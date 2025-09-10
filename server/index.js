@@ -24,35 +24,21 @@ const app = express();
 const httpServer = createServer(app);
 InitialiseSocketio({server:httpServer})
 
-// const io = getIO()
-// io.on("bayUpdated", async(formData, callback, socket) => {
-//    try {
-//     const updatedBay =  await updateBay(formData);
-//     if (tryToUpdate.status === "400") {
-//       return callback({status: "400",message: "Please fill out all the required fields"})
-//     } 
-//    if (tryToUpdate.status === "401") {
-//       return callback({status: "401",message: "Please fill out all the required fields"})
-//    }
-//    socket.emit("baySuccesfullyUpdated", updatedBay)
-//    } catch (error) {
-//       return callback({status: "500", message: "Sth went wrong. Please try again later"})
-//    }
-// })
+
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 
 
-//app.use(bodyParser.urlencoded({ extended: false }));
+
 app.use(express.json({extended:true}))
 app.use(express.urlencoded({extended:true}))
 app.use(cors({origin: ["http://localhost:3000", "https://trailer-tracker.onrender.com"], credentials:true}));
 app.use(cookieParser())
 const mongoDb = "mongodb+srv://ruslangyurov:UPhkK4FkI2nVFUii@oucluster.dqizjw9.mongodb.net/?retryWrites=true&w=majority"
 
-//app.use('/', express.static(path.join(__dirname, 'public')))
+app.use('/', express.static(path.join(__dirname, 'public')))
 
 app.use(logger)
 
@@ -75,5 +61,12 @@ mongoose.connect(mongoDb).then(() => console.log(
  app.use('/user', userRoute)
  app.use('/auth', userAuthRoute)
  
- 
+ // Catch-all error handler
+app.use((err, req, res, next) => {
+  console.error(err.stack); // logs the error for debugging
+  const status = err.status || 500; // default to 500 if not set
+  const message = err.message || "Something went wrong!";
+  res.status(status).json({ message });
+});
+
   

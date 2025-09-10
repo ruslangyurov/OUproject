@@ -11,7 +11,7 @@ const BaySchema = new Schema ({
         required:true
     },
     stockDelivered: String,
-    fullTrailer: String,
+    fullTrailer: { type: Boolean, default: false },
     comment: String,
     trestleOn:Boolean,
     
