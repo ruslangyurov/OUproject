@@ -38,7 +38,7 @@ app.use(cors({origin: ["http://localhost:3000", "https://trailer-tracker.onrende
 app.use(cookieParser())
 const mongoDb = "mongodb+srv://ruslangyurov:UPhkK4FkI2nVFUii@oucluster.dqizjw9.mongodb.net/?retryWrites=true&w=majority"
 
-app.use('/', express.static(path.join(__dirname, 'public')))
+//app.use('/', express.static(path.join(__dirname, 'public')))
 
 app.use(logger)
 
