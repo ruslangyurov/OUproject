@@ -2,9 +2,9 @@ import express from 'express';
 const router = express.Router()
 import asyncHandler from 'express-async-handler';
 import * as userController from '../controller/userController.js';
-import {verify} from '../middleware/verifyJWT.js';
+import {verifyJWT} from '../middleware/verifyJWT.js';
 
-router.use(verify)
+router.use(verifyJWT)
 
 router.route('/')
     .get(asyncHandler(userController.getAllUsers))

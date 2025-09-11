@@ -1,25 +1,29 @@
 import jwt from 'jsonwebtoken';
 
+// Middleware to verify JWT access token
+const verifyJWT = (req, res, next) => {
+  // Get the Authorization header
+  const authHeader = req.headers.authorization || req.headers.Authorization;
 
-
-
-jwt.verify(
-  refreshToken,
-  process.env.REFRESH_TOKEN_SECRET,
-  async (err, decoded) => {
-    if (err) return res.status(403).json({ message: "Forbidden" })
-
-    const foundUser = await User.findOne({ username: decoded.username }).exec()
-    if (!foundUser) return res.status(401).json({ message: 'Unauthorized - user not found' })
-
-    const accessToken = jwt.sign(
-      { userInfo: { username: foundUser.username, role: foundUser.role, user_id: foundUser.user_id } },
-      process.env.TOKEN_SECRET,
-      { expiresIn: '15m' }
-    )
-
-    res.json({ accessToken })
+  if (!authHeader?.startsWith('Bearer ')) {
+    return res.status(401).json({ message: 'Unauthorized: No token provided' });
   }
-)
 
-export {verify}
+  // Extract token from "Bearer <token>"
+  const token = authHeader.split(' ')[1];
+
+  // Verify the token
+  jwt.verify(token, process.env.TOKEN_SECRET, (err, decoded) => {
+    if (err) {
+      return res.status(403).json({ message: err.message }); // e.g., TokenExpiredError
+    }
+
+    // Attach user info to request object for downstream middleware/routes
+    req.user = decoded.userInfo.username;
+    req.role = decoded.userInfo.role;
+
+    next();
+  });
+};
+
+export { verifyJWT };
