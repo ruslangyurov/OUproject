@@ -1,5 +1,6 @@
 import express from 'express';
 const router = express.Router()
+import asyncHandler from 'express-async-handler';
 import * as userController from '../controller/userController.js';
 import * as verifyToken from '../middleware/verifyJWT.js';
 
