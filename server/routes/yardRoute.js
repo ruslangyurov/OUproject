@@ -1,7 +1,6 @@
 import express from 'express';
 const router = express.Router();
-import pkg from 'express-async-handler';
-const asyncHandler = pkg;
+import asyncHandler from 'express-async-handler';
 import * as yardController from '../controller/yardController.js';
 import {verifyJWT} from '../middleware/verifyJWT.js';
 
@@ -15,11 +14,11 @@ router.route('/')
     .patch(yardController.updateBay)
     .delete()
 
-router.route('/FullTrailers').get(yardController.asyncHandler(getFullTrailers))
+router.route('/FullTrailers').get(asyncHandler(yardController.getFullTrailers))
 
-router.route('/Search').get(yardController.asyncHandler(getBay))
+router.route('/Search').get(asyncHandler(yardController.getBay))
 
-router.route('/EmptyTrailers').get(yardController.asyncHandler(getEmptyTrailers))
+router.route('/EmptyTrailers').get(asyncHandler(yardController.getEmptyTrailers))
 
 router.route('/create-bays').post(yardController.createBays)
 
