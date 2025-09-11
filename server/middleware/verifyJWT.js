@@ -1,30 +1,25 @@
 import jwt from 'jsonwebtoken';
-import { env } from 'process';
-const {verify} = jwt;
 
 
-const verifyJWT = (req, res, next) => {
-    const authHeader = req.headers.authorization || req.headers.Authorization
-    // console.log(authHeader)
-   
-    if (!authHeader?.startsWith('Bearer ')) {
-        return res.status(401).json({ message: 'Unauthorized' })
-    }
 
-    const token = authHeader.split(' ')[1]
-    verify(
-        token,
-        process.env.TOKEN_SECRET,
-        (err, decoded) => {
-            if (err) {
-        
-                return res.status(403).json({ message: err.message })
-            }
-            req.user = decoded.userInfo.username
-            req.role = decoded.userInfo.role
-            next()
-        }
+
+jwt.verify(
+  refreshToken,
+  process.env.REFRESH_TOKEN_SECRET,
+  async (err, decoded) => {
+    if (err) return res.status(403).json({ message: "Forbidden" })
+
+    const foundUser = await User.findOne({ username: decoded.username }).exec()
+    if (!foundUser) return res.status(401).json({ message: 'Unauthorized - user not found' })
+
+    const accessToken = jwt.sign(
+      { userInfo: { username: foundUser.username, role: foundUser.role, user_id: foundUser.user_id } },
+      process.env.TOKEN_SECRET,
+      { expiresIn: '15m' }
     )
-}
 
-export {verifyJWT} 
+    res.json({ accessToken })
+  }
+)
+
+export {verify}

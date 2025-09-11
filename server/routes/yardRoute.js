@@ -2,11 +2,11 @@ import express from 'express';
 const router = express.Router();
 import asyncHandler from 'express-async-handler';
 import * as yardController from '../controller/yardController.js';
-import {verifyJWT} from '../middleware/verifyJWT.js';
+import {verify} from '../middleware/verifyJWT.js';
 
 
 
-// router.use(verifyJWT)
+router.use(verify)
 
 
 router.route('/')
