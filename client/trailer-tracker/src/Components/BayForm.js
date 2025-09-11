@@ -279,8 +279,8 @@ return (
           maxWidth: 400,
           }}
         >
-          <MenuItem value={"Full"}>Full Trailer</MenuItem>
-          <MenuItem value={"Empty"}>Empty Trailer</MenuItem>
+          <MenuItem value="Full">Full Trailer</MenuItem>
+          <MenuItem value="Empty">Empty Trailer</MenuItem>
         </Select>
       </FormControl>
        <Button

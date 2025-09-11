@@ -9,19 +9,19 @@ import bcrypt from 'bcrypt';
 // @route GET /users
 // @access private
 
-export const getAllUsers = asyncHandler(async (req,res) => {
+export const getAllUsers = async (req,res) => {
     const users = await User.find().select('-password').lean();
     if (!users) {
         return res.status(400).json({message: "No users found"})
     }
     return users;
-})
+}
 
 // @desc create new user
 // @route POST /users
 // @access private
 
-export const createNewUser = asyncHandler(async (req,res) => {
+export const createNewUser = async (req,res) => {
    
    //confirm data
    const {username, password, role, name, address, phone} = req.body;
@@ -44,13 +44,13 @@ export const createNewUser = asyncHandler(async (req,res) => {
    } else {
     return res.status(400).json({message:"Invalid data."})
    }
-})
+}
 
 // @desc update user
 // @route PATCH /users
 // @access private
 
-export const getUserInfo = asyncHandler(async (req, res) => {
+export const getUserInfo = async (req, res) => {
   const  username  = req.user; // <-- From JWT
 
   console.log(username)
@@ -65,11 +65,11 @@ export const getUserInfo = asyncHandler(async (req, res) => {
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
-});
+};
 
 
 
-export const updateUserAdminEmployment = asyncHandler(async (req,res) => {
+export const updateUserAdminEmployment = async (req,res) => {
 
     const {username, newPosition, newDepartment, newStartDate, newEndDate} = req.body
 
@@ -91,9 +91,9 @@ export const updateUserAdminEmployment = asyncHandler(async (req,res) => {
   }
 
     res.status(200).json(updatedUser);
-})
+}
 
-export const updateUserInfoUser = asyncHandler(async (req, res) => {
+export const updateUserInfoUser = async (req, res) => {
     
     const {newName, newAddress, newPhoneNumber} = req.body
     const username = req.user
@@ -111,9 +111,9 @@ export const updateUserInfoUser = asyncHandler(async (req, res) => {
     return res.status(404).json({ message: "User not found." });
   }
     res.status(200).json(updatedUser)
-})
+}
 
-export const updateUserAdmin = asyncHandler(async (req,res) => {
+export const updateUserAdmin = async (req,res) => {
    const {username, role, newUsername, newPassword, newRole} = req.body
    
    if (!username || !role) {
@@ -145,12 +145,12 @@ export const updateUserAdmin = asyncHandler(async (req,res) => {
    res.status(200).json(user)
 
    
-})
+}
 // @desc delete user
 // @route DELETE /users
 // @access private
 
-export const deleteUser = asyncHandler(async (req,res) => {
+export const deleteUser = async (req,res) => {
    const {username, role} = req.body
 
    const user =  await User.findOne({username:username, role:role})
@@ -167,4 +167,4 @@ export const deleteUser = asyncHandler(async (req,res) => {
    }
 
    
-})
+}

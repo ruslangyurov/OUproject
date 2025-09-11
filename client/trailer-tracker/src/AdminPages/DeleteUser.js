@@ -32,7 +32,7 @@ export const DeleteUser = () => {
             });
             setSuccess(response?.data?.message);
         } catch (err) {
-            setErrMsg(err.response?.data?.message || "An error occurred.");
+            setErrMsg(err.response?.data?.message || err.message || "An error occurred.");
             }
         }
     

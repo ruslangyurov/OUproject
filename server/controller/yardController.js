@@ -16,7 +16,7 @@ export const createBays = async (req, res) => {
       bayNumber: i,
       trailerNumber: "Trailer Number",
       stockDelivered: "",
-      fullTrailer: "empty",
+      fullTrailer: false,
       comment: "",
       trestleOn: false,
     };
@@ -74,7 +74,7 @@ const createBay = async(req,res) => {
 const updateBay = async(data) => {
     const {bayNumber, trailerNumber, stockDelivered, fullTrailer, comment} = data
 
-    if (!fullTrailer || !trailerNumber) {
+    if (!trailerNumber) {
         return ({status: "400"})
     }
     console.log(trailerNumber)
