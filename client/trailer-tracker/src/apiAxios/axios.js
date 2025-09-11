@@ -3,6 +3,7 @@ import { useAuth } from "../Config/AuthContext";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
+import {refreshToken} from '../Config/RefreshHelper';
 
 // Create an axios instance
 const axiosInstance = axios.create({
@@ -55,8 +56,7 @@ export const ResponseInterceptor = () => {
         originalRequest._retry = true;
 
         try {
-          const refreshResponse = await axiosInstance.get('/auth/refresh');
-          const newAccessToken = refreshResponse.data.accessToken;
+          const newAccessToken = await refreshToken();
           console.log(newAccessToken)
 
           if (!newAccessToken) {
@@ -65,7 +65,7 @@ export const ResponseInterceptor = () => {
           }
 
           setAuth(newAccessToken);
-          localStorage.setItem('accessToken', newAccessToken);
+          
 
           originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
           return axiosInstance(originalRequest);

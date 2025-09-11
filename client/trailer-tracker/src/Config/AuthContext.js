@@ -2,6 +2,7 @@ import { createContext, useState, useContext } from "react";
 import {jwtDecode} from "jwt-decode";
 import { useMemo, useEffect } from "react";
 import axiosInstance from '../apiAxios/axios';
+import {refreshToken} from './Config/RefreshHelper';
 
 export const AuthContext = createContext();
 
@@ -11,8 +12,8 @@ export const AuthContextProvider = ({ children }) => {
   useEffect(() => {
     const refreshToken = async () => {
       try {
-        const res = await axiosInstance.get("/auth/refresh", { withCredentials: true });
-        setAuth(res.data.accessToken);
+        const newToken = await refreshToken();
+        setAuth(newToken);
       } catch (err) {
         console.log("No valid refresh token found.");
       }
