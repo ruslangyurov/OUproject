@@ -16,7 +16,7 @@ import userRoute from './routes/userRoute.js';
 import cookieParser from 'cookie-parser';
 import * as path from 'path';
 import { updateBay } from './controller/yardController.js';
-import {logger} from './middleware/logger.js';
+
 
 //app.use(logger)
 
