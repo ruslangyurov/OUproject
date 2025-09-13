@@ -193,7 +193,7 @@ return (
         helperText="Please enter trailer number"
         error={
           localForm.trailerNumber === "Trailer Number" ||
-          localform.trailerNumber === ""
+          localForm.trailerNumber === ""
         }
        
       />
@@ -210,7 +210,7 @@ return (
         }}
         onClick={() => {
           if (localForm.stockDelivered === "Stock Delivered")
-            props.setFormData({ ...localForm, stockDelivered: "" });
+            setLocalForm({ ...localForm, stockDelivered: "" });
         }}
         onChange={(e) => updateStorage("stockDelivered", e.target.value)}
         id="Stock - text"
@@ -232,7 +232,7 @@ return (
           maxWidth: 400,
         }}
         onClick={() => {if (localForm.comment === "Comment")
-            props.setFormData({ ...localForm, comment: "" });
+            setLocalForm({ ...localForm, comment: "" });
         }}
         onChange={(e) =>updateStorage("comment", e.target.value)}
         id="Comment - text"
@@ -305,7 +305,7 @@ return (
         variant="caption"
         sx={{ mt: 1, alignSelf: "flex-end", color: 'gray' }}
       >
-        {localForm.updatedAt && `Updated at ${format(new Date(localform.updatedAT), 'PPpp')} by ${localForm.updatedBy}`}
+        {localForm.updatedAt && `Updated at ${format(new Date(localForm.updatedAT), 'PPpp')} by ${localForm.updatedBy}`}
       </Typography>
       <Typography
         variant="caption"
