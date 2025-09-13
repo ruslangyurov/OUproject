@@ -45,7 +45,7 @@ const InitialiseSocketio = ({ server }) => {
 
         socket.on("bayUpdate", async (data, callback) => {
           
-                const bayUpdated = await updateBay(data.formData);
+                const bayUpdated = await updateBay(data);
 
                 if (bayUpdated.status === "400") {
                     return callback({ status: "400", message: "Please fill in all the required fields." });

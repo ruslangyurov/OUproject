@@ -97,7 +97,7 @@ useEffect(() => {
  
   
   } 
-}, [bayData, updatedAt, props.number]);
+}, [bayData, props.number]);
 
 useEffect(() => {
   if (msg) {
