@@ -19,23 +19,25 @@ import { Typography } from '@mui/material';
 
 
 
-export default function BayForm(props) {
+export default function BayForm({formData, setFormData}) {
 
   const {socket, bayDeleted, trestleUpdatedOnBay, brokenBayUpdate} = useSocketContext()
 
  
-  
+  const [localForm, setLocalForm] = useState(formData)
   const {username} = useAuth();
   const [msg, setErrMsg] = useState("");
   const [emptyBay, setEmptyBay] = useState(true);
   const [trestleUpdaterLocal,  setTrestleUpdaterLocal] = useState(null)
-  const [bayUpdatedAt, setBayUpdatedAt] = useState(null)
+  const [updateBay, setUpdateBay] = useState(null)
  
   const [trestleUpdatedAt, setTrestleUpdatedAt] = useState(null)
   
   const brokenB = brokenBayUpdate.brokenBay
 
-  
+  useEffect(() => {
+    setLocalForm(formData);
+  }, [formData]);
 
   useEffect(() => {
   // Detect if bay is filled
@@ -85,7 +87,7 @@ export default function BayForm(props) {
 
 
   const updateStorage = (field, value) => {
-    props.setFormData(prevState => ({...prevState, [field]:value}))
+     setLocalFormData(prevState => ({...prevState, [field]:value}))
 
     
   }
@@ -96,7 +98,7 @@ export default function BayForm(props) {
   const handleSubmit = (e) => {
       e.preventDefault()
       if (socket) {
-       socket.emit("bayUpdate", {formData:props.formData, user:username}, (response) => {
+       socket.emit("bayUpdate", {formData:formData, user:username}, (response) => {
        console.log("SERVER RESPONSE:", response)
        setErrMsg(response.message)
       })
@@ -181,17 +183,17 @@ return (
           maxWidth: 400,
         }}
         onClick={() => {
-          if (props.formData.trailerNumber === "Trailer Number")
-            props.setFormData({ ...props.formData, trailerNumber: "" });
+          if (localForm.trailerNumber === "Trailer Number")
+            setLocalForm({ ...localForm, trailerNumber: "" });
         }}
-        onChange={(e) => updateStorage("trailerNumber", e.target.value)}
+        onChange={(e) => updateStorage("TrailerNumber", e.target.value)}
         id="outlined-required"
         label="Trailer Number"
-        value={props.formData.trailerNumber}
+        value={localForm.trailerNumber}
         helperText="Please enter trailer number"
         error={
-          props.formData.trailerNumber === "Trailer Number" ||
-          props.formData.trailerNumber === ""
+          localForm.trailerNumber === "Trailer Number" ||
+          localform.trailerNumber === ""
         }
        
       />
@@ -207,13 +209,13 @@ return (
           maxWidth: 400,
         }}
         onClick={() => {
-          if (props.formData.stockDelivered === "Stock Delivered")
-            props.setFormData({ ...props.formData, stockDelivered: "" });
+          if (localform.stockDelivered === "Stock Delivered")
+            props.setFormData({ ...localform, stockDelivered: "" });
         }}
         onChange={(e) => updateStorage("stockDelivered", e.target.value)}
         id="Stock - text"
         label="Stock"
-        value={props.formData.stockDelivered}
+        value={localform.stockDelivered}
         helperText="Enter type of stock delivered"
       
       />
@@ -229,13 +231,13 @@ return (
           minWidth: 200,
           maxWidth: 400,
         }}
-        onClick={() => {if (props.formData.comment === "Comment")
-            props.setFormData({ ...props.formData, comment: "" });
+        onClick={() => {if (localform.comment === "Comment")
+            props.setFormData({ ...localform, comment: "" });
         }}
         onChange={(e) =>updateStorage("comment", e.target.value)}
         id="Comment - text"
         label="Comment"
-        value={props.formData.comment}
+        value={localform.comment}
     
       />
 
@@ -244,7 +246,7 @@ return (
         <Select
           labelId="StandTrailer"
           id="Trailer"
-          value={props.formData.fullTrailer ? "Full":"Empty"}
+          value={localform.fullTrailer ? "Full":"Empty"}
           label="Stand Trailer"
           onChange={(e) => updateStorage("fullTrailer", e.target.value === "Full")}
            sx={{width: {
@@ -303,13 +305,13 @@ return (
         variant="caption"
         sx={{ mt: 1, alignSelf: "flex-end", color: 'gray' }}
       >
-        {bayUpdatedAt && `Updated at ${format(new Date(props.formData.updatedAT), 'PPpp')} by ${props.formData.updatedBy}`}
+        {bayUpdatedAt && `Updated at ${format(new Date(localform.updatedAT), 'PPpp')} by ${localform.updatedBy}`}
       </Typography>
       <Typography
         variant="caption"
         sx={{ mt: 1, alignSelf: "flex-end", color: 'gray' }}
       >
-        {trestleUpdatedAt && `Trestle status updated at ${format(new Date(props.formData.updatedAt), 'PPpp')} by ${props.formData.updatedBy}`}
+        {trestleUpdatedAt && `Trestle status updated at ${format(new Date(localform.updatedAt), 'PPpp')} by ${localform.updatedBy}`}
       </Typography>
     </Box>
   </Box>
