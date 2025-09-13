@@ -39,33 +39,33 @@ export default function BayForm({formData, setFormData}) {
     setLocalForm(formData);
   }, [formData]);
 
-  useEffect(() => {
-  // Detect if bay is filled
-  if (props.formData.bayNumber === props.number && props.formData.trailerNumber?.trim() && props.formData.trailerNumber != "Trailer Number") {
-    setEmptyBay(false);
-  } else {
-    setEmptyBay(true)
-  }
-}, [props.formData, props.number]);
+//   useEffect(() => {
+//   // Detect if bay is filled
+//   if (props.formData.bayNumber === props.number && props.formData.trailerNumber?.trim() && props.formData.trailerNumber != "Trailer Number") {
+//     setEmptyBay(false);
+//   } else {
+//     setEmptyBay(true)
+//   }
+// }, [props.formData, props.number]);
 
-// useEffect(() => {
-//   console.log("BayForm: props.trestleOn changed for bay", props.number, "to", props.trestleOn);
-//   setTrestle(props.trestleOn)
-// },[props.trestleOn])
+// // useEffect(() => {
+// //   console.log("BayForm: props.trestleOn changed for bay", props.number, "to", props.trestleOn);
+// //   setTrestle(props.trestleOn)
+// // },[props.trestleOn])
 
 
 
-  useEffect(() => {
-    if (!trestleUpdatedOnBay) return;
-    if (trestleUpdatedOnBay?.bayNumber === props.number) {
-      const trestleUpdate = {
-        trestleOn: trestleUpdatedOnBay.trestleOn,
-        updatedBy: trestleUpdatedOnBay.updatedBy,
-        updatedAt: trestleUpdatedOnBay.updatedAt
-      }
-      props.setFormData(prev => ({...prev, ...trestleUpdate}))
-    }
-  }, [trestleUpdatedOnBay, props.number]);
+//   useEffect(() => {
+//     if (!trestleUpdatedOnBay) return;
+//     if (trestleUpdatedOnBay?.bayNumber === props.number) {
+//       const trestleUpdate = {
+//         trestleOn: trestleUpdatedOnBay.trestleOn,
+//         updatedBy: trestleUpdatedOnBay.updatedBy,
+//         updatedAt: trestleUpdatedOnBay.updatedAt
+//       }
+//       props.setFormData(prev => ({...prev, ...trestleUpdate}))
+//     }
+//   }, [trestleUpdatedOnBay, props.number]);
 
     
   
@@ -74,16 +74,16 @@ export default function BayForm({formData, setFormData}) {
     
 
 
-  useEffect(() => {
-    if (msg) {
-      setErrMsg("");
-    }
-  }, [
-    props.formData.trailerNumber,
-    props.formData.stockDelivered,
-    props.formData.fullTrailer,
-    props.formData.comment
-  ]);
+//   useEffect(() => {
+//     if (msg) {
+//       setErrMsg("");
+//     }
+//   }, [
+//     props.formData.trailerNumber,
+//     props.formData.stockDelivered,
+//     props.formData.fullTrailer,
+//     props.formData.comment
+//   ]);
 
 
   const updateStorage = (field, value) => {
@@ -98,7 +98,7 @@ export default function BayForm({formData, setFormData}) {
   const handleSubmit = (e) => {
       e.preventDefault()
       if (socket) {
-       socket.emit("bayUpdate", {formData:formData, user:username}, (response) => {
+       socket.emit("bayUpdate", {formData:localForm, user:username}, (response) => {
        console.log("SERVER RESPONSE:", response)
        setErrMsg(response.message)
       })
@@ -107,37 +107,37 @@ export default function BayForm({formData, setFormData}) {
     
   // Bay is empty. Data is reset
    
-  const handleDelete = (e) => {
+  // const handleDelete = (e) => {
 
-    setEmptyBay(true)
+  //   setEmptyBay(true)
    
-    const resetBay = {
-      bayNumber: props.number,
-      trailerNumber: props.formData.trailerNumber
-    }
-    if (socket) {
-      socket.emit("bayDelete", {...resetBay, user:username}, (response) => {
-        setErrMsg(response.message)
-      })
-    }
-  }
+  //   const resetBay = {
+  //     bayNumber: props.number,
+  //     trailerNumber: props.formData.trailerNumber
+  //   }
+  //   if (socket) {
+  //     socket.emit("bayDelete", {...resetBay, user:username}, (response) => {
+  //       setErrMsg(response.message)
+  //     })
+  //   }
+  // }
   
-  const handleBrokenBay = (e) => {
-    const newStatus = e.target.checked;
+  // const handleBrokenBay = (e) => {
+  //   const newStatus = e.target.checked;
 
-     if (socket) {
-      socket.emit("brokenBay", ({bayNumber:props.number, user:username, brokenBay:newStatus}))
-    }
-  }
+  //    if (socket) {
+  //     socket.emit("brokenBay", ({bayNumber:props.number, user:username, brokenBay:newStatus}))
+  //   }
+  // }
 
-  const handleTrestle = (e) => {
-    const newStatus = e.target.checked;
+  // const handleTrestle = (e) => {
+  //   const newStatus = e.target.checked;
     
     
-    if (socket) {
-      socket.emit("updateTrestle", ({bayNumber:props.number, trestleOn:newStatus, user:username}))
-    }
-  }
+  //   if (socket) {
+  //     socket.emit("updateTrestle", ({bayNumber:props.number, trestleOn:newStatus, user:username}))
+  //   }
+  // }
     
     
     // This will act as a delete operation on the app
@@ -209,13 +209,13 @@ return (
           maxWidth: 400,
         }}
         onClick={() => {
-          if (localform.stockDelivered === "Stock Delivered")
-            props.setFormData({ ...localform, stockDelivered: "" });
+          if (localForm.stockDelivered === "Stock Delivered")
+            props.setFormData({ ...localForm, stockDelivered: "" });
         }}
         onChange={(e) => updateStorage("stockDelivered", e.target.value)}
         id="Stock - text"
         label="Stock"
-        value={localform.stockDelivered}
+        value={localForm.stockDelivered}
         helperText="Enter type of stock delivered"
       
       />
@@ -231,13 +231,13 @@ return (
           minWidth: 200,
           maxWidth: 400,
         }}
-        onClick={() => {if (localform.comment === "Comment")
-            props.setFormData({ ...localform, comment: "" });
+        onClick={() => {if (localForm.comment === "Comment")
+            props.setFormData({ ...localForm, comment: "" });
         }}
         onChange={(e) =>updateStorage("comment", e.target.value)}
         id="Comment - text"
         label="Comment"
-        value={localform.comment}
+        value={localForm.comment}
     
       />
 
@@ -246,7 +246,7 @@ return (
         <Select
           labelId="StandTrailer"
           id="Trailer"
-          value={localform.fullTrailer ? "Full":"Empty"}
+          value={localForm.fullTrailer ? "Full":"Empty"}
           label="Stand Trailer"
           onChange={(e) => updateStorage("fullTrailer", e.target.value === "Full")}
            sx={{width: {
