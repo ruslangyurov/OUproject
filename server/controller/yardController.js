@@ -73,7 +73,7 @@ const createBay = async(req,res) => {
 
 const updateBay = async(data) => {
     const {bayNumber, trailerNumber, stockDelivered, fullTrailer, comment} = data.formData
-    const {user} = data.user
+    const user = data.user
 
     if (!trailerNumber) {
         return ({status: "400"})
