@@ -17,7 +17,7 @@ export const Inbound = () => {
   
   const [filter, setFilter] = useState(false)
   const {inbound, setInbound} = useSocketContext()
-  
+  const [trestle, setTrestle] = useState(false)
 
   const baysToReturn = filter 
   ? inbound.filter(bay => !bay.trestleOn && bay.trailerNumber !== "Trailer Number")
@@ -48,6 +48,8 @@ export const Inbound = () => {
               setFormData={(updated) =>
                 setInbound(prev =>prev.map(b =>b.bayNumber === bay.bayNumber ? { ...b, ...updated } : b))
               }
+              trestle = {trestle}
+              setTrestle = {setTrestle}
             />
           </AccordionSummary>
         </Accordion>

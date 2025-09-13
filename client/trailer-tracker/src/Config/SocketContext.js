@@ -14,13 +14,10 @@ const socketContext = createContext()
 
 export const SocketContextProvider = ({children}) => {
     const [isConnected, setIsConnected] = useState(false);
-    const [bayData, setBayData] = useState(null)
     const [inbound, setInbound] = useState([])
     const [outbound, setOutbound] = useState([])
     const [parking, setParking] = useState([])
     const [bayDeleted, setBayDeleted] = useState(null)
-    const [trestleUpdatedOnBay, setTrestleUpdatedOnBay] = useState(null)
-    const [brokenBayUpdate, setBrokenBayUpdate] = useState(false)
     const socketRef = useRef(null)
     const {isAuth} = useAuth(); 
 
@@ -82,7 +79,7 @@ export const SocketContextProvider = ({children}) => {
           socket.on("trestleUpdated", (bay) => {
             if (!bay) return;
 
-           
+            setTrestleUpdatedOnBay({updatedAt:bay.updatedAt, updatedBy:bay.updatedBy})
 
             if (bay.bayNumber <= 30) {
               setInbound(prev =>

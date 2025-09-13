@@ -19,7 +19,7 @@ import { Typography } from '@mui/material';
 
 
 
-export default function BayForm({formData, setFormData}) {
+export default function BayForm({formData, setFormData, trestle, setTrestle}) {
 
   const {socket, bayDeleted, trestleUpdatedOnBay, brokenBayUpdate} = useSocketContext()
 
@@ -30,7 +30,7 @@ export default function BayForm({formData, setFormData}) {
   const [emptyBay, setEmptyBay] = useState(true);
   const [trestleUpdaterLocal,  setTrestleUpdaterLocal] = useState(null)
   const [updateBay, setUpdateBay] = useState(null)
- 
+  
   const [trestleUpdatedAt, setTrestleUpdatedAt] = useState(null)
   
   const brokenB = brokenBayUpdate.brokenBay
@@ -130,14 +130,14 @@ export default function BayForm({formData, setFormData}) {
   //   }
   // }
 
-  // const handleTrestle = (e) => {
-  //   const newStatus = e.target.checked;
+  const handleTrestle = (e) => {
+    const newStatus = e.target.checked;
     
     
-  //   if (socket) {
-  //     socket.emit("updateTrestle", ({bayNumber:props.number, trestleOn:newStatus, user:username}))
-  //   }
-  // }
+    if (socket) {
+      socket.emit("updateTrestle", ({bayNumber:localForm.bayNumber, trestleOn:newStatus, user:username}))
+    }
+  }
     
     
     // This will act as a delete operation on the app
@@ -294,7 +294,7 @@ return (
       />
 
        <FormControlLabel
-        control={<Switch checked={localForm.trestleOn}  />}
+        control={<Switch checked={localForm.trestleOn} onChange={handleTrestle}  />}
         label="Trestle on"
       />
 
@@ -311,7 +311,7 @@ return (
         variant="caption"
         sx={{ mt: 1, alignSelf: "flex-end", color: 'gray' }}
       >
-        {trestleUpdatedAt && `Trestle status updated at ${format(new Date(localForm.updatedAt), 'PPpp')} by ${localForm.updatedBy}`}
+        {localForm.trestleUpdatedAt && `Trestle status updated at ${format(localForm.updatedAt, 'PPpp')} by ${localForm.trestleUpdatedBy}`}
       </Typography>
     </Box>
   </Box>

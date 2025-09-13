@@ -16,6 +16,8 @@ const BaySchema = new Schema ({
     trestleOn:Boolean,
     updatedBy: String,
     broken:Boolean,
+    tresleUpdatedAt: Date, 
+    tresleUpdatedBy: String
     
 },{timestamps:true})
 
