@@ -87,7 +87,7 @@ export default function BayForm({formData, setFormData}) {
 
 
   const updateStorage = (field, value) => {
-     setLocalFormData(prevState => ({...prevState, [field]:value}))
+     setLocalForm(prevState => ({...prevState, [field]:value}))
 
     
   }
@@ -284,17 +284,17 @@ return (
         width:"100%"
       }}>
       <FormControlLabel
-        control={<Switch checked={emptyBay} onChange={handleDelete} />}
+        control={<Switch checked={emptyBay} onChange={} />}
         label="Empty bay"
       />
 
       <FormControlLabel
-        control={<Switch checked={brokenB} onChange = {handleBrokenBay} />}
+        control={<Switch checked={brokenB} onChange = {} />}
         label="Broken Bay"
       />
 
        <FormControlLabel
-        control={<Switch checked={props.trestleOn} onChange={handleTrestle} />}
+        control={<Switch checked={localForm.trestleOn} onChange={} />}
         label="Trestle on"
       />
 
@@ -305,13 +305,13 @@ return (
         variant="caption"
         sx={{ mt: 1, alignSelf: "flex-end", color: 'gray' }}
       >
-        {bayUpdatedAt && `Updated at ${format(new Date(localform.updatedAT), 'PPpp')} by ${localform.updatedBy}`}
+        {localForm.updatedAt && `Updated at ${format(new Date(localform.updatedAT), 'PPpp')} by ${localForm.updatedBy}`}
       </Typography>
       <Typography
         variant="caption"
         sx={{ mt: 1, alignSelf: "flex-end", color: 'gray' }}
       >
-        {trestleUpdatedAt && `Trestle status updated at ${format(new Date(localform.updatedAt), 'PPpp')} by ${localform.updatedBy}`}
+        {trestleUpdatedAt && `Trestle status updated at ${format(new Date(localForm.updatedAt), 'PPpp')} by ${localForm.updatedBy}`}
       </Typography>
     </Box>
   </Box>
