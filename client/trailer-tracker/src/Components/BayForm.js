@@ -67,25 +67,10 @@ export default function BayForm(props) {
 
     
   
-  useEffect(() => {
-    if (bayData && bayData.bayNumber === props.number) {
-      props.setFormData({
-        bayNumber: props.number,
-        trailerNumber: bayData.trailerNumber || "Trailer Number",
-        stockDelivered: bayData.stockDelivered || "Stock Delivered",
-        fullTrailer: bayData.fullTrailer,
-        comment: bayData.comment || "Comment",
-        updatedBy: bayData.user,
-        updatedAt:bayData.updatedAt
-        
-      });
-      setEmptyBay(false)
+  
       
     
- 
-  
-  } 
-}, [bayData, props.number]);
+
 
   useEffect(() => {
     if (msg) {
