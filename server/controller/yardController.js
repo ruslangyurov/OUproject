@@ -86,7 +86,7 @@ const updateBay = async(data) => {
         stockDelivered:stockDelivered === "Stock Delivered"||stockDelivered === ""?"No Information":stockDelivered,
         fullTrailer:fullTrailer,
         comment:comment,
-        updatedBy = user
+        updatedBy: user
     }
 
     try {
