@@ -16,8 +16,8 @@ import { useSocketContext } from '../Config/SocketContext';
 export const Inbound = () => {
   
   const [filter, setFilter] = useState(false)
-  const {inbound, outbound} = useSocketContext()
-
+  const {inbound, setInbound} = useSocketContext()
+  
 
   const baysToReturn = filter 
   ? inbound.filter(bay => !bay.trestleOn && bay.trailerNumber !== "Trailer Number")

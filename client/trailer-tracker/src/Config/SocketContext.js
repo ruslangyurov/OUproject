@@ -127,7 +127,7 @@ export const SocketContextProvider = ({children}) => {
   
 
   return (
-    <socketContext.Provider value = {{socket:socketRef.current, isConnected, bayData, inbound,outbound, bayDeleted, trestleUpdatedOnBay, brokenBayUpdate, setBrokenBayUpdate}}>
+    <socketContext.Provider value = {{socket:socketRef.current, isConnected, bayData, inbound,setInbound, outbound, bayDeleted, trestleUpdatedOnBay, brokenBayUpdate, setBrokenBayUpdate}}>
       {children}
     </socketContext.Provider>
   )
