@@ -9,7 +9,7 @@ export const Inbound = () => {
   const [filter, setFilter] = useState(false)
   const {inbound, outbound} = useSocketContext()
   
-  const bayList = useMemo(() => {
+  const bayList = () => {
 
     const baysToReturn = filter ? inbound.filter((bay) => !bay.trestleOn && bay.trailerNumber !== "Trailer Number") : inbound
     return baysToReturn.map((bay) => (
@@ -27,14 +27,14 @@ export const Inbound = () => {
       index={bay.bayNumber}
     />
   ));
-  }, [filter,inbound]);
+  };
 
 
 
   return (
     <>
       <div style = {{marginTop:"60px"}}>
-        {bayList}
+        {bayList()}
       </div>
       <div className="footer">
         <Button

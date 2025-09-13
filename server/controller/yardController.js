@@ -133,7 +133,7 @@ const deleteBay = async(data) => {
       return { status: 409 };
     } else {
       console.error("Delete error:", err);
-      return { status: 500 };
+      return { status: 500, message:err.message};
     }
   }
 };
