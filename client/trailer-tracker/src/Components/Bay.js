@@ -22,6 +22,8 @@ export default function Bay(props) {
       stockDelivered: props.stockDelivered,
       fullTrailer: props.fullTrailer,
       comment: props.comment,
+      updatedBy: props.updatedBy,
+      updatedAt: props.updatedAt
   
     });
 
@@ -61,12 +63,10 @@ export default function Bay(props) {
 
           <BayForm
             number={props.number}
-            state={props.state}
-            filter={props.filter}
+            filter = {props.filter}
             formData = {formData}
             setFormData = {setFormData}
-            trestleOn = {props.trestleOn}
-            userEdited = {userEdited}
+            
 
           />
         </AccordionSummary>

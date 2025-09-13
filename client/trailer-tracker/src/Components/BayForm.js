@@ -21,14 +21,13 @@ import { Typography } from '@mui/material';
 
 export default function BayForm(props) {
 
-  const {socket, bayData, updatedAt, bayDeleted, trestleUpdated, bayUpdater, trestleUpdater, brokenBayUpdate} = useSocketContext()
+  const {socket, bayData, bayDeleted, trestleUpdatedOnBay, brokenBayUpdate} = useSocketContext()
 
  
   
   const {username} = useAuth();
   const [msg, setErrMsg] = useState("");
   const [emptyBay, setEmptyBay] = useState(true);
-  const [bayUpdaterLocal, setBayUpdaterLocal] = useState(null)
   const [trestleUpdaterLocal,  setTrestleUpdaterLocal] = useState(null)
   const [bayUpdatedAt, setBayUpdatedAt] = useState(null)
  
@@ -40,7 +39,7 @@ export default function BayForm(props) {
       bayNumber: props.number,
       trailerNumber: "Trailer Number", 
       stockDelivered: "",
-      fullTrailer: "",
+      fullTrailer: false,
       comment: ""
     }
   
@@ -48,7 +47,7 @@ useEffect(() => {
   // Reset form if bay was deleted
   if (bayDeleted?.status && bayDeleted.bayNumber === props.number) {
     setEmptyBay(true);
-    props.setFormData(bayDelete);
+    props.setFormData(prev => ({...prev, ...bayDelete}));
   }
 }, [bayDeleted, props.number, props.setFormData]);
 
@@ -66,12 +65,17 @@ useEffect(() => {
 //   setTrestle(props.trestleOn)
 // },[props.trestleOn])
 
+const trestleUpdate = {
+  trestleOn: trestleUpdatedOnBay.trestleOn,
+  updatedBy: trestleUpdatedOnBay.updatedBy,
+  updatedAt: trestleUpdatedOnBay.updatedAt
+}
+
 useEffect(() => {
-  if (trestleUpdated?.bayNumber === props.number) {
-    setTrestleUpdaterLocal(trestleUpdater);
-    setTrestleUpdatedAt(trestleUpdated.time);
+  if (trestleUpdatedOnBay?.bayNumber === props.number) {
+    props.setFormData(prev => ({...prev, ...trestleUpdate}))
   }
-}, [trestleUpdated, trestleUpdater, props.number]);
+}, [trestleUpdatedOnBay, props.number]);
 
     
   
@@ -81,13 +85,14 @@ useEffect(() => {
       bayNumber: props.number,
       trailerNumber: bayData.trailerNumber || "Trailer Number",
       stockDelivered: bayData.stockDelivered || "Stock Delivered",
-      fullTrailer: bayData.fullTrailer || "",
+      fullTrailer: bayData.fullTrailer,
       comment: bayData.comment || "Comment",
+      updatedBy: bayData.user,
+      updatedAt:bayData.updatedAt
       
     });
     setEmptyBay(false)
-    setBayUpdatedAt(updatedAt)
-    setBayUpdaterLocal(bayUpdater);
+    
     
  
   
@@ -325,13 +330,13 @@ return (
         variant="caption"
         sx={{ mt: 1, alignSelf: "flex-end", color: 'gray' }}
       >
-        {bayUpdatedAt && `Updated at ${format(new Date(bayUpdatedAt), 'PPpp')} by ${bayUpdaterLocal}`}
+        {bayUpdatedAt && `Updated at ${format(new Date(props.formData.updatedAT), 'PPpp')} by ${props.formData.updatedBy}`}
       </Typography>
       <Typography
         variant="caption"
         sx={{ mt: 1, alignSelf: "flex-end", color: 'gray' }}
       >
-        {trestleUpdatedAt && `Trestle status updated at ${format(new Date(trestleUpdatedAt), 'PPpp')} by ${trestleUpdaterLocal}`}
+        {trestleUpdatedAt && `Trestle status updated at ${format(new Date(props.formData.updatedAt), 'PPpp')} by ${props.formData.updatedBy}`}
       </Typography>
     </Box>
   </Box>

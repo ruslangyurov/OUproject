@@ -19,9 +19,8 @@ const InitialiseSocketio = ({ server }) => {
                 });
 
         socket.on("updateTrestle", async(data) => {
-            console.log("update trestle recieved")
-            const trestleUpdated = await updateTrestle(data)
-            io.emit("trestleUpdated", {...trestleUpdated, user:data.user});
+            const trestleUpdatedOnBay = await updateTrestle(data)
+            io.emit("trestleUpdated", trestleUpdatedOnBay);
             
         });
 
@@ -56,7 +55,7 @@ const InitialiseSocketio = ({ server }) => {
                     return callback({ status: "500", message: "Something went wrong. Please try again later!" });
                 } else if (bayUpdated.status === "200") {
                    
-                    io.emit("bayUpdated", {...bayUpdated, user:data.user});
+                    io.emit("bayUpdated", {...bayUpdated});
                     return callback({status:"200"})
 
                 }

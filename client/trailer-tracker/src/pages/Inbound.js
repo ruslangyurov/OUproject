@@ -21,6 +21,8 @@ export const Inbound = () => {
       comment={bay.comment}
       fullTrailer={bay.fullTrailer}
       trestleOn = {bay.trestleOn}
+      updatedBy = {bay.updatedBy}
+      updatedAt = {bay.updatedAT}
       filter={filter}
       index={bay.bayNumber}
     />

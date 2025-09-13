@@ -72,7 +72,7 @@ const createBay = async(req,res) => {
 }
 
 const updateBay = async(data) => {
-    const {bayNumber, trailerNumber, stockDelivered, fullTrailer, comment} = data
+    const {bayNumber, trailerNumber, stockDelivered, fullTrailer, comment, user} = data
 
     if (!trailerNumber) {
         return ({status: "400"})
@@ -84,15 +84,17 @@ const updateBay = async(data) => {
         trailerNumber:trailerNumber.toLowerCase(),
         stockDelivered:stockDelivered === "Stock Delivered"||stockDelivered === ""?"No Information":stockDelivered,
         fullTrailer:fullTrailer,
-        comment:comment
+        comment:comment,
+        updatedBy = user
     }
+
     try {
       const newBay =  await Bay.findOneAndUpdate({bayNumber:bayNumber}, update, {new:true, runValidators:true}).exec()
 
       if (!newBay) {
           return ({status: "401"})
       } 
-      return {status: "200", bayInfo: newBay, updateTime:newBay.updatedAt}  
+      return {status: "200", bayInfo:newBay}  
     } catch (err) {
       return { status: "500", message: "Server error" };
   }
@@ -102,10 +104,10 @@ const updateBay = async(data) => {
 
 
 const updateTrestle = async(data) => {
-    const {bayNumber, trestleOn} = data
+    const {bayNumber, trestleOn, user} = data
 
-    const updatedTrestle = await Bay.findOneAndUpdate({bayNumber:bayNumber}, {trestleOn:trestleOn}, {new:true, runValidators:true}).exec()
-    return {trestleOn:updatedTrestle.trestleOn, bayNumber:updatedTrestle.bayNumber, trestleUpdated:updatedTrestle.updatedAt}
+    const updatedBayTrestle = await Bay.findOneAndUpdate({bayNumber:bayNumber}, {trestleOn:trestleOn, updatedBy:user}, {new:true, runValidators:true}).exec()
+    return updatedBayTrestle
 }
 
 const deleteBay = async(data) => {

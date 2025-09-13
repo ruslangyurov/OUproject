@@ -15,13 +15,11 @@ const socketContext = createContext()
 export const SocketContextProvider = ({children}) => {
     const [isConnected, setIsConnected] = useState(false);
     const [bayData, setBayData] = useState(null)
-    const [updatedAt, setUpdatedAt] = useState(null)
     const [inbound, setInbound] = useState([])
     const [outbound, setOutbound] = useState([])
+    const [parking, setParking] = useState([])
     const [bayDeleted, setBayDeleted] = useState(null)
-    const [bayUpdater, setBayUpdater] = useState(null)
-    const [trestleUpdater, setTrestleUpdater] = useState(null)
-    const [trestleUpdated, setTrestleUpdated] = useState(null)
+    const [trestleUpdatedOnBay, setTrestleUpdatedOnBay] = useState(null)
     const [brokenBayUpdate, setBrokenBayUpdate] = useState(false)
     const socketRef = useRef(null)
     const {isAuth} = useAuth(); 
@@ -53,10 +51,21 @@ export const SocketContextProvider = ({children}) => {
           socket.on("bayUpdated", (data) => {
             if (data.status === "200") {
                 setBayData(data.bayInfo) 
-                setUpdatedAt(data.updateTime)
-                setBayUpdater(data.user)
-            }
-      })
+                if (data.bayInfo.bayNumber <= 30) {
+                  setInbound(prev => prev.map(bay => (
+                    bay.bayNumber === data.bayInfo.bayNumber ? {...bay, ...data.bayInfo}:bay
+                  )))
+                } else if (30 < data.bayInfo.bayNumber < 70) {
+                  setOutbound(prev => prev.map(bay => (
+                    bay.bayNumber === data.bayInfo.bayNumber ? {...bay, ...data.bayInfo}:bay
+                  )))
+                } else {
+                  setParking(prev => prev.map(bay => (
+                    bay.bayNumber === data.bayInfo.bayNumber ? {...bay, ...data.bayInfo}:bay
+                  )))
+                }
+                }
+          })
           
            socket.on("bayDeleted", (data) => {
             console.log(data)
@@ -73,11 +82,12 @@ export const SocketContextProvider = ({children}) => {
           socket.on("trestleUpdated", (bay) => {
             
             if (bay) {
-              console.log(bay)
-              setInbound(prev => prev.map(b => b.bayNumber === bay.bayNumber ? {...b, trestleOn: bay.trestleOn} : b))}
-              setTrestleUpdated({time:bay.trestleUpdated, bayNumber:bay.bayNumber})
-              setTrestleUpdater(bay.user)
-            })
+              setTrestleUpdatedOnBay(bay)
+              if (bay.bayNumber <= 30) {
+                setInbound(prev => prev.map(b => b.bayNumber === bay.bayNumber ? {...b, trestleOn: bay.trestleOn} : b))}
+              } else {
+                setOutbound(prev => prev.map(b => b.bayNumber === bay.bayNumber ? {...b, trestleOn: bay.trestleOn} : b))}
+              })
 
           socket.on("brokenBayUpdate", (data) => [
               setBrokenBayUpdate(data)
@@ -108,7 +118,7 @@ export const SocketContextProvider = ({children}) => {
   
 
   return (
-    <socketContext.Provider value = {{socket:socketRef.current, isConnected, bayData, updatedAt, inbound,outbound, bayDeleted, trestleUpdated, bayUpdater, trestleUpdater, brokenBayUpdate, setBrokenBayUpdate}}>
+    <socketContext.Provider value = {{socket:socketRef.current, isConnected, bayData, inbound,outbound, bayDeleted, trestleUpdatedOnBay, brokenBayUpdate, setBrokenBayUpdate}}>
       {children}
     </socketContext.Provider>
   )
