@@ -305,7 +305,7 @@ return (
         variant="caption"
         sx={{ mt: 1, alignSelf: "flex-end", color: 'gray' }}
       >
-        {localForm.updatedAt && `Updated at ${format(new Date(localForm.updatedAT), 'PPpp')} by ${localForm.updatedBy}`}
+        {localForm.updatedAt && `Updated at ${format(new Date(localForm.updatedAt), 'PPpp')} by ${localForm.updatedBy}`}
       </Typography>
       <Typography
         variant="caption"
