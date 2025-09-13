@@ -79,7 +79,7 @@ export const SocketContextProvider = ({children}) => {
           socket.on("trestleUpdated", (bay) => {
             if (!bay) return;
 
-            setTrestleUpdatedOnBay({updatedAt:bay.updatedAt, updatedBy:bay.updatedBy})
+            
 
             if (bay.bayNumber <= 30) {
               setInbound(prev =>
@@ -95,9 +95,9 @@ export const SocketContextProvider = ({children}) => {
           });
 
 
-          socket.on("brokenBayUpdate", (data) => [
-              setBrokenBayUpdate(data)
-          ])
+          // socket.on("brokenBayUpdate", (data) => [
+          //     setBrokenBayUpdate(data)
+          // ])
 
 
 
@@ -124,7 +124,7 @@ export const SocketContextProvider = ({children}) => {
   
 
   return (
-    <socketContext.Provider value = {{socket:socketRef.current, isConnected, bayData, inbound,setInbound, outbound, bayDeleted, trestleUpdatedOnBay, brokenBayUpdate, setBrokenBayUpdate}}>
+    <socketContext.Provider value = {{socket:socketRef.current, isConnected, inbound, setInbound, outbound, bayDeleted}}>
       {children}
     </socketContext.Provider>
   )
