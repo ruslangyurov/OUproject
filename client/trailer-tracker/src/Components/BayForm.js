@@ -186,7 +186,7 @@ return (
           if (localForm.trailerNumber === "Trailer Number")
             setLocalForm({ ...localForm, trailerNumber: "" });
         }}
-        onChange={(e) => updateStorage("TrailerNumber", e.target.value)}
+        onChange={(e) => updateStorage("trailerNumber", e.target.value)}
         id="outlined-required"
         label="Trailer Number"
         value={localForm.trailerNumber}
