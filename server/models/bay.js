@@ -15,7 +15,7 @@ const BaySchema = new Schema ({
     comment: String,
     trestleOn:Boolean,
     updatedBy: String,
-    broken:boolean,
+    broken:Boolean,
     
 },{timestamps:true})
 
