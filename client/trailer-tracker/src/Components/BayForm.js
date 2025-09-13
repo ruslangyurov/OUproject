@@ -284,17 +284,17 @@ return (
         width:"100%"
       }}>
       <FormControlLabel
-        control={<Switch checked={emptyBay} onChange={} />}
+        control={<Switch checked={emptyBay} />}
         label="Empty bay"
       />
 
       <FormControlLabel
-        control={<Switch checked={brokenB} onChange = {} />}
+        control={<Switch checked={brokenB}  />}
         label="Broken Bay"
       />
 
        <FormControlLabel
-        control={<Switch checked={localForm.trestleOn} onChange={} />}
+        control={<Switch checked={localForm.trestleOn}  />}
         label="Trestle on"
       />
 
