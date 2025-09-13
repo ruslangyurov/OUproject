@@ -65,14 +65,16 @@ useEffect(() => {
 //   setTrestle(props.trestleOn)
 // },[props.trestleOn])
 
-const trestleUpdate = {
-  trestleOn: trestleUpdatedOnBay.trestleOn,
-  updatedBy: trestleUpdatedOnBay.updatedBy,
-  updatedAt: trestleUpdatedOnBay.updatedAt
-}
+
 
 useEffect(() => {
+  if (!trestleUpdatedOnBay) return;
   if (trestleUpdatedOnBay?.bayNumber === props.number) {
+    const trestleUpdate = {
+      trestleOn: trestleUpdatedOnBay.trestleOn,
+      updatedBy: trestleUpdatedOnBay.updatedBy,
+      updatedAt: trestleUpdatedOnBay.updatedAt
+    }
     props.setFormData(prev => ({...prev, ...trestleUpdate}))
   }
 }, [trestleUpdatedOnBay, props.number]);

@@ -80,14 +80,23 @@ export const SocketContextProvider = ({children}) => {
           })
 
           socket.on("trestleUpdated", (bay) => {
-            
-            if (bay) {
-              setTrestleUpdatedOnBay(bay)
-              if (bay.bayNumber <= 30) {
-                setInbound(prev => prev.map(b => b.bayNumber === bay.bayNumber ? {...b, trestleOn: bay.trestleOn} : b))}
-              } else {
-                setOutbound(prev => prev.map(b => b.bayNumber === bay.bayNumber ? {...b, trestleOn: bay.trestleOn} : b))}
-              })
+            if (!bay) return;
+
+            setTrestleUpdatedOnBay(bay);
+
+            if (bay.bayNumber <= 30) {
+              setInbound(prev =>
+                prev.map(b => b.bayNumber === bay.bayNumber ? { ...b, trestleOn: bay.trestleOn } : b));
+            } else if (bay.bayNumber > 30 && bay.bayNumber < 70) {
+              setOutbound(prev =>
+                prev.map(b => b.bayNumber === bay.bayNumber ? { ...b, trestleOn: bay.trestleOn } : b));
+            } else {
+              setParking(prev =>
+                prev.map(b => b.bayNumber === bay.bayNumber ? { ...b, trestleOn: bay.trestleOn } : b)
+              );
+            }
+          });
+
 
           socket.on("brokenBayUpdate", (data) => [
               setBrokenBayUpdate(data)
