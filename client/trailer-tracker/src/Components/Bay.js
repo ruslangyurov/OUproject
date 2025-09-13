@@ -1,76 +1,76 @@
-import Box from '@mui/material/Box';
-import Accordion from '@mui/material/Accordion';
-import AccordionActions from '@mui/material/AccordionActions';
-import AccordionSummary from '@mui/material/AccordionSummary';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import Switch from '@mui/material/Switch';
-import FormGroup from '@mui/material/FormGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import BayForm from '../Components/BayForm';
-import { Typography } from '@mui/material';
-import { useSocketContext } from '../Config/SocketContext';
-import { useEffect, useState, useRef } from 'react';
+// import Box from '@mui/material/Box';
+// import Accordion from '@mui/material/Accordion';
+// import AccordionActions from '@mui/material/AccordionActions';
+// import AccordionSummary from '@mui/material/AccordionSummary';
+// import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+// import Switch from '@mui/material/Switch';
+// import FormGroup from '@mui/material/FormGroup';
+// import FormControlLabel from '@mui/material/FormControlLabel';
+// import BayForm from '../Components/BayForm';
+// import { Typography } from '@mui/material';
+// import { useSocketContext } from '../Config/SocketContext';
+// import { useEffect, useState, useRef } from 'react';
 
 
-export default function Bay(props) {
+// export default function Bay(props) {
 
-  const userEdited = useRef(false)
+//   const userEdited = useRef(false)
 
-  const [formData, setFormData] = useState({
-      bayNumber: props.number,
-      trailerNumber: props.trailerNumber,
-      stockDelivered: props.stockDelivered,
-      fullTrailer: props.fullTrailer,
-      comment: props.comment,
-      updatedBy: props.updatedBy,
-      updatedAt: props.updatedAt
+//   const [formData, setFormData] = useState({
+//       bayNumber: props.number,
+//       trailerNumber: props.trailerNumber,
+//       stockDelivered: props.stockDelivered,
+//       fullTrailer: props.fullTrailer,
+//       comment: props.comment,
+//       updatedBy: props.updatedBy,
+//       updatedAt: props.updatedAt
   
-    });
+//     });
 
  
 
-  if (props.state === true && props.filter === true) {
-    return "";
-  }
+//   if (props.state === true && props.filter === true) {
+//     return "";
+//   }
 
-  return (
-    <Box sx={{ width: '100%', mb: 2 }}>
-      <Accordion disableGutters sx={{ width: '100%' }}>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel1-content"
-          id="panel1-header"
-          sx={{
-            bgcolor: '#e3f2fd',
-            alignItems: 'flex-start',
-            gap: 1,
-            px: 2,
-            py: 1,
-          }}
-        >
-          <Typography
-            sx={{
-              fontSize: {
-                xs: '1rem',
-                sm: '1.2rem',
-                md: '1.4rem',
-              },
-              fontWeight: 'bold',
-            }}
-          >
-            {props.number.toString()}
-          </Typography>
+//   return (
+//     <Box sx={{ width: '100%', mb: 2 }}>
+//       <Accordion disableGutters sx={{ width: '100%' }}>
+//         <AccordionSummary
+//           expandIcon={<ExpandMoreIcon />}
+//           aria-controls="panel1-content"
+//           id="panel1-header"
+//           sx={{
+//             bgcolor: '#e3f2fd',
+//             alignItems: 'flex-start',
+//             gap: 1,
+//             px: 2,
+//             py: 1,
+//           }}
+//         >
+//           <Typography
+//             sx={{
+//               fontSize: {
+//                 xs: '1rem',
+//                 sm: '1.2rem',
+//                 md: '1.4rem',
+//               },
+//               fontWeight: 'bold',
+//             }}
+//           >
+//             {props.number.toString()}
+//           </Typography>
 
-          <BayForm
-            number={props.number}
-            filter = {props.filter}
-            formData = {formData}
-            setFormData = {setFormData}
+//           <BayForm
+//             number={props.number}
+//             filter = {props.filter}
+//             formData = {formData}
+//             setFormData = {setFormData}
             
 
-          />
-        </AccordionSummary>
-      </Accordion>
-    </Box>
-  );
-}
+//           />
+//         </AccordionSummary>
+//       </Accordion>
+//     </Box>
+//   );
+// }

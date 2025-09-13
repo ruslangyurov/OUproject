@@ -50,21 +50,21 @@ export const SocketContextProvider = ({children}) => {
 
           socket.on("bayUpdated", (data) => {
             if (data.status === "200") {
-                setBayData(data.bayInfo) 
-                if (data.bayInfo.bayNumber <= 30) {
-                  setInbound(prev => prev.map(bay => (
-                    bay.bayNumber === data.bayInfo.bayNumber ? {...bay, ...data.bayInfo}:bay
-                  )))
-                } else if (30 < data.bayInfo.bayNumber < 70) {
-                  setOutbound(prev => prev.map(bay => (
-                    bay.bayNumber === data.bayInfo.bayNumber ? {...bay, ...data.bayInfo}:bay
-                  )))
-                } else {
-                  setParking(prev => prev.map(bay => (
-                    bay.bayNumber === data.bayInfo.bayNumber ? {...bay, ...data.bayInfo}:bay
-                  )))
-                }
-                }
+               
+              if (data.bayInfo.bayNumber <= 30) {
+                setInbound(prev => prev.map(bay => (
+                bay.bayNumber === data.bayInfo.bayNumber ? {...bay, ...data.bayInfo}:bay
+                )))
+              } else if (30 < data.bayInfo.bayNumber < 70) {
+                setOutbound(prev => prev.map(bay => (
+                  bay.bayNumber === data.bayInfo.bayNumber ? {...bay, ...data.bayInfo}:bay
+                )))
+              } else {
+                setParking(prev => prev.map(bay => (
+                  bay.bayNumber === data.bayInfo.bayNumber ? {...bay, ...data.bayInfo}:bay
+                )))
+              }
+            }
           })
           
            socket.on("bayDeleted", (data) => {
@@ -82,7 +82,7 @@ export const SocketContextProvider = ({children}) => {
           socket.on("trestleUpdated", (bay) => {
             if (!bay) return;
 
-            setTrestleUpdatedOnBay(bay);
+           
 
             if (bay.bayNumber <= 30) {
               setInbound(prev =>

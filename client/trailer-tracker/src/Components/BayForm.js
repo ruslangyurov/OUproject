@@ -21,7 +21,7 @@ import { Typography } from '@mui/material';
 
 export default function BayForm(props) {
 
-  const {socket, bayData, bayDeleted, trestleUpdatedOnBay, brokenBayUpdate} = useSocketContext()
+  const {socket, bayDeleted, trestleUpdatedOnBay, brokenBayUpdate} = useSocketContext()
 
  
   
@@ -35,23 +35,9 @@ export default function BayForm(props) {
   
   const brokenB = brokenBayUpdate.brokenBay
 
-  const bayDelete = {
-      bayNumber: props.number,
-      trailerNumber: "Trailer Number", 
-      stockDelivered: "",
-      fullTrailer: false,
-      comment: ""
-    }
   
-useEffect(() => {
-  // Reset form if bay was deleted
-  if (bayDeleted?.status && bayDeleted.bayNumber === props.number) {
-    setEmptyBay(true);
-    props.setFormData(prev => ({...prev, ...bayDelete}));
-  }
-}, [bayDeleted, props.number, props.setFormData]);
 
-useEffect(() => {
+  useEffect(() => {
   // Detect if bay is filled
   if (props.formData.bayNumber === props.number && props.formData.trailerNumber?.trim() && props.formData.trailerNumber != "Trailer Number") {
     setEmptyBay(false);
@@ -67,50 +53,50 @@ useEffect(() => {
 
 
 
-useEffect(() => {
-  if (!trestleUpdatedOnBay) return;
-  if (trestleUpdatedOnBay?.bayNumber === props.number) {
-    const trestleUpdate = {
-      trestleOn: trestleUpdatedOnBay.trestleOn,
-      updatedBy: trestleUpdatedOnBay.updatedBy,
-      updatedAt: trestleUpdatedOnBay.updatedAt
+  useEffect(() => {
+    if (!trestleUpdatedOnBay) return;
+    if (trestleUpdatedOnBay?.bayNumber === props.number) {
+      const trestleUpdate = {
+        trestleOn: trestleUpdatedOnBay.trestleOn,
+        updatedBy: trestleUpdatedOnBay.updatedBy,
+        updatedAt: trestleUpdatedOnBay.updatedAt
+      }
+      props.setFormData(prev => ({...prev, ...trestleUpdate}))
     }
-    props.setFormData(prev => ({...prev, ...trestleUpdate}))
-  }
-}, [trestleUpdatedOnBay, props.number]);
+  }, [trestleUpdatedOnBay, props.number]);
 
     
   
-useEffect(() => {
-  if (bayData && bayData.bayNumber === props.number) {
-    props.setFormData({
-      bayNumber: props.number,
-      trailerNumber: bayData.trailerNumber || "Trailer Number",
-      stockDelivered: bayData.stockDelivered || "Stock Delivered",
-      fullTrailer: bayData.fullTrailer,
-      comment: bayData.comment || "Comment",
-      updatedBy: bayData.user,
-      updatedAt:bayData.updatedAt
+  useEffect(() => {
+    if (bayData && bayData.bayNumber === props.number) {
+      props.setFormData({
+        bayNumber: props.number,
+        trailerNumber: bayData.trailerNumber || "Trailer Number",
+        stockDelivered: bayData.stockDelivered || "Stock Delivered",
+        fullTrailer: bayData.fullTrailer,
+        comment: bayData.comment || "Comment",
+        updatedBy: bayData.user,
+        updatedAt:bayData.updatedAt
+        
+      });
+      setEmptyBay(false)
       
-    });
-    setEmptyBay(false)
-    
     
  
   
   } 
 }, [bayData, props.number]);
 
-useEffect(() => {
-  if (msg) {
-    setErrMsg("");
-  }
-}, [
-  props.formData.trailerNumber,
-  props.formData.stockDelivered,
-  props.formData.fullTrailer,
-  props.formData.comment
-]);
+  useEffect(() => {
+    if (msg) {
+      setErrMsg("");
+    }
+  }, [
+    props.formData.trailerNumber,
+    props.formData.stockDelivered,
+    props.formData.fullTrailer,
+    props.formData.comment
+  ]);
 
 
   const updateStorage = (field, value) => {
