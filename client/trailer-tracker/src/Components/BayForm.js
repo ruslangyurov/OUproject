@@ -39,14 +39,14 @@ export default function BayForm({formData, setFormData, trestle, setTrestle}) {
     setLocalForm(formData);
   }, [formData]);
 
-//   useEffect(() => {
-//   // Detect if bay is filled
-//   if (props.formData.bayNumber === props.number && props.formData.trailerNumber?.trim() && props.formData.trailerNumber != "Trailer Number") {
-//     setEmptyBay(false);
-//   } else {
-//     setEmptyBay(true)
-//   }
-// }, [props.formData, props.number]);
+  useEffect(() => {
+  // Detect if bay is filled
+  if (formData.trailerNumber?.trim() && formData.trailerNumber != "Trailer Number") {
+    setEmptyBay(false);
+  } else {
+    setEmptyBay(true)
+  }
+}, [formData]);
 
 // // useEffect(() => {
 // //   console.log("BayForm: props.trestleOn changed for bay", props.number, "to", props.trestleOn);
@@ -109,11 +109,10 @@ export default function BayForm({formData, setFormData, trestle, setTrestle}) {
    
   const handleDelete = (e) => {
 
-   
-   
+    setEmptyBay(true)
     const resetBay = {
-      bayNumber: localForm.bayNumber,
-      trailerNumber: LocalForm.trailerNumber
+      bayNumber: formData.bayNumber,
+      trailerNumber: formData.trailerNumber
     }
     if (socket) {
       socket.emit("bayDelete", {...resetBay, user:username}, (response) => {

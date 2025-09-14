@@ -113,10 +113,19 @@ const updateTrestle = async(data) => {
 }
 
 const deleteBay = async(data) => {
-  const {bayNumber, trailerNumber} = data;
+  const {bayNumber, trailerNumber, user} = data;
 
   if (!trailerNumber || !bayNumber) {
     return { status: 400, message:`Validation error, trailer number: ${trailerNumber}, bay number: ${bayNumber}` };
+  }
+
+  const deletedBay = {
+    trailerNumber:"Trailer Number",
+    stockDelivered:"",
+    fullTrailer:"",
+    comment:"",
+    bayUpdatedAt: new Date(),
+    bayUpdatedBy: user
   }
 
   try {
