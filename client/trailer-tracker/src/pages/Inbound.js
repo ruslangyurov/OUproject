@@ -26,7 +26,7 @@ export const Inbound = () => {
   return (
   <> 
     {baysToReturn.map(bay => (
-      <Box sx={{ width: '100%', mb: 2 }} key={bay.bayNumber}>
+      <Box sx={{ width: '100%', mb: 2. mt:"60px" }} key={bay.bayNumber}>
         <Accordion disableGutters sx={{ width: '100%' }}>
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
