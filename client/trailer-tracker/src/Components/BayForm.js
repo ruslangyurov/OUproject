@@ -283,7 +283,7 @@ return (
         width:"100%"
       }}>
       <FormControlLabel
-        control={<Switch checked={emptyBay} />}
+        control={<Switch checked={emptyBay} onChange={handleDelete} />}
         label="Empty bay"
       />
 
