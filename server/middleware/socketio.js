@@ -31,13 +31,13 @@ const InitialiseSocketio = ({ server }) => {
         socket.on("bayDelete", async(data, callback) => {
             const bayDeleted = await deleteBay(data)
             if (bayDeleted.status === 200) {
-                io.emit("bayDeleted", {bayDeleted:bayDeleted.bayNumber, user:data.user, time:bayDeleted.bayDeletedAt})
+                io.emit("bayDeleted", bayDeleted.bay)
             } else if (bayDeleted.status === 400) {
                 return callback({status:400, message:bayDeleted.message})
             } else if (bayDeleted.status === 409) {
                 return callback({status:409, message:"Duplicate key error"})
             } else {
-                return callback({status:500, message: beyDeleted.message})
+                return callback({status:500, message: "Internal server error."})
             }
             
         })
@@ -55,7 +55,7 @@ const InitialiseSocketio = ({ server }) => {
                     return callback({ status: "500", message: "Something went wrong. Please try again later!" });
                 } else if (bayUpdated.status === "200") {
                    
-                    io.emit("bayUpdated", {...bayUpdated});
+                    io.emit("bayUpdated", bayUpdated.bayInfo);
                     return callback({status:"200"})
 
                 }

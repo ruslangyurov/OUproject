@@ -107,20 +107,20 @@ export default function BayForm({formData, setFormData, trestle, setTrestle}) {
     
   // Bay is empty. Data is reset
    
-  // const handleDelete = (e) => {
+  const handleDelete = (e) => {
 
-  //   setEmptyBay(true)
    
-  //   const resetBay = {
-  //     bayNumber: props.number,
-  //     trailerNumber: props.formData.trailerNumber
-  //   }
-  //   if (socket) {
-  //     socket.emit("bayDelete", {...resetBay, user:username}, (response) => {
-  //       setErrMsg(response.message)
-  //     })
-  //   }
-  // }
+   
+    const resetBay = {
+      bayNumber: localForm.bayNumber,
+      trailerNumber: LocalForm.trailerNumber
+    }
+    if (socket) {
+      socket.emit("bayDelete", {...resetBay, user:username}, (response) => {
+        setErrMsg(response.message)
+      })
+    }
+  }
   
   // const handleBrokenBay = (e) => {
   //   const newStatus = e.target.checked;
@@ -305,13 +305,13 @@ return (
         variant="caption"
         sx={{ mt: 1, alignSelf: "flex-end", color: 'gray' }}
       >
-        {localForm.bayUpdatedAt && `Updated at ${format(new Date(localForm.bayUpdatedAt), 'PPpp')} by ${localForm.bayUpdatedBy}`}
+        {localForm.bayUpdatedAt && `Updated ${format(new Date(localForm.bayUpdatedAt), 'PPpp')} by ${localForm.bayUpdatedBy}`}
       </Typography>
       <Typography
         variant="caption"
         sx={{ mt: 1, alignSelf: "flex-end", color: 'gray' }}
       >
-        {localForm.trestleUpdatedAt && `Trestle status updated at ${format(localForm.trestleUpdatedAt, 'PPpp')} by ${localForm.trestleUpdatedBy}`}
+        {localForm.trestleUpdatedAt && `Trestle status updated ${format(localForm.trestleUpdatedAt, 'PPpp')} by ${localForm.trestleUpdatedBy}`}
       </Typography>
     </Box>
   </Box>

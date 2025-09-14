@@ -50,31 +50,40 @@ export const SocketContextProvider = ({children}) => {
                
               if (data.bayInfo.bayNumber <= 30) {
                 setInbound(prev => prev.map(bay => (
-                bay.bayNumber === data.bayInfo.bayNumber ? {...bay, ...data.bayInfo}:bay
+                bay.bayNumber === data.bayInfo.bayNumber ? {...bay, ...data}:bay
                 )))
               } else if (30 < data.bayInfo.bayNumber < 70) {
                 setOutbound(prev => prev.map(bay => (
-                  bay.bayNumber === data.bayInfo.bayNumber ? {...bay, ...data.bayInfo}:bay
+                  bay.bayNumber === data.bayInfo.bayNumber ? {...bay, ...data}:bay
                 )))
               } else {
                 setParking(prev => prev.map(bay => (
-                  bay.bayNumber === data.bayInfo.bayNumber ? {...bay, ...data.bayInfo}:bay
+                  bay.bayNumber === data.bayInfo.bayNumber ? {...bay, ...data}:bay
                 )))
               }
             }
           })
           
            socket.on("bayDeleted", (data) => {
-            console.log(data)
-            setBayDeleted({status:true, bayNumber:data.bayDeleted, user:data.user, time:data.time})
-            setInbound(prev => prev.map(b => b.bayNumber === data.bayDeleted ? {...b, 
-              trailerNumber: "Trailer Number",
-              stockDelivered: "",
-              fullTrailer: "",
-              comment: "",
-              trestleOn: false
-            }:b))
-          })
+              if (data.status === "200") {
+               
+                if (data.bayInfo.bayNumber <= 30) {
+                  setInbound(prev => prev.map(bay => (
+                  bay.bayNumber === data.bayInfo.bayNumber ? {...bay, ...data}:bay
+                  )))
+                } else if (30 < data.bayInfo.bayNumber < 70) {
+                  setOutbound(prev => prev.map(bay => (
+                    bay.bayNumber === data.bayInfo.bayNumber ? {...bay, ...data}:bay
+                  )))
+                } else {
+                  setParking(prev => prev.map(bay => (
+                    bay.bayNumber === data.bayInfo.bayNumber ? {...bay, ...data}:bay
+                  )))
+                }
+            }
+          }
+          )
+           
 
           socket.on("trestleUpdated", (bay) => {
             if (!bay) return;
