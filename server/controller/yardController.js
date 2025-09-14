@@ -135,7 +135,7 @@ const deleteBay = async(data) => {
       return { status: 404 }; // Not found
     }
 
-    return { status: 200, bay:bayDeleted };
+    return { status: 200, bayInfo:bayDeleted };
   } catch (err) {
     if (err.name === "ValidationError") {
       return { status: 400, message:err.message };
