@@ -122,7 +122,7 @@ const deleteBay = async(data) => {
   const deletedBay = {
     trailerNumber:"Trailer Number",
     stockDelivered:"",
-    fullTrailer:"",
+    fullTrailer:false,
     comment:"",
     bayUpdatedAt: new Date(),
     bayUpdatedBy: user
