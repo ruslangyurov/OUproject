@@ -46,7 +46,7 @@ export default function BayForm({formData, setFormData, trestle, setTrestle}) {
   } else {
     setEmptyBay(true)
   }
-}, [formData]);
+}, [formData.trailerNumber]);
 
 // // useEffect(() => {
 // //   console.log("BayForm: props.trestleOn changed for bay", props.number, "to", props.trestleOn);

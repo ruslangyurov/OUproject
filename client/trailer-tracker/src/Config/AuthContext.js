@@ -10,7 +10,7 @@ export const AuthContextProvider = ({ children }) => {
   const [auth, setAuth] = useState("");                 // this will contain the authentication token sent by the server
   
   useEffect(() => {
-    const refreshToken = async () => {
+    const refresh = async () => {
       try {
         const newToken = await refreshToken();
         setAuth(newToken);
@@ -20,7 +20,7 @@ export const AuthContextProvider = ({ children }) => {
     };
 
     if (!auth) {
-      refreshToken();
+      refresh();
     }
   }, []);
 
