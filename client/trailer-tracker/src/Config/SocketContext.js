@@ -50,15 +50,15 @@ export const SocketContextProvider = ({children}) => {
                
               if (data.bayInfo.bayNumber <= 30) {
                 setInbound(prev => prev.map(bay => (
-                bay.bayNumber === data.bayInfo.bayNumber ? {...bay, ...data}:bay
+                bay.bayNumber === data.bayInfo.bayNumber ? {...bay, ...data.bayInfo}:bay
                 )))
               } else if (30 < data.bayInfo.bayNumber < 70) {
                 setOutbound(prev => prev.map(bay => (
-                  bay.bayNumber === data.bayInfo.bayNumber ? {...bay, ...data}:bay
+                  bay.bayNumber === data.bayInfo.bayNumber ? {...bay, ...data.bayInfo}:bay
                 )))
               } else {
                 setParking(prev => prev.map(bay => (
-                  bay.bayNumber === data.bayInfo.bayNumber ? {...bay, ...data}:bay
+                  bay.bayNumber === data.bayInfo.bayNumber ? {...bay, ...data.bayInfo}:bay
                 )))
               }
             }
@@ -69,15 +69,15 @@ export const SocketContextProvider = ({children}) => {
                
                 if (data.bayInfo.bayNumber <= 30) {
                   setInbound(prev => prev.map(bay => (
-                  bay.bayNumber === data.bayInfo.bayNumber ? {...bay, ...data}:bay
+                  bay.bayNumber === data.bayInfo.bayNumber ? {...bay, ...data.bay}:bay
                   )))
                 } else if (30 < data.bayInfo.bayNumber < 70) {
                   setOutbound(prev => prev.map(bay => (
-                    bay.bayNumber === data.bayInfo.bayNumber ? {...bay, ...data}:bay
+                    bay.bayNumber === data.bayInfo.bayNumber ? {...bay, ...data.bay}:bay
                   )))
                 } else {
                   setParking(prev => prev.map(bay => (
-                    bay.bayNumber === data.bayInfo.bayNumber ? {...bay, ...data}:bay
+                    bay.bayNumber === data.bayInfo.bayNumber ? {...bay, ...data.bay}:bay
                   )))
                 }
             }

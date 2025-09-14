@@ -31,7 +31,7 @@ const InitialiseSocketio = ({ server }) => {
         socket.on("bayDelete", async(data, callback) => {
             const bayDeleted = await deleteBay(data)
             if (bayDeleted.status === 200) {
-                io.emit("bayDeleted", bayDeleted.bay)
+                io.emit("bayDeleted", bayDeleted)
             } else if (bayDeleted.status === 400) {
                 return callback({status:400, message:bayDeleted.message})
             } else if (bayDeleted.status === 409) {
@@ -55,7 +55,7 @@ const InitialiseSocketio = ({ server }) => {
                     return callback({ status: "500", message: "Something went wrong. Please try again later!" });
                 } else if (bayUpdated.status === "200") {
                    
-                    io.emit("bayUpdated", bayUpdated.bayInfo);
+                    io.emit("bayUpdated", bayUpdated);
                     return callback({status:"200"})
 
                 }
