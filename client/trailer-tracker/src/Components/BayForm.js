@@ -305,13 +305,13 @@ return (
         variant="caption"
         sx={{ mt: 1, alignSelf: "flex-end", color: 'gray' }}
       >
-        {localForm.updatedAt && `Updated at ${format(new Date(localForm.updatedAt), 'PPpp')} by ${localForm.updatedBy}`}
+        {localForm.bayUpdatedAt && `Updated at ${format(new Date(localForm.bayUpdatedAt), 'PPpp')} by ${localForm.bayUpdatedBy}`}
       </Typography>
       <Typography
         variant="caption"
         sx={{ mt: 1, alignSelf: "flex-end", color: 'gray' }}
       >
-        {localForm.trestleUpdatedAt && `Trestle status updated at ${format(localForm.updatedAt, 'PPpp')} by ${localForm.trestleUpdatedBy}`}
+        {localForm.trestleUpdatedAt && `Trestle status updated at ${format(localForm.trestleUpdatedAt, 'PPpp')} by ${localForm.trestleUpdatedBy}`}
       </Typography>
     </Box>
   </Box>

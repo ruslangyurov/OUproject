@@ -86,7 +86,8 @@ const updateBay = async(data) => {
         stockDelivered:stockDelivered === "Stock Delivered"||stockDelivered === ""?"No Information":stockDelivered,
         fullTrailer:fullTrailer,
         comment:comment,
-        updatedBy: user
+        bayUpdatedBy: user,
+        bayUpdatedAt: new Date()
     }
 
     try {
@@ -107,7 +108,7 @@ const updateBay = async(data) => {
 const updateTrestle = async(data) => {
     const {bayNumber, trestleOn, user} = data
 
-    const updatedBayTrestle = await Bay.findOneAndUpdate({bayNumber:bayNumber}, {trestleOn:trestleOn, updatedBy:user}, {new:true, runValidators:true}).exec()
+    const updatedBayTrestle = await Bay.findOneAndUpdate({bayNumber:bayNumber}, {trestleOn:trestleOn, trestleUpdatedAt: new Date(), trestleUpdatedBy:user}, {new:true, runValidators:true}).exec()
     return updatedBayTrestle
 }
 

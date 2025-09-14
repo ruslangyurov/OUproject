@@ -14,7 +14,8 @@ const BaySchema = new Schema ({
     fullTrailer: { type: Boolean, default: false },
     comment: String,
     trestleOn:Boolean,
-    updatedBy: String,
+    bayUpdatedAt: Date,
+    bayUpdatedBy: String,
     broken:{Boolean, default: false },
     tresleUpdatedAt: Date, 
     tresleUpdatedBy: String
