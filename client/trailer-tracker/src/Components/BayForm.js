@@ -41,7 +41,7 @@ export default function BayForm({formData, setFormData, trestle, setTrestle}) {
 
   useEffect(() => {
   // Detect if bay is filled
-  if (formData.trailerNumber?.trim() && formData.trailerNumber != "Trailer Number") {
+  if (localForm.trailerNumber?.trim() && localForm.trailerNumber != "Trailer Number") {
     setEmptyBay(false);
   } else {
     setEmptyBay(true)
