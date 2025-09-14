@@ -33,7 +33,7 @@ export default function BayForm({formData, setFormData, trestle, setTrestle}) {
   
   const [trestleUpdatedAt, setTrestleUpdatedAt] = useState(null)
   
-  const brokenB = brokenBayUpdate.brokenBay
+  
 
   useEffect(() => {
     setLocalForm(formData);
@@ -289,7 +289,7 @@ return (
       />
 
       <FormControlLabel
-        control={<Switch checked={brokenB}  />}
+        control={<Switch checked={localForm.broken}  />}
         label="Broken Bay"
       />
 
