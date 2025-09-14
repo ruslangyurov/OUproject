@@ -21,17 +21,17 @@ import { Typography } from '@mui/material';
 
 export default function BayForm({formData, setFormData, trestle, setTrestle}) {
 
-  const {socket, bayDeleted, trestleUpdatedOnBay, brokenBayUpdate} = useSocketContext()
+  const {socket} = useSocketContext()
 
  
   const [localForm, setLocalForm] = useState(formData)
   const {username} = useAuth();
   const [msg, setErrMsg] = useState("");
   const [emptyBay, setEmptyBay] = useState(true);
-  const [trestleUpdaterLocal,  setTrestleUpdaterLocal] = useState(null)
-  const [updateBay, setUpdateBay] = useState(null)
+
+
   
-  const [trestleUpdatedAt, setTrestleUpdatedAt] = useState(null)
+  
   
   
 
