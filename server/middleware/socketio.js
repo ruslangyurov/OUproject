@@ -37,7 +37,7 @@ const InitialiseSocketio = ({ server }) => {
             } else if (bayDeleted.status === 409) {
                 return callback({status:409, message:"Duplicate key error"})
             } else {
-                return callback({status:500, message: "Internal server error."})
+                return callback({status:500, message: bayDeleted.message})
             }
             
         })

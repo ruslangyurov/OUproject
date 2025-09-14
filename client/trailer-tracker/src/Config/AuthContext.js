@@ -15,7 +15,7 @@ export const AuthContextProvider = ({ children }) => {
         const newToken = await refreshToken();
         setAuth(newToken);
       } catch (err) {
-        console.log("No valid refresh token found.");
+        console.log(err?.message);
       }
     };
 

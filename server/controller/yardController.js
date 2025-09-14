@@ -129,7 +129,7 @@ const deleteBay = async(data) => {
   }
 
   try {
-    const bayDeleted = await Bay.findOneAndUpdate({ bayNumber },{trailerNumber:"Trailer Number", stockDelivered:"", fullTrailer:"", comment:"" },{ new: true, runValidators: true }).exec();
+    const bayDeleted = await Bay.findOneAndUpdate({ bayNumber },deletedBay,{ new: true, runValidators: true }).exec();
 
     if (!bayDeleted) {
       return { status: 404 }; // Not found
