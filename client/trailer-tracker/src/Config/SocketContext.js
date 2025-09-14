@@ -83,7 +83,7 @@ export const SocketContextProvider = ({children}) => {
 
             if (bay.bayNumber <= 30) {
               setInbound(prev =>
-                prev.map(b => b.bayNumber === bay.bayNumber ? { ...b, trestleOn: bay.trestleOn } : b));
+                prev.map(b => b.bayNumber === bay.bayNumber ? { ...b, trestleOn: bay.trestleOn, trestleUpdatedAt: bay.trestleUpdatedAt, trestleUpdatedBy: trestleUpdatedBy } : b));
             } else if (bay.bayNumber > 30 && bay.bayNumber < 70) {
               setOutbound(prev =>
                 prev.map(b => b.bayNumber === bay.bayNumber ? { ...b, trestleOn: bay.trestleOn } : b));
