@@ -11,7 +11,7 @@ import { useTheme } from '@mui/material/styles';
 
 
 export const Search = () => {
-    const [results, setResults] = useState([]);
+    const [results, setResults] = useState(null);
     const [errMsg, setErrMsg] = useState("");
     
     const theme = useTheme()
@@ -67,14 +67,12 @@ export const Search = () => {
         if (isSmallScreen) {
             return (
                 <Box sx = {{mt:"80px", px:2}}>
-                    {results.map((bay) => (
-                    <Paper key = {bay.bayNumber} sx = {{mb:2, p:2}}>
-                        <Typography variant = "subtitle2"><strong>Bay number:</strong> {bay.bayNumber}</Typography>
-                        <Typography variant="subtitle2"><strong>Trailer Number:</strong> {bay.trailerNumber}</Typography>
-                        <Typography variant="subtitle2"><strong>Stock:</strong> {bay.stockDelivered}</Typography>
-                        <Typography variant="subtitle2"><strong>Comment:</strong> {bay.comment}</Typography>
+                    <Paper sx = {{mb:2, p:2}}>
+                        <Typography variant = "subtitle2"><strong>Bay number:</strong> {results.bayNumber}</Typography>
+                        <Typography variant="subtitle2"><strong>Trailer Number:</strong> {results.trailerNumber}</Typography>
+                        <Typography variant="subtitle2"><strong>Stock:</strong> {results.stockDelivered}</Typography>
+                        <Typography variant="subtitle2"><strong>Comment:</strong> {results.comment}</Typography>
                     </Paper>
-                    ))}
                 </Box>  
         )
         }
@@ -90,17 +88,12 @@ export const Search = () => {
                 </TableRow>
                 </TableHead>
                 <TableBody>
-                    {results.map(bay => (
-                    <TableRow
-                        key={bay.bayNumber}
-                        sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                    >
-                        <TableCell component="th" scope="row">{bay.bayNumber}</TableCell>
-                        <TableCell align="right">{bay.trailerNumber}</TableCell>
-                        <TableCell align="right">{bay.stockDelivered}</TableCell>
-                        <TableCell align="right">{bay.comment}</TableCell>
+                    <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+                        <TableCell component="th" scope="row">{results.bayNumber}</TableCell>
+                        <TableCell align="right">{results.trailerNumber}</TableCell>
+                        <TableCell align="right">{results.stockDelivered}</TableCell>
+                        <TableCell align="right">{results.comment}</TableCell>
                     </TableRow>
-                    ))}
                 </TableBody>
             </Table>
             </TableContainer>
