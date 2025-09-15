@@ -25,8 +25,9 @@ export const Inbound = () => {
 
   return (
   <> 
+  <Box sx = {{mt:"60px"}}>
     {baysToReturn.map(bay => (
-      <Box sx={{ width: '100%', mb: 0.5, mt:"60px" }} key={bay.bayNumber}>
+      <Box sx={{ width: '100%', mb: 0.5, mt:"6px" }} key={bay.bayNumber}>
         <Accordion disableGutters sx={{ width: '100%' }}>
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
@@ -54,7 +55,7 @@ export const Inbound = () => {
           </AccordionSummary>
         </Accordion>
       </Box>
-
+  
 ))};
     
       <div className="footer">
@@ -73,6 +74,7 @@ export const Inbound = () => {
         {filter ? "Unfilter" : "Filter"}
         </Button>
       </div>
+  </Box>
   </>
   )
 }
