@@ -5,14 +5,17 @@ import axiosInstanse from '../apiAxios/axios'
 import { setRef } from '@mui/material'
 import {
   Table, TableBody, TableCell, TableContainer,
-  TableHead, TableRow, Paper, Box, Typography
+  TableHead, TableRow, Paper, Box, Typography, useMediaQuery
 } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
 
 
 export const Search = () => {
     const [results, setResults] = useState([]);
     const [errMsg, setErrMsg] = useState("");
-  
+    
+    const theme = useTheme()
+    const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
 
     const {state} = useLocation()
     useEffect(() => {
@@ -61,6 +64,20 @@ export const Search = () => {
         }
 
     if (results) {
+        if (isSmallScreen) {
+            return (
+                <Box sx = {{mt:"80px", px:2}}>
+                    {results.map((bay) => (
+                    <Paper key = {bay.bayNumber} sx = {{mb:2, p:2}}>
+                        <Typography variant = "subtitle2"><strong>Bay number:</strong> {bay.bayNumber}</Typography>
+                        <Typography variant="subtitle2"><strong>Trailer Number:</strong> {bay.trailerNumber}</Typography>
+                        <Typography variant="subtitle2"><strong>Stock:</strong> {bay.stockDelivered}</Typography>
+                        <Typography variant="subtitle2"><strong>Comment:</strong> {bay.comment}</Typography>
+                    </Paper>
+                    ))}
+                </Box>  
+        )
+        }
         return (
             <TableContainer component={Paper} sx={{ mt: "60px" }}>
             <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -73,22 +90,22 @@ export const Search = () => {
                 </TableRow>
                 </TableHead>
                 <TableBody>
-                <TableRow
-                    key={results.id || results.bayNumber}
-                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                >
-                    <TableCell component="th" scope="row">{results.bayNumber}</TableCell>
-                    <TableCell align="right">{results.trailerNumber}</TableCell>
-                    <TableCell align="right">{results.stockDelivered}</TableCell>
-                    <TableCell align="right">{results.comment}</TableCell>
-                </TableRow>
+                    {results.map(bay => (
+                    <TableRow
+                        key={bay.bayNumber}
+                        sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                    >
+                        <TableCell component="th" scope="row">{bay.bayNumber}</TableCell>
+                        <TableCell align="right">{bay.trailerNumber}</TableCell>
+                        <TableCell align="right">{bay.stockDelivered}</TableCell>
+                        <TableCell align="right">{bay.comment}</TableCell>
+                    </TableRow>
+                    ))}
                 </TableBody>
             </Table>
             </TableContainer>
         );
-        }
-
-    return <h2>No trailer found.</h2>;
+    } else {return <h2>No trailer found.</h2>;}
 
 
 }

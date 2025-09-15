@@ -54,7 +54,7 @@ export const FullTrailers = () => {
       <Box sx = {{mt:"80px", px:2}}>
         {fullTrailers.map((bay) => (
           <Paper key = {bay.bayNumber} sx = {{mb:2, p:2}}>
-            <Typography variant = "subtitle2"><strong>Bay number:</strong>{bay.bayNumber}</Typography>
+            <Typography variant = "subtitle2"><strong>Bay number:</strong> {bay.bayNumber}</Typography>
             <Typography variant="subtitle2"><strong>Trailer Number:</strong> {bay.trailerNumber}</Typography>
             <Typography variant="subtitle2"><strong>Stock:</strong> {bay.stockDelivered}</Typography>
             <Typography variant="subtitle2"><strong>Comment:</strong> {bay.comment}</Typography>
