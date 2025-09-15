@@ -46,7 +46,7 @@ export const SocketContextProvider = ({children}) => {
           })
 
           socket.on("bayUpdated", (data) => {
-            if (data.status === "200") {
+            if (data.status === 200) {
                
               if (data.bayInfo.bayNumber <= 30) {
                 setInbound(prev => prev.map(bay => (
@@ -65,7 +65,7 @@ export const SocketContextProvider = ({children}) => {
           })
           
            socket.on("bayDeleted", (data) => {
-              if (data.status === "200") {
+              if (data.status === 200) {
                
                 if (data.bayInfo.bayNumber <= 30) {
                   setInbound(prev => prev.map(bay => (

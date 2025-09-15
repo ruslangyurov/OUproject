@@ -47,16 +47,16 @@ const InitialiseSocketio = ({ server }) => {
           
                 const bayUpdated = await updateBay(data);
 
-                if (bayUpdated.status === "400") {
-                    return callback({ status: "400", message: "Please fill in all the required fields." });
-                } else if (bayUpdated.status === "401") {
-                    return callback({ status: "401", message: "Bay not found. Please try again." });
+                if (bayUpdated.status === 400) {
+                    return callback({ status: 400, message: "Please fill in all the required fields." });
+                } else if (bayUpdated.status === 401) {
+                    return callback({ status: 401, message: "Bay not found. Please try again." });
                 } else if (!bayUpdated.status) {
-                    return callback({ status: "500", message: "Something went wrong. Please try again later!" });
-                } else if (bayUpdated.status === "200") {
+                    return callback({ status: 500, message: "Something went wrong. Please try again later!" });
+                } else if (bayUpdated.status === 200) {
                    
                     io.emit("bayUpdated", bayUpdated);
-                    return callback({status:"200"})
+                    return callback({status:200})
 
                 }
         });

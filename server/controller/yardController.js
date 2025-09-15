@@ -76,7 +76,7 @@ const updateBay = async(data) => {
     const user = data.user
 
     if (!trailerNumber) {
-        return ({status: "400"})
+        return ({status: 400})
     }
     console.log(trailerNumber)
     
@@ -94,11 +94,11 @@ const updateBay = async(data) => {
       const newBay =  await Bay.findOneAndUpdate({bayNumber:bayNumber}, update, {new:true, runValidators:true}).exec()
 
       if (!newBay) {
-          return ({status: "401"})
+          return ({status: 401})
       } 
-      return {status: "200", bayInfo:newBay}  
+      return {status: 200, bayInfo:newBay}  
     } catch (err) {
-      return { status: "500", message: "Server error" };
+      return { status: 500, message: "Server error" };
   }
 }
 
