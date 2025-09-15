@@ -161,7 +161,7 @@ const getAllBays = async() => {
 
 const getEmptyTrailers = async(req, res) => {
 
-    const bays = await Bay.find({fullTrailer:false}).exec()
+    const bays = await Bay.find({fullTrailer:false, trailerNumber: {$ne: "Trailer Number"}}).exec()
     if (!bays) {
         return res.status(400).json("No bays found")
     
