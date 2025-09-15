@@ -71,7 +71,7 @@ export const Inbound = () => {
             textTransform: "none",
           }}
         >
-        {filter ? "Unfilter" : "Filter"}
+        {filter ? "Undo" : "Filter trestle"}
         </Button>
       </div>
   </Box>
