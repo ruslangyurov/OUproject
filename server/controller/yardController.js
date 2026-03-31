@@ -172,7 +172,7 @@ const getEmptyTrailers = async(req, res) => {
 const getFullTrailers = async(req, res) => {
 
     const bays = await Bay.find({fullTrailer:true}).exec()
-    if (!bays) {
+    if (!bays.length) {
         return res.status(400).json("No bays found")
     
     }
